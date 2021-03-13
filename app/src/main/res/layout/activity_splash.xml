@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/a10"
+    android:orientation="vertical"
+    tools:context=".SplashActivity">
+
+    <ImageView
+        android:layout_width="259dp"
+        android:layout_height="123dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="-4dp"
+        android:src="@drawable/header_logo" />
+
+    <ImageView
+        android:layout_width="227dp"
+        android:layout_height="91dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="-7dp"
+        android:layout_marginBottom="11dp"
+        android:src="@drawable/bottom_logo"
+        app:tint="#fff"
+        android:tintMode="multiply"/>
+
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    android:text="Geo-Tagging"
+    android:fontFamily="sans-serif"
+    android:textStyle="bold"
+android:textColor="#fff"
+        android:shadowColor="#000"
+        android:shadowRadius="5"
+        android:shadowDx="5"
+        android:shadowDy="5"
+    android:id="@+id/tv1"
+    android:textSize="30sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv1"
+        android:textColor="#fff"
+        android:shadowColor="#000"
+        android:shadowRadius="5"
+        android:shadowDx="5"
+        android:shadowDy="5"
+        android:visibility="gone"
+        android:textStyle="bold|italic"
+        android:layout_centerHorizontal="true"
+        android:text="A resolution tracking app"/>
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/app_icon"
+        android:layout_above="@id/tv1"
+        android:layout_centerHorizontal="true"/>
+</RelativeLayout>

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    tools:context=".UserProfileActivity">
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/img3" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/a9"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <EditText
+
+            android:id="@+id/display_one_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/info"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginRight="15dp"
+            android:drawableLeft="@drawable/ic_person_outline"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:hint="User Name"
+            android:inputType="none"
+            android:background="@drawable/shadow_black"
+            android:elevation="5dp"
+            android:drawableTint="#2196F3"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            />
+
+        <!--<RelativeLayout-->
+
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/info"-->
+        <!--android:layout_below="@+id/layout">-->
+
+        <!--<TextView-->
+
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textColor="@color/black"-->
+        <!--android:layout_margin="10dp"-->
+        <!--android:textSize="17dp"-->
+        <!--android:text="Profile Information"/>-->
+
+        <!--</RelativeLayout>-->
+
+        <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="@color/colorPrimary"-->
+        <!--android:layout_below="@+id/info"/>-->
+
+        <EditText
+
+            android:id="@+id/display_two_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/display_one_name"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:drawableLeft="@drawable/ic_email_black"
+            android:drawablePadding="8dp"
+            android:background="@drawable/shadow_black"
+            android:elevation="5dp"
+            android:drawableTint="#2196F3"
+            android:gravity="center_vertical"
+            android:hint="User Email"
+            android:inputType="none"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+             />
+
+        <EditText
+
+            android:id="@+id/display_three_mobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/display_two_email"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginRight="15dp"
+            android:drawableTint="#2196F3"
+            android:drawableLeft="@drawable/ic_phone_android"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:hint="User Mobile"
+            android:inputType="none"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:src="@drawable/shadow_black"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            android:background="@drawable/shadow_black"
+            android:elevation="5dp"
+            />
+
+        <LinearLayout
+
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center"
+            android:elevation="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <RelativeLayout
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center">
+
+                    <RelativeLayout
+                        android:layout_width="130dp"
+                        android:layout_height="130dp">
+
+                        <ImageView
+
+                            android:id="@+id/upload_photo_tv"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentBottom="true"
+                            android:background="@drawable/pencil_woo"
+                            android:backgroundTint="#2196F3" />
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+
+                            android:id="@+id/image_user_View"
+                            android:layout_width="125dp"
+                            android:layout_height="114dp"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:background="@drawable/mycooluser"
+                            android:backgroundTint="@color/black"
+                            android:paddingTop="8dp"
+                            app:civ_border_color="#2196F3"
+                            app:civ_border_width="2dp" />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="Edit Profile"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+
+                android:id="@+id/update_profile_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/button_color"
+                android:text="Logout"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <Button
+
+                android:id="@+id/edit_update_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/button_color"
+                android:text="update"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

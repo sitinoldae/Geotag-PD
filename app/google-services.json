@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "989386698637",
+    "firebase_url": "https://mygsdlproject.firebaseio.com",
+    "project_id": "mygsdlproject",
+    "storage_bucket": "mygsdlproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:989386698637:android:5e8cdaf48b9bc07f",
+        "android_client_info": {
+          "package_name": "com.waterflood.gsdl_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "989386698637-etffjo65n0son6jaobhl3mrvaoeqq7r5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.waterflood.gsdl_app",
+            "certificate_hash": "bbc6a228a1f7815388989ef502789c3ac1590cac"
+          }
+        },
+        {
+          "client_id": "989386698637-sdi2gr9jhboav4b4d3fgl9hshcgv24ku.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnhcZszPiPQmGUiieG30zF8EwJinaOmXU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "989386698637-sdi2gr9jhboav4b4d3fgl9hshcgv24ku.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
