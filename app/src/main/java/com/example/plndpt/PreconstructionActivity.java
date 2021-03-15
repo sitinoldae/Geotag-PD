@@ -3,6 +3,8 @@ package com.example.plndpt;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,6 +32,7 @@ public class PreconstructionActivity extends AppCompatActivity {
     List<User> myListData = new ArrayList<User>();
     String abc[] = {"india", "UK", "US"};
     private Sharedpreferences mpref;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,7 @@ public class PreconstructionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_preconstruction);
 
         recyclerView = findViewById(R.id.recyclerView);
+        progressBar= findViewById(R.id.progressbar);
 
         mpref = Sharedpreferences.getUserDataObj(this);
         requestQueue = Volley.newRequestQueue(this);
@@ -48,7 +52,6 @@ public class PreconstructionActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONArray response) {
                 try {
-
                     for (int ii = 0; ii < response.length(); ii++) {
 
                         JSONObject jsonObject = response.getJSONObject(ii);
@@ -106,7 +109,6 @@ public class PreconstructionActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-
-
+        progressBar.setVisibility(View.GONE);
     }
 }

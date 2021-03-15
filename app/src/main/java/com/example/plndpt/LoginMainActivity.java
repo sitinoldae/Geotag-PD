@@ -43,18 +43,14 @@ public class LoginMainActivity extends AppCompatActivity {
         btnlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 logIn();
             }
         });
-
 
         createnewac.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginMainActivity.this, SignUpActivity.class));
-
-
             }
         });
     }
@@ -92,15 +88,11 @@ public class LoginMainActivity extends AppCompatActivity {
                                 String password = object.getString("password");
 
                                 if (email.equalsIgnoreCase(userid) && pass.equals(password)) {
-
                                     c++;
-
                                     mpref.set_User_Mobile_verif(object.getString("mobile"));
                                     mpref.set_user_name_verif(object.getString("name"));
                                     mpref.set_user_email_verif(object.getString("userid"));
                                     mpref.setCircle_concerned_officer_mob(object.getString("dptname"));
-
-
                                 }
 
 

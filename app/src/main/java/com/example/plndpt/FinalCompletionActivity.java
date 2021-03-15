@@ -3,6 +3,8 @@ package com.example.plndpt;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,6 +32,7 @@ public class FinalCompletionActivity extends AppCompatActivity {
     List<User> myListData = new ArrayList<User>();
     String abc[] = {"india", "UK", "US"};
     private Sharedpreferences mpref;
+    ProgressBar progressbar3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +40,7 @@ public class FinalCompletionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_final_completion);
 
         recyclerView = findViewById(R.id.recyclerView);
-
+        progressbar3 = findViewById(R.id.progressbar3);
         mpref = Sharedpreferences.getUserDataObj(this);
         requestQueue = Volley.newRequestQueue(this);
         String URL_Officer = "http://map.gsdl.org.in:8080/planningdpt/viewReports/Final Completion";
@@ -106,7 +109,6 @@ public class FinalCompletionActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-
-
+        progressbar3.setVisibility(View.GONE);
     }
 }

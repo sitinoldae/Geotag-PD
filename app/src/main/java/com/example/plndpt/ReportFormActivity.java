@@ -761,12 +761,11 @@ else
     @OnClick(R.id.btn_submit)
     public void submit_form(View view){
 
-//            if (mphoto_bitmap !=null){
+        try {
             Random random= new Random();
             Calendar calender= Calendar.getInstance();
             appID="UAP"+random.nextInt(1000)+calender.get(Calendar.YEAR)+""+(calender.get(Calendar.MONTH)+1)+""+calender.get(Calendar.DATE)+""+
                     (calender.get(Calendar.HOUR))+""+calender.get(Calendar.MINUTE)+""+calender.get(Calendar.SECOND);
-
 
 
             u1.setReportid(appID);
@@ -777,17 +776,17 @@ else
             u1.setDescription(dscn);
 
 
-        if(u1.getLat().equals("0.0") || u1.getLog().equals("0.0") ||u1.getLat().equals("") || u1.getLog().equals(""))
-        {
-            AlertDialog alert = builder.create();
-            //Setting the title manually
-            alert.setTitle("Please check your internet connection or GPS setting");
-            alert.show();
+            if(u1.getLat().equals("0.0") || u1.getLog().equals("0.0") ||u1.getLat().equals("") || u1.getLog().equals(""))
+            {
+                AlertDialog alert = builder.create();
+                //Setting the title manually
+                alert.setTitle("Please check your internet connection or GPS setting");
+                alert.show();
 
-            return;
+                return;
 
 
-        }
+            }
 
 
             //Setting message manually and performing action on button click
@@ -812,18 +811,13 @@ else
             alert.show();
 
 
-
-
-
-
-
-
-
-
-
 //            }else {
 //                Toast.makeText(getApplicationContext(),"Upload Issue Image",Toast.LENGTH_LONG).show();
 //            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(),"Error : "+e.getMessage(),Toast.LENGTH_LONG).show();
+        }
 
     }
 
@@ -887,74 +881,44 @@ else
 
     private  void IssueFormHit() {
 
-        if((u1.getProgress().equals("Pre-construction") || u1.getProgress().equals("During Execution") ||u1.getProgress().equals("Final Completion"))   && u1.getStatus().equals("YES"))
-        {
-            formSubmit();
-            updateStatus();
-        }
-        else
-        {
-            formSubmit();
-        }
+        try {
+            if((u1.getProgress().equals("Pre-construction") || u1.getProgress().equals("During Execution") ||u1.getProgress().equals("Final Completion"))   && u1.getStatus().equals("YES"))
+            {
+                formSubmit();
+                updateStatus();
+            }
+            else
+            {
+                formSubmit();
+            }
 
-        Report_form();
+            Report_form();
 
-        builder.setMessage("Successfully Submitted \n Application ID: "+appID)
-                .setCancelable(false)
-                .setPositiveButton("yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
+            builder.setMessage("Successfully Submitted \n Application ID: "+appID)
+                    .setCancelable(false)
+                    .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
 
-                        finish();
-
-
-                    }
-                })
-                .setNegativeButton("", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        //  Action for 'NO' Button
+                            finish();
 
 
-                    }
-                });
-        //Creating dialog box
-        AlertDialog alert = builder.create();
-        //Setting the title manually
-        alert.setTitle("Confirmation");
-        alert.show();
+                        }
+                    })
+                    .setNegativeButton("", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //  Action for 'NO' Button
 
 
+                        }
+                    });
+            //Creating dialog box
+            AlertDialog alert = builder.create();
+            //Setting the title manually
+            alert.setTitle("Confirmation");
+            alert.show();
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      //----------------------------------nain-------------neel
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            //----------------------------------nain-------------neel
 
 
 //
@@ -964,8 +928,10 @@ else
 //
 //
 //        AppController.getInstance().getRequestQueue().getCache().clear();
-
-
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(),"Error :"+e.getMessage(),Toast.LENGTH_SHORT).show();
+        }
 
 
     }

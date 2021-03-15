@@ -3,6 +3,8 @@ package com.example.plndpt;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,6 +33,7 @@ public class DuringExcutionActivity extends AppCompatActivity {
     List<User> myListData = new ArrayList<User>();
     String abc[] = {"india", "UK", "US"};
     private Sharedpreferences mpref;
+    ProgressBar progressbar2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,7 @@ public class DuringExcutionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_during_excution);
 
         recyclerView = findViewById(R.id.recyclerView);
+        progressbar2 = findViewById(R.id.progressbar2);
 
         mpref = Sharedpreferences.getUserDataObj(this);
         requestQueue = Volley.newRequestQueue(this);
@@ -107,7 +111,6 @@ public class DuringExcutionActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
-
-
+        progressbar2.setVisibility(View.GONE);
     }
 }

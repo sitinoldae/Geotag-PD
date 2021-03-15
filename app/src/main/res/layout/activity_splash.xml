@@ -11,24 +11,24 @@
     tools:context=".SplashActivity">
 
     <ImageView
-        android:layout_width="259dp"
-        android:layout_height="123dp"
+        android:layout_width="220dp"
+        android:layout_height="94dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="6dp"
-        android:layout_marginTop="-4dp"
+        android:layout_marginLeft="58dp"
+        android:layout_marginTop="4dp"
         android:src="@drawable/header_logo" />
 
     <ImageView
-        android:layout_width="227dp"
-        android:layout_height="91dp"
+        android:layout_width="203dp"
+        android:layout_height="81dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginRight="-7dp"
         android:layout_marginBottom="11dp"
         android:src="@drawable/bottom_logo"
-        app:tint="#fff"
-        android:tintMode="multiply"/>
+        android:tintMode="multiply"
+        app:tint="#fff" />
 
     <TextView
     android:layout_width="wrap_content"
@@ -58,10 +58,11 @@ android:textColor="#fff"
         android:textStyle="bold|italic"
         android:layout_centerHorizontal="true"
         android:text="A resolution tracking app"/>
+
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/app_icon"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_above="@id/tv1"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/app_icon" />
 </RelativeLayout>

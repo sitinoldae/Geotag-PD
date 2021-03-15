@@ -209,7 +209,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="15dp"
-                android:background="@drawable/button_color"
+                android:background="@drawable/shadow_btn_layer_list"
                 android:text="Logout"
                 android:textColor="@color/white"
                 android:textStyle="bold" />

@@ -8,8 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +19,8 @@ import java.util.TimerTask;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -28,22 +29,25 @@ public class SplashActivity extends AppCompatActivity {
     private ArrayList permissionsToRequest;
     private ArrayList permissionsRejected = new ArrayList();
     private ArrayList permissions = new ArrayList();
-    private Sharedpreferences mpref;
+    private Sharedpreferences MPREFS;
 
     @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        View decorView = getWindow().getDecorView();
+        decorView.setOnSystemUiVisibilityChangeListener
+                (visibility -> {
+                    if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
+                        hideNavigationBar();
+                    }
+                });
         setContentView(R.layout.activity_splash);
-
-        mpref = Sharedpreferences.getUserDataObj(this);
-
+        MPREFS = Sharedpreferences.getUserDataObj(this);
         permissions.add(ACCESS_FINE_LOCATION);
         permissions.add(ACCESS_COARSE_LOCATION);
-
+        permissions.add(WRITE_EXTERNAL_STORAGE);
+        permissions.add(READ_EXTERNAL_STORAGE);
         permissionsToRequest = findUnAskedPermissions(permissions);
         //get the permissions we have asked for before but are not granted.
         //we will store this in a global list to access later.
@@ -56,16 +60,6 @@ public class SplashActivity extends AppCompatActivity {
                         ALL_PERMISSIONS_RESULT);
         }
 
-
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                Intent intent = new Intent(SplashActivity.this, PhoneNumberVerifyActivity.class);
-//                startActivity(intent);
-//                finish();
-//            }
-//        },splace_time);
-
         Timer t = new Timer();
         boolean checkConnection = new ApplicationUtility().checkConnection(SplashActivity.this);
         if (checkConnection) {
@@ -74,7 +68,6 @@ public class SplashActivity extends AppCompatActivity {
             Toast.makeText(SplashActivity.this,
                     "connection not found...please check internet connection", splace_time).show();
         }
-
     }
 
     private ArrayList findUnAskedPermissions(ArrayList wanted) {
@@ -153,8 +146,7 @@ public class SplashActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-
-            if (mpref.get_user_id().isEmpty()) {
+            if (MPREFS.get_user_id().isEmpty()) {
                 Intent i = new Intent(SplashActivity.this, MainActivity.class);
                 finish();
                 startActivity(i);
@@ -164,7 +156,13 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(i);
             }
         }
-
     }
 
+    private void hideNavigationBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION|
+                            View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        }
+    }
 }
