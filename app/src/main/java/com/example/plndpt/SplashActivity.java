@@ -142,6 +142,14 @@ public class SplashActivity extends AppCompatActivity {
         // locationTrack.stopListener();
     }
 
+    private void hideNavigationBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+                            View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        }
+    }
+
     class splash extends TimerTask {
 
         @Override
@@ -155,14 +163,6 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
                 startActivity(i);
             }
-        }
-    }
-
-    private void hideNavigationBar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION|
-                            View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         }
     }
 }

@@ -13,6 +13,7 @@
         android:layout_below="@+id/header_view"
         android:layout_marginTop="0dp"
         android:orientation="vertical">
+
         <include layout="@layout/loginformuser" />
 
     </LinearLayout>

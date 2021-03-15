@@ -22,21 +22,23 @@
         android:layout_marginTop="100dp"
         android:gravity="center|left"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="OTP"
-            android:textSize="10sp"
-            android:textStyle="bold"
-            android:textColor="#1E88E5"
+            android:layout_gravity="start"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="sans-serif-black"
+            android:gravity="start"
             android:shadowColor="#000"
             android:shadowDx="5"
             android:shadowDy="5"
-            android:layout_marginBottom="5dp"
-            android:gravity="start"
-            android:layout_gravity="start"
-            android:layout_marginLeft="20dp"
-            android:fontFamily="sans-serif-black"/>
+            android:text="OTP"
+            android:textColor="#1E88E5"
+            android:textSize="10sp"
+            android:textStyle="bold" />
+
         <EditText
             android:id="@+id/verify_otrp_et"
             android:layout_width="match_parent"
@@ -45,12 +47,12 @@
             android:layout_marginRight="15dp"
             android:background="@drawable/shadow_black"
             android:elevation="5dp"
+            android:gravity="center_horizontal"
+            android:hint="Enter the OTP received"
             android:inputType="number"
             android:padding="10dp"
-            android:textAlignment="center"
-            android:hint="Enter the OTP received"
             android:singleLine="true"
-            android:gravity="center_horizontal" />
+            android:textAlignment="center" />
 
 
         <Button
@@ -62,8 +64,8 @@
             android:layout_marginRight="15dp"
             android:background="@drawable/shadow_btn_layer_list"
             android:text="Verify"
-            android:textStyle="bold"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textStyle="bold" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -99,8 +101,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="50dp"
-            android:gravity="center"
             android:layout_marginRight="15dp"
+            android:gravity="center"
             android:text="OTP is sent to Your Mobile Number"
             android:textColor="#2196F3"
             android:textSize="12dp" />

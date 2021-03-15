@@ -31,8 +31,8 @@ public class FinalCompletionActivity extends AppCompatActivity {
     RequestQueue requestQueue;
     List<User> myListData = new ArrayList<User>();
     String abc[] = {"india", "UK", "US"};
-    private Sharedpreferences mpref;
     ProgressBar progressbar3;
+    private Sharedpreferences mpref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

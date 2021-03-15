@@ -3,55 +3,58 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_gravity="center"
-    android:gravity="center"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     android:background="@drawable/a9"
+    android:gravity="center"
     android:orientation="vertical"
     tools:context=".MainActivity">
+
     <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/main_logo"
         android:layout_width="180dp"
         android:layout_height="180dp"
-        android:id="@+id/main_logo"
-        android:elevation="5dp"
-        android:translationZ="2dp"
-        android:outlineSpotShadowColor="@color/black"
-        android:outlineAmbientShadowColor="@color/black"
-        android:background="@drawable/app_icon"
         android:layout_marginBottom="20dp"
-        app:tint="@color/black"/>
+        android:background="@drawable/app_icon"
+        android:elevation="5dp"
+        android:outlineAmbientShadowColor="@color/black"
+        android:outlineSpotShadowColor="@color/black"
+        android:translationZ="2dp"
+        app:tint="@color/black" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="50dp"
-        android:textColor="@color/black"
-        android:textAlignment="center"
+        android:gravity="center_horizontal"
         android:text="Welcome to GeoTag App, press the desired button to continue"
-        android:gravity="center_horizontal" />
+        android:textAlignment="center"
+        android:textColor="@color/black" />
+
     <Button
         android:id="@+id/login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="50dp"
         android:layout_below="@id/main_logo"
-        android:textColor="#fff"
+        android:layout_marginHorizontal="50dp"
         android:background="@drawable/shadow_btn_layer_list"
-        android:text="Log In"
         android:backgroundTint="@android:color/holo_blue_light"
+        android:text="Log In"
+        android:textColor="#fff"
         android:textStyle="bold" />
 
     <Button
         android:id="@+id/signup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="50dp"
-        android:layout_centerHorizontal="true"
         android:layout_below="@id/login"
-        android:textColor="#fff"
-        android:backgroundTint="@color/black"
-        android:background="@drawable/shadow_btn_layer_list"
-        android:text="Sign Up"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="50dp"
         android:layout_marginTop="20dp"
+        android:background="@drawable/shadow_btn_layer_list"
+        android:backgroundTint="@color/black"
+        android:text="Sign Up"
+        android:textColor="#fff"
         android:textStyle="bold" />
 
     <ImageView

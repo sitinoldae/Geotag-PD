@@ -9,7 +9,7 @@ public interface ApiInterface2 {
 
 
     //String URL_BASE = "http://59.180.230.28:8080/waterlogging/gsdl/waterlogging/";
-  //  String URL_BASE = "http://10.0.2.2:8080/waterlogging/gsdl/waterlogging/";
+    //  String URL_BASE = "http://10.0.2.2:8080/waterlogging/gsdl/waterlogging/";
 
     String URL_LOGIN = "http://map.gsdl.org.in:8080/planningdpt/";
     // String URL_LOGIN="http://10.0.2.2:8080/";

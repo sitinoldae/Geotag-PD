@@ -32,8 +32,8 @@ public class DuringExcutionActivity extends AppCompatActivity {
     RequestQueue requestQueue;
     List<User> myListData = new ArrayList<User>();
     String abc[] = {"india", "UK", "US"};
-    private Sharedpreferences mpref;
     ProgressBar progressbar2;
+    private Sharedpreferences mpref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

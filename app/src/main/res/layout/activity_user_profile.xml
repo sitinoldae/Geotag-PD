@@ -33,19 +33,18 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="18dp"
             android:layout_marginRight="15dp"
+            android:background="@drawable/shadow_black"
             android:drawableLeft="@drawable/ic_person_outline"
             android:drawablePadding="8dp"
+            android:drawableTint="#2196F3"
+            android:elevation="5dp"
             android:gravity="center_vertical"
             android:hint="User Name"
             android:inputType="none"
-            android:background="@drawable/shadow_black"
-            android:elevation="5dp"
-            android:drawableTint="#2196F3"
             android:padding="10dp"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="15dp"
-            />
+            android:textSize="15dp" />
 
         <!--<RelativeLayout-->
 
@@ -80,19 +79,18 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
+            android:background="@drawable/shadow_black"
             android:drawableLeft="@drawable/ic_email_black"
             android:drawablePadding="8dp"
-            android:background="@drawable/shadow_black"
-            android:elevation="5dp"
             android:drawableTint="#2196F3"
+            android:elevation="5dp"
             android:gravity="center_vertical"
             android:hint="User Email"
             android:inputType="none"
             android:padding="10dp"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="15dp"
-             />
+            android:textSize="15dp" />
 
         <EditText
 
@@ -103,9 +101,11 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="18dp"
             android:layout_marginRight="15dp"
-            android:drawableTint="#2196F3"
+            android:background="@drawable/shadow_black"
             android:drawableLeft="@drawable/ic_phone_android"
             android:drawablePadding="8dp"
+            android:drawableTint="#2196F3"
+            android:elevation="5dp"
             android:gravity="center_vertical"
             android:hint="User Mobile"
             android:inputType="none"
@@ -113,10 +113,7 @@
             android:singleLine="true"
             android:src="@drawable/shadow_black"
             android:textColor="@color/black"
-            android:textSize="15dp"
-            android:background="@drawable/shadow_black"
-            android:elevation="5dp"
-            />
+            android:textSize="15dp" />
 
         <LinearLayout
 

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -31,33 +30,34 @@
         app:tint="#fff" />
 
     <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_centerHorizontal="true"
-    android:layout_centerVertical="true"
-    android:text="Geo-Tagging"
-    android:fontFamily="sans-serif"
-    android:textStyle="bold"
-android:textColor="#fff"
+        android:id="@+id/tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:fontFamily="sans-serif"
         android:shadowColor="#000"
-        android:shadowRadius="5"
         android:shadowDx="5"
         android:shadowDy="5"
-    android:id="@+id/tv1"
-    android:textSize="30sp"/>
+        android:shadowRadius="5"
+        android:text="Geo-Tagging"
+        android:textColor="#fff"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv1"
-        android:textColor="#fff"
+        android:layout_centerHorizontal="true"
         android:shadowColor="#000"
-        android:shadowRadius="5"
         android:shadowDx="5"
         android:shadowDy="5"
-        android:visibility="gone"
+        android:shadowRadius="5"
+        android:text="A resolution tracking app"
+        android:textColor="#fff"
         android:textStyle="bold|italic"
-        android:layout_centerHorizontal="true"
-        android:text="A resolution tracking app"/>
+        android:visibility="gone" />
 
     <ImageView
         android:layout_width="150dp"

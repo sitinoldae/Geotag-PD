@@ -2,7 +2,6 @@ package com.example.plndpt;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,7 +17,6 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.os.StrictMode;
 import android.provider.MediaStore;
-
 import android.provider.Settings;
 import android.util.Base64;
 import android.util.Log;
@@ -38,26 +36,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.gson.JsonElement;
-
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -83,57 +73,54 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class ReportFormActivity extends AppCompatActivity implements Callback<User>,Runnable {
-    Thread t1;
-
-    FusedLocationProviderClient fusedLocationProviderClient;
-    private View mLoading;
-    //String[] country = { "Pre-construction", "During Execution", "Final Completion"};
-    String[] status = {"NO","YES"};
+public class ReportFormActivity extends AppCompatActivity implements Callback<User>, Runnable {
     public static final String DATA_URL = "http://map.gsdl.org.in:8080/planningdpt/viewProjects";
-   // public static final String DATA_URL = "http://10.0.2.2:8080/viewProjects";
-
     public static final String JSON_ARRAY = "result";
+    public static final int RequestPermissionCode = 1;
+    private static final int PICK_PHOTO_FOR_AVATAR = 1;
+    public static User u1 = new User();
+    // public static final String DATA_URL = "http://10.0.2.2:8080/viewProjects";
+    static int num;
+    private static String dateString;
+    Thread t1;
+    FusedLocationProviderClient fusedLocationProviderClient;
+    //String[] country = { "Pre-construction", "During Execution", "Final Completion"};
+    String[] status = {"NO", "YES"};
     HashMap<String, String> capitalCities;
-
     AlertDialog.Builder builder;
     @BindView(R.id.issue_image)
     ImageView imageView_issue;
-
     @BindView(R.id.location_addr)
     TextView location_tv;
     //Creating a request queue
     RequestQueue requestQueue2;
-    //Declaring an Spinner
-    private Spinner spinnerdpt;
-
-    //An ArrayList for Spinner Items
-    private ArrayList<String> dptname;
-
-    //JSON Array
-    private JSONArray result;
-
-
-    private Spinner spinner,spinerstatus;
-    private String item;
     String div;
-    private AlertDialog alertDialoggg;
-
-    private LocationTrack locationTrack;
     // initializing
     // FusedLocationProviderClient
     // object
     FusedLocationProviderClient mFusedLocationClient;
-
     // Initializing other items
     // from layout file
     TextView latitudeTextView, longitTextView;
     int PERMISSION_ID = 44;
-    private Geocoder geocoder;
     List<Address> addresses;
-    public  static final int RequestPermissionCode  = 1;
+    String appID;
+    EditText dsc;
+    long date;
+    Spinner spin;
+    private View mLoading;
+    //Declaring an Spinner
+    private Spinner spinnerdpt;
+    //An ArrayList for Spinner Items
+    private ArrayList<String> dptname;
+    //JSON Array
+    private JSONArray result;
+    private Spinner spinner, spinerstatus;
+    private String item;
+    private AlertDialog alertDialoggg;
+    private LocationTrack locationTrack;
+    private Geocoder geocoder;
     private byte[] data, imageBytes;
-
     private Sharedpreferences mpref;
     private ApiInterface repost_form_interface;
     private ApiInterface2 repost_form_interface2;
@@ -142,14 +129,16 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
     private ProgressShow progressShow;
     private String my_value;
     private RequestQueue requestQueue;
-    String appID;
-    static int num;
-    EditText dsc;
-    long date;
-    public static User u1=new User();
-    private static String dateString;
-            Spinner spin;
-    private static final int PICK_PHOTO_FOR_AVATAR = 1;
+    private LocationCallback mLocationCallback = new LocationCallback() {
+
+        @Override
+        public void onLocationResult(LocationResult locationResult) {
+            Location mLastLocation = locationResult.getLastLocation();
+//            latitudeTextView.setText("Latitude: " + mLastLocation.getLatitude() + "");
+//            longitTextView.setText("Longitude: " + mLastLocation.getLongitude() + "");
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -164,18 +153,18 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(ReportFormActivity.this);
 
 
-       spin = (Spinner) findViewById(R.id.spinnerprogress);
-       spinerstatus = findViewById(R.id.spinnerstatus);
+        spin = (Spinner) findViewById(R.id.spinnerprogress);
+        spinerstatus = findViewById(R.id.spinnerstatus);
 
         mpref = Sharedpreferences.getUserDataObj(this);
         //Creating the ArrayAdapter instance having the country list
-       // ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,country);
+        // ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,country);
         //aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Setting the ArrayAdapter data on the Spinner
-       // spin.setAdapter(aa);
+        // spin.setAdapter(aa);
 
 
-        ArrayAdapter aa1 = new ArrayAdapter(this,android.R.layout.simple_spinner_item,status);
+        ArrayAdapter aa1 = new ArrayAdapter(this, android.R.layout.simple_spinner_item, status);
         aa1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Setting the ArrayAdapter data on the Spinner
         spinerstatus.setAdapter(aa1);
@@ -184,27 +173,27 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
         dptname = new ArrayList<String>();
         //Initializing Spinner
         spinner = (Spinner) findViewById(R.id.spinner);
-dsc = findViewById(R.id.dsc);
+        dsc = findViewById(R.id.dsc);
         //This method will fetch the data from the URL to get deptname
 
-       final String DATA_URL = "http://map.gsdl.org.in:8080/planningdpt/viewpro/"+mpref.getCircle_concerned_officer_mob();
-    //    final String DATA_URL = "http://10.0.2.2:8080/viewpro/"+mpref.getCircle_concerned_officer_mob();
+        final String DATA_URL = "http://map.gsdl.org.in:8080/planningdpt/viewpro/" + mpref.getCircle_concerned_officer_mob();
+        //    final String DATA_URL = "http://10.0.2.2:8080/viewpro/"+mpref.getCircle_concerned_officer_mob();
 
-        Log.d("url main",DATA_URL);
+        Log.d("url main", DATA_URL);
         getprojectname(DATA_URL);
-        EditText name,email,mob;
+        EditText name, email, mob;
         builder = new AlertDialog.Builder(this);
-        u1=new User();
+        u1 = new User();
         if (android.os.Build.VERSION.SDK_INT > 19) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
-           }
+        }
 
-        requestQueue= Volley.newRequestQueue(this);
+        requestQueue = Volley.newRequestQueue(this);
         ButterKnife.bind(this);
-        name=findViewById(R.id.name);
-        mob=findViewById(R.id.mobile);
-        email=findViewById(R.id.email);
+        name = findViewById(R.id.name);
+        mob = findViewById(R.id.mobile);
+        email = findViewById(R.id.email);
 
 
         name.setText(mpref.get_user_name_verif());
@@ -224,11 +213,6 @@ dsc = findViewById(R.id.dsc);
         u1.setLog(mpref.get_search_Longitude());
 
 
-
-
-
-
-
         repost_form_interface = ApiClient.getClient().create(ApiInterface.class);
         repost_form_interface2 = ApiClient2.getClient().create(ApiInterface2.class);
 
@@ -244,30 +228,18 @@ dsc = findViewById(R.id.dsc);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         dateString = sdf.format(date);
 
-        Log.d("date_ccc",dateString);
+        Log.d("date_ccc", dateString);
 
 
         u1.setTimestamp(dateString);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
         imageView_issue.setScaleType(ImageView.ScaleType.FIT_XY);
 
-        if(getIntent().getStringExtra("search_text")!= null){
+        if (getIntent().getStringExtra("search_text") != null) {
             location_tv.setVisibility(View.VISIBLE);
             location_tv.setText(getIntent().getStringExtra("search_text"));
-        }else {
+        } else {
             location_tv.setVisibility(View.GONE);
         }
 
@@ -290,18 +262,18 @@ dsc = findViewById(R.id.dsc);
 //
 //            }
 //        });
-    spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-        @Override
-        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-            u1.setProgress(spin.getSelectedItem().toString());
-        }
+                u1.setProgress(spin.getSelectedItem().toString());
+            }
 
-        @Override
-        public void onNothingSelected(AdapterView<?> adapterView) {
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
-        }
-    });
+            }
+        });
 
         spinerstatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -315,39 +287,28 @@ dsc = findViewById(R.id.dsc);
 
             }
         });
-}
+    }
 
-
-    private void setUIRef()
-    {
+    private void setUIRef() {
         //Create a Instance of the Loading Layout
         mLoading = findViewById(R.id.my_loading_layout);
     }
 
-
-    private void showLoading()
-    {
+    private void showLoading() {
         /*Call this function when you want progress dialog to appear*/
-        if (mLoading != null)
-        {
+        if (mLoading != null) {
             mLoading.setVisibility(View.VISIBLE);
         }
     }
 
-
-
-
-    private void hideLoading()
-    {
+    private void hideLoading() {
         /*Call this function when you want progress dialog to disappear*/
-        if (mLoading != null)
-        {
+        if (mLoading != null) {
             mLoading.setVisibility(View.GONE);
         }
     }
 
-    String getprojectname(String url)
-    {
+    String getprojectname(String url) {
 
         JsonArrayRequest stringRequest2 = new JsonArrayRequest(url,
                 new Response.Listener<JSONArray>() {
@@ -355,20 +316,20 @@ dsc = findViewById(R.id.dsc);
                     public void onResponse(JSONArray response) {
                         JSONObject j = null;
                         List<String> arrayList = new ArrayList<>();
-                         capitalCities = new HashMap<String, String>();
+                        capitalCities = new HashMap<String, String>();
 
                         try {
-                            for(int i=0;i<response.length();i++) {
+                            for (int i = 0; i < response.length(); i++) {
                                 JSONObject object = response.getJSONObject(i);
                                 String dptname = object.getString("projectname");
                                 String projectid = object.getString("projectid");
 
-                                System.out.print("projectname"+dptname);
+                                System.out.print("projectname" + dptname);
                                 capitalCities.put(dptname, projectid);
                                 arrayList.add(dptname);
                             }
                             spinner.setAdapter(new ArrayAdapter<String>(ReportFormActivity.this, android.R.layout.simple_spinner_dropdown_item, arrayList));
-                           // hideLoading();
+                            // hideLoading();
                             //Parsing the fetched Json String to JSON Object
                             //j = new JSONObject(response);
 
@@ -385,11 +346,11 @@ dsc = findViewById(R.id.dsc);
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        System.out.println("dpterror"+error.getMessage());
+                        System.out.println("dpterror" + error.getMessage());
                     }
                 });
 
-        RequestQueue requestQueue2= Volley.newRequestQueue(this);
+        RequestQueue requestQueue2 = Volley.newRequestQueue(this);
 
         //Adding request to the queue
         requestQueue2.add(stringRequest2);
@@ -398,26 +359,23 @@ dsc = findViewById(R.id.dsc);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-               u1.setProject(spinner.getSelectedItem().toString());
+                u1.setProject(spinner.getSelectedItem().toString());
                 String project = spinner.getSelectedItem().toString();
 
 
                 getreportprojectcheck(project);
 
-                for (Map.Entry<String, String> e : capitalCities.entrySet())
-                {
+                for (Map.Entry<String, String> e : capitalCities.entrySet()) {
 
-                    if(project.equals(e.getKey()))
-
-                    {
+                    if (project.equals(e.getKey())) {
                         u1.setProjectid(e.getValue());
                     }
                     System.out.println("Key: " + e.getKey()
                             + " Value: " + e.getValue());
+                }
+
+
             }
-
-
-        }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -431,7 +389,6 @@ dsc = findViewById(R.id.dsc);
         showLoading();
 
 
-
         final String DATA_URLALlPROJECT = "http://map.gsdl.org.in:8080/planningdpt/viewReports";
         JsonArrayRequest stringRequest2 = new JsonArrayRequest(DATA_URLALlPROJECT,
                 new Response.Listener<JSONArray>() {
@@ -441,34 +398,29 @@ dsc = findViewById(R.id.dsc);
                         List<String> arrayList = new ArrayList<>();
 
                         try {
-                            for(int i=0;i<response.length();i++) {
+                            for (int i = 0; i < response.length(); i++) {
                                 JSONObject object = response.getJSONObject(i);
                                 String projectname = object.getString("project");
 
-                                System.out.print("project"+projectname);
+                                System.out.print("project" + projectname);
 
                                 arrayList.add(projectname);
                             }
 
 
-                            if(!arrayList.contains(project))
-                            {
+                            if (!arrayList.contains(project)) {
 
                                 List<String> arrayList1 = new ArrayList<>();
                                 arrayList1.add("Pre-construction");
                                 hideLoading();
                                 spin.setAdapter(new ArrayAdapter<String>(ReportFormActivity.this, android.R.layout.simple_spinner_dropdown_item, arrayList1));
 
-                            }
-
-                            else
-
-                            {
+                            } else {
                                 checkprogressandstatus(project);
 
                             }
 
-                          //  spinner.setAdapter(new ArrayAdapter<String>(ReportFormActivity.this, android.R.layout.simple_spinner_dropdown_item, arrayList));
+                            //  spinner.setAdapter(new ArrayAdapter<String>(ReportFormActivity.this, android.R.layout.simple_spinner_dropdown_item, arrayList));
                             //Parsing the fetched Json String to JSON Object
                             //j = new JSONObject(response);
 
@@ -485,11 +437,11 @@ dsc = findViewById(R.id.dsc);
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        System.out.println("dpterror"+error.getMessage());
+                        System.out.println("dpterror" + error.getMessage());
                     }
                 });
 
-        RequestQueue requestQueue2= Volley.newRequestQueue(this);
+        RequestQueue requestQueue2 = Volley.newRequestQueue(this);
 
         //Adding request to the queue
         requestQueue2.add(stringRequest2);
@@ -505,7 +457,6 @@ dsc = findViewById(R.id.dsc);
                     public void onResponse(JSONArray response) {
 
 
-
                         JSONObject j = null;
                         List<String> arrayList = new ArrayList<>();
                         HashMap<String, String> dataall = new HashMap<String, String>();
@@ -513,25 +464,26 @@ dsc = findViewById(R.id.dsc);
                         try {
 
 
-                            {}
-                            for(int i=0;i<response.length();i++) {
+                            {
+                            }
+                            for (int i = 0; i < response.length(); i++) {
                                 JSONObject object = response.getJSONObject(i);
                                 String projectname = object.getString("project");
                                 String status = object.getString("status");
                                 String progress = object.getString("progress");
 
-                                System.out.print("project"+projectname);
+                                System.out.print("project" + projectname);
 
-                                dataall.put("project",projectname);
-                                dataall.put("status",status);
-                                dataall.put("progress",progress);
+                                dataall.put("project", projectname);
+                                dataall.put("status", status);
+                                dataall.put("progress", progress);
 
                                 System.out.println(dataall);
 
-                               // arrayList.add(projectname);
+                                // arrayList.add(projectname);
                             }
 
-                            if(dataall.get("project").equalsIgnoreCase(project) && dataall.get("progress").equalsIgnoreCase("Pre-construction") &&
+                            if (dataall.get("project").equalsIgnoreCase(project) && dataall.get("progress").equalsIgnoreCase("Pre-construction") &&
                                     dataall.get("status").equalsIgnoreCase("NO")) {
 
                                 List<String> arrayList1 = new ArrayList<>();
@@ -539,10 +491,7 @@ dsc = findViewById(R.id.dsc);
 
 
                                 spin.setAdapter(new ArrayAdapter<String>(ReportFormActivity.this, android.R.layout.simple_spinner_dropdown_item, arrayList1));
-                            }
-
-                            else
-                            if(dataall.get("project").equalsIgnoreCase(project) && dataall.get("progress").equalsIgnoreCase("Pre-construction") &&
+                            } else if (dataall.get("project").equalsIgnoreCase(project) && dataall.get("progress").equalsIgnoreCase("Pre-construction") &&
                                     dataall.get("status").equalsIgnoreCase("YES")) {
 
                                 List<String> arrayList1 = new ArrayList<>();
@@ -550,9 +499,7 @@ dsc = findViewById(R.id.dsc);
 
 
                                 spin.setAdapter(new ArrayAdapter<String>(ReportFormActivity.this, android.R.layout.simple_spinner_dropdown_item, arrayList1));
-                            }
-else
-                            if(dataall.get("project").equalsIgnoreCase(project) && dataall.get("progress").equalsIgnoreCase("During Execution") &&
+                            } else if (dataall.get("project").equalsIgnoreCase(project) && dataall.get("progress").equalsIgnoreCase("During Execution") &&
                                     dataall.get("status").equalsIgnoreCase("NO")) {
 
                                 List<String> arrayList1 = new ArrayList<>();
@@ -560,10 +507,7 @@ else
 
 
                                 spin.setAdapter(new ArrayAdapter<String>(ReportFormActivity.this, android.R.layout.simple_spinner_dropdown_item, arrayList1));
-                            }
-
-                            else
-                            if(dataall.get("project").equalsIgnoreCase(project) && dataall.get("progress").equalsIgnoreCase("During Execution") &&
+                            } else if (dataall.get("project").equalsIgnoreCase(project) && dataall.get("progress").equalsIgnoreCase("During Execution") &&
                                     dataall.get("status").equalsIgnoreCase("YES")) {
 
                                 List<String> arrayList1 = new ArrayList<>();
@@ -571,10 +515,7 @@ else
 
 
                                 spin.setAdapter(new ArrayAdapter<String>(ReportFormActivity.this, android.R.layout.simple_spinner_dropdown_item, arrayList1));
-                            }
-                            else
-
-                            if(dataall.get("project").equalsIgnoreCase(project) && dataall.get("progress").equalsIgnoreCase("Final Completion") &&
+                            } else if (dataall.get("project").equalsIgnoreCase(project) && dataall.get("progress").equalsIgnoreCase("Final Completion") &&
                                     dataall.get("status").equalsIgnoreCase("NO")) {
 
                                 List<String> arrayList1 = new ArrayList<>();
@@ -582,10 +523,7 @@ else
 
 
                                 spin.setAdapter(new ArrayAdapter<String>(ReportFormActivity.this, android.R.layout.simple_spinner_dropdown_item, arrayList1));
-                            }
-
-                            else
-                            if(dataall.get("project").equalsIgnoreCase(project) && dataall.get("progress").equalsIgnoreCase("Final Completion") &&
+                            } else if (dataall.get("project").equalsIgnoreCase(project) && dataall.get("progress").equalsIgnoreCase("Final Completion") &&
                                     dataall.get("status").equalsIgnoreCase("YES")) {
 
                                 List<String> arrayList1 = new ArrayList<>();
@@ -594,8 +532,6 @@ else
 
                                 spin.setAdapter(new ArrayAdapter<String>(ReportFormActivity.this, android.R.layout.simple_spinner_dropdown_item, arrayList1));
                             }
-
-
 
 
 //                                }else
@@ -610,8 +546,7 @@ else
 //
 //                                }
 //                                System.out.println(m.getKey()+" "+m.getValue());
-                         //   }
-
+                            //   }
 
 
                             //  spinner.setAdapter(new ArrayAdapter<String>(ReportFormActivity.this, android.R.layout.simple_spinner_dropdown_item, arrayList));
@@ -624,31 +559,27 @@ else
                             //Calling method getStudents to get the students from the JSON Array
                             // getStudents(result);
                         } catch (JSONException e) {
-                            System.out.println("dpterror"+e.getMessage());
+                            System.out.println("dpterror" + e.getMessage());
                         }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        System.out.println("dpterror"+error.getMessage());
+                        System.out.println("dpterror" + error.getMessage());
                     }
                 });
 
-        RequestQueue requestQueue2= Volley.newRequestQueue(this);
+        RequestQueue requestQueue2 = Volley.newRequestQueue(this);
 
         //Adding request to the queue
         requestQueue2.add(stringRequest2);
 
 
-
-
-
     }
 
-
     @OnClick(R.id.issue_photo_layout)
-    public void photo_upload_option_linear(View view){
+    public void photo_upload_option_linear(View view) {
 
         LayoutInflater li = LayoutInflater.from(ReportFormActivity.this);
         View promptsView = li.inflate(R.layout.camera_option_dialogue, null);
@@ -690,12 +621,6 @@ else
 // Always show the chooser (if there are multiple options available)
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
 
-
-
-
-
-
-
             }
         });
     }
@@ -703,10 +628,10 @@ else
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
 
-        switch(requestCode) {
+        switch (requestCode) {
 
             case 0:
-                if(resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     imageView_issue.setVisibility(View.VISIBLE);
                     mphoto_bitmap = (Bitmap) imageReturnedIntent.getExtras().get("data");
                     Log.d("new_value__camera", String.valueOf(mphoto_bitmap));
@@ -717,10 +642,10 @@ else
                     mphoto_bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                     byte[] imageBytes = baos.toByteArray();
                     imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-                    System.out.print("encode64_coder"+imageString);
-                    if (imageString.isEmpty()){
+                    System.out.print("encode64_coder" + imageString);
+                    if (imageString.isEmpty()) {
 
-                    }else {
+                    } else {
                         my_value = imageString;
                     }
 
@@ -728,7 +653,7 @@ else
                 break;
             case 1:
                 System.out.println("yooo");
-                if(resultCode == RESULT_OK && imageReturnedIntent != null && imageReturnedIntent.getData() != null){
+                if (resultCode == RESULT_OK && imageReturnedIntent != null && imageReturnedIntent.getData() != null) {
                     Uri selectedImage = imageReturnedIntent.getData();
                     Log.d("nayi_value", String.valueOf(selectedImage));
 
@@ -741,31 +666,23 @@ else
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                   // System.out.println("preeti=="+gallery_bitmap);
-                    my_value  =getStringImage(gallery_bitmap);
-                    System.out.print("honey"+my_value);
+                    // System.out.println("preeti=="+gallery_bitmap);
+                    my_value = getStringImage(gallery_bitmap);
+                    System.out.print("honey" + my_value);
 
                 }
                 break;
         }
     }
 
-
-
-
-
-
-
-
-
     @OnClick(R.id.btn_submit)
-    public void submit_form(View view){
+    public void submit_form(View view) {
 
         try {
-            Random random= new Random();
-            Calendar calender= Calendar.getInstance();
-            appID="UAP"+random.nextInt(1000)+calender.get(Calendar.YEAR)+""+(calender.get(Calendar.MONTH)+1)+""+calender.get(Calendar.DATE)+""+
-                    (calender.get(Calendar.HOUR))+""+calender.get(Calendar.MINUTE)+""+calender.get(Calendar.SECOND);
+            Random random = new Random();
+            Calendar calender = Calendar.getInstance();
+            appID = "UAP" + random.nextInt(1000) + calender.get(Calendar.YEAR) + "" + (calender.get(Calendar.MONTH) + 1) + "" + calender.get(Calendar.DATE) + "" +
+                    (calender.get(Calendar.HOUR)) + "" + calender.get(Calendar.MINUTE) + "" + calender.get(Calendar.SECOND);
 
 
             u1.setReportid(appID);
@@ -776,8 +693,7 @@ else
             u1.setDescription(dscn);
 
 
-            if(u1.getLat().equals("0.0") || u1.getLog().equals("0.0") ||u1.getLat().equals("") || u1.getLog().equals(""))
-            {
+            if (u1.getLat().equals("0.0") || u1.getLog().equals("0.0") || u1.getLat().equals("") || u1.getLog().equals("")) {
                 AlertDialog alert = builder.create();
                 //Setting the title manually
                 alert.setTitle("Please check your internet connection or GPS setting");
@@ -816,28 +732,27 @@ else
 //            }
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(getApplicationContext(),"Error : "+e.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Error : " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
     }
 
     private void Report_form() {
 
-       // progressShow.showProgress(ReportFormActivity.this);
+        // progressShow.showProgress(ReportFormActivity.this);
 
 //        ByteArrayOutputStream baos = new ByteArrayOutputStream();
 //        mphoto_bitmap.compress(Bitmap.CompressFormat.JPEG, 40, baos);
 //        byte[] imageBytes = baos.toByteArray();
 //        imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
 
-    //    Log.d("hgfdsa",imageString);
+        //    Log.d("hgfdsa",imageString);
 
         //----------------------------------------------------------
 
 //-------------------------------------------------------------------
 
     }
-
 
     @OnClick(R.id.location_layout)
     public void location_linear_layout(View view) {
@@ -858,14 +773,14 @@ else
             @Override
             public void onClick(View v) {
 //nit
-                if(!checkPermissions()){
+                if (!checkPermissions()) {
                     Toast.makeText(getApplicationContext(), "Check GPS or Related Permission", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     try {
                         getLastLocation();
                     } catch (Exception e) {
                         e.printStackTrace();
-                        Toast.makeText(getApplicationContext(), "Error : "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Error : " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
                 alertDialog.dismiss();
@@ -875,26 +790,19 @@ else
 
     }
 
-
-
-
-
-    private  void IssueFormHit() {
+    private void IssueFormHit() {
 
         try {
-            if((u1.getProgress().equals("Pre-construction") || u1.getProgress().equals("During Execution") ||u1.getProgress().equals("Final Completion"))   && u1.getStatus().equals("YES"))
-            {
+            if ((u1.getProgress().equals("Pre-construction") || u1.getProgress().equals("During Execution") || u1.getProgress().equals("Final Completion")) && u1.getStatus().equals("YES")) {
                 formSubmit();
                 updateStatus();
-            }
-            else
-            {
+            } else {
                 formSubmit();
             }
 
             Report_form();
 
-            builder.setMessage("Successfully Submitted \n Application ID: "+appID)
+            builder.setMessage("Successfully Submitted \n Application ID: " + appID)
                     .setCancelable(false)
                     .setPositiveButton("yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
@@ -930,13 +838,13 @@ else
 //        AppController.getInstance().getRequestQueue().getCache().clear();
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(getApplicationContext(),"Error :"+e.getMessage(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Error :" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
 
     }
 
-    public String getStringImage(Bitmap bmp){
+    public String getStringImage(Bitmap bmp) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] imageBytes = baos.toByteArray();
@@ -945,7 +853,7 @@ else
         return encodedImage;
     }
 
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
         onBackPressed();
         return true;
     }
@@ -957,21 +865,18 @@ else
         startActivity(intent);
     }
 
-
     @Override
     public void onResponse(Call<User> call, retrofit2.Response<User> response) {
-        Log.d("INFO_NEEL","yo"+response.body());
+        Log.d("INFO_NEEL", "yo" + response.body());
 
     }
 
     @Override
     public void onFailure(Call<User> call, Throwable t) {
-        Log.d("ERROR_INFO_NEEL","yo"+t);
+        Log.d("ERROR_INFO_NEEL", "yo" + t);
     }
 
-
-    void formSubmit()
-    {
+    void formSubmit() {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ApiInterface2.URL_REPORT)
@@ -987,19 +892,19 @@ else
 
 
             paramObject.put("dptname", mpref.getCircle_concerned_officer_mob());
-            paramObject.put("project",u1.getProject());
+            paramObject.put("project", u1.getProject());
             paramObject.put("name", u1.getName());
             paramObject.put("userid", u1.getUserid());
             paramObject.put("mobile", u1.getMobile());
             paramObject.put("lat", u1.getLat());
             paramObject.put("log", u1.getLog());
-            paramObject.put("images",u1.getImages());
+            paramObject.put("images", u1.getImages());
             paramObject.put("timestamp", u1.getTimestamp());
             paramObject.put("reportid", u1.getReportid());
             paramObject.put("description", u1.getDescription());
-            paramObject.put("progress",u1.getProgress());
-            paramObject.put("status",u1.getStatus());
-            paramObject.put("projectid",u1.getProjectid());
+            paramObject.put("progress", u1.getProgress());
+            paramObject.put("status", u1.getStatus());
+            paramObject.put("projectid", u1.getProjectid());
 
 
             Call<User> userCall = apiInterface.getUser(paramObject.toString());
@@ -1009,13 +914,9 @@ else
         }
 
 
-
-
     }
 
-
-    void updateStatus()
-    {
+    void updateStatus() {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ApiInterface2.URL_UPDATESTATUS)
@@ -1030,9 +931,7 @@ else
             JSONObject paramObject = new JSONObject();
 
 
-            paramObject.put("project",u1.getProject());
-
-
+            paramObject.put("project", u1.getProject());
 
             Call<User> userCall = apiInterface.updateStatus(paramObject.toString());
             userCall.enqueue(this);
@@ -1040,13 +939,7 @@ else
             e.printStackTrace();
         }
 
-
-
-
     }
-
-
-
 
     @SuppressLint("MissingPermission")
     private void getLastLocation() {
@@ -1067,36 +960,36 @@ else
                         if (location == null) {
                             requestNewLocationData();
                         } else {
-
-
-                            try
-                            {
-
+                            requestNewLocationData();
+                            try {
                                 u1.setLat(String.valueOf(location.getLatitude()));
                                 u1.setLog(String.valueOf(location.getLongitude()));
-                       List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                      if (addresses != null && addresses.size() > 0) {
-                            String address = addresses.get(0).getAddressLine(0)+" "+addresses.get(0).getAddressLine(1);
-                            if (address != null) {
-                                location_tv.setVisibility(View.VISIBLE);
-                                location_tv.setText(address);
-                                hideLoading();
-                            } else {
-                                location_tv.setVisibility(View.GONE);
+                                List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                                if (addresses != null && addresses.size() > 0) {
+                                    String address = addresses.get(0).getAddressLine(0) + " ";
+                                    if(addresses.get(0).getAddressLine(1)!=null) {
+                                        String addLineTwo = addresses.get(0).getAddressLine(1);
+                                        address=address+addLineTwo;
+                                    }
+                                    if (address != null) {
+                                        location_tv.setVisibility(View.VISIBLE);
+                                        location_tv.setText(address);
+                                        hideLoading();
+                                    } else {
+                                        location_tv.setVisibility(View.GONE);
+                                    }
+                                    System.out.println("Address >> " + address);
+                                    Toast.makeText(getApplicationContext(), "" + location.getLatitude() + "" + location.getLongitude() + "", Toast.LENGTH_SHORT).show();
+
+
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
-                            System.out.println("Address >> " + address);
-                            Toast.makeText(getApplicationContext(),""+location.getLatitude()+""+location.getLongitude()+"",Toast.LENGTH_SHORT).show();
 
 
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-
-
-                  //          latitudeTextView.setText(location.getLatitude() + "");
-                     //       longitTextView.setText(location.getLongitude() + "");
+                            //          latitudeTextView.setText(location.getLatitude() + "");
+                            //       longitTextView.setText(location.getLongitude() + "");
                         }
                     }
                 });
@@ -1119,7 +1012,7 @@ else
         // object with appropriate methods
         LocationRequest mLocationRequest = new LocationRequest();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setInterval(5);
+        mLocationRequest.setInterval(1);
         mLocationRequest.setFastestInterval(0);
         mLocationRequest.setNumUpdates(1);
 
@@ -1128,16 +1021,6 @@ else
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
     }
-
-    private LocationCallback mLocationCallback = new LocationCallback() {
-
-        @Override
-        public void onLocationResult(LocationResult locationResult) {
-            Location mLastLocation = locationResult.getLastLocation();
-//            latitudeTextView.setText("Latitude: " + mLastLocation.getLatitude() + "");
-//            longitTextView.setText("Longitude: " + mLastLocation.getLongitude() + "");
-        }
-    };
 
     // method to check for permissions
     private boolean checkPermissions() {
@@ -1184,10 +1067,9 @@ else
         }
     }
 
-public void run()
-{
-    getLastLocation();
+    public void run() {
+        getLastLocation();
 
-}
+    }
 
 }

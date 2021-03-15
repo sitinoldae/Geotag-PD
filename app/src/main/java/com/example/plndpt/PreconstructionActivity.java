@@ -31,8 +31,8 @@ public class PreconstructionActivity extends AppCompatActivity {
     RequestQueue requestQueue;
     List<User> myListData = new ArrayList<User>();
     String abc[] = {"india", "UK", "US"};
-    private Sharedpreferences mpref;
     ProgressBar progressBar;
+    private Sharedpreferences mpref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class PreconstructionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_preconstruction);
 
         recyclerView = findViewById(R.id.recyclerView);
-        progressBar= findViewById(R.id.progressbar);
+        progressBar = findViewById(R.id.progressbar);
 
         mpref = Sharedpreferences.getUserDataObj(this);
         requestQueue = Volley.newRequestQueue(this);
