@@ -6,8 +6,4 @@
     <color name="black">#000</color>
     <color name="white">#fff</color>
     <color name="light_grey">#E8E8EE</color>
-    <color name="geo_color">#a6e3e9</color>
-    <color name="colorWhiteSemiTransparent">#D9ffffff</color>
-    <color name="red_violet">#c71585</color>
-    <color name="colorWhite">#FFFFFF</color>
 </resources>
