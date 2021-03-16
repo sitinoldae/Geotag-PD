@@ -8,7 +8,7 @@
         android:glEsVersion="0x00030000"
         android:required="true" />
     <uses-feature android:name="android.hardware.location.gps" />
-
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
@@ -35,53 +35,56 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".FinalCompletionActivity"
+            android:name="inorg.gsdl.plndpt.FinalCompletionActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
-            android:name=".DuringExcutionActivity"
+            android:name="inorg.gsdl.plndpt.CapturePictureActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="inorg.gsdl.plndpt.DuringExcutionActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".PreconstructionActivity"
+            android:name="inorg.gsdl.plndpt.PreconstructionActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".ProgressActivity"
+            android:name="inorg.gsdl.plndpt.ProgressActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".UserProfileActivity"
+            android:name="inorg.gsdl.plndpt.UserProfileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name="inorg.gsdl.plndpt.ui.login.LoginActivity"
             android:label="@string/title_activity_login" />
 
         <activity
-            android:name=".VerifyOTPActivity"
+            android:name="inorg.gsdl.plndpt.VerifyOTPActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".PhoneNumberVerifyActivity" />
+        <activity android:name="inorg.gsdl.plndpt.PhoneNumberVerifyActivity" />
 
         <activity
-            android:name=".MainActivityHome"
+            android:name="inorg.gsdl.plndpt.MainActivityHome"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".LoginMainActivity"
+            android:name="inorg.gsdl.plndpt.LoginMainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".EmailActivity" />
+        <activity android:name="inorg.gsdl.plndpt.EmailActivity" />
 
         <activity
-            android:name=".SignUpActivity"
+            android:name="inorg.gsdl.plndpt.SignUpActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".UserNameActivity" />
+        <activity android:name="inorg.gsdl.plndpt.UserNameActivity" />
 
         <activity
-            android:name=".SplashActivity"
+            android:name="inorg.gsdl.plndpt.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -91,12 +94,17 @@
         </activity>
 
         <activity
-            android:name=".ReportFormActivity"
+            android:name="inorg.gsdl.plndpt.ReportFormActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <activity
-            android:name=".MainActivity"
+            android:name="inorg.gsdl.plndpt.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -112,7 +120,7 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <receiver android:name=".MySMSBroadCastReceiver">
+        <receiver android:name="inorg.gsdl.plndpt.MySMSBroadCastReceiver">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
@@ -125,7 +133,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
+                android:resource="@xml/file_list" />
         </provider>
     </application>
 </manifest>

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/a9"
     android:orientation="vertical"
-    tools:context=".MainActivityHome">
+    tools:context="inorg.gsdl.plndpt.MainActivityHome">
 
     <ImageView
         android:id="@+id/user_profille"
@@ -17,7 +17,7 @@
         android:layout_alignParentRight="true"
         android:layout_margin="30dp"
         android:background="@drawable/shadow_color"
-        android:padding="5dp"
+        android:padding="10dp"
         android:src="@drawable/ic_baseline_edit_24"
         app:tint="#000" />
 

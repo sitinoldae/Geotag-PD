@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/img3"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context="inorg.gsdl.plndpt.MainActivity">
 
     <Button
         android:id="@+id/report_grievence_tv"
@@ -23,7 +23,8 @@
         android:padding="10dp"
         android:text="Capture GeoTag"
         android:textColor="@color/black"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        tools:ignore="UnusedAttribute" />
 
 
     <!--<View-->

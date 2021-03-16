@@ -9,7 +9,7 @@
     android:layout_gravity="center"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".VerifyOTPActivity">
+    tools:context="inorg.gsdl.plndpt.VerifyOTPActivity">
 
     <ImageView
         android:layout_width="match_parent"

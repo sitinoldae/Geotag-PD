@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/a9"
     android:orientation="vertical"
-    tools:context=".ProgressActivity">
+    tools:context="inorg.gsdl.plndpt.ProgressActivity">
 
     <Button
         android:id="@+id/construction"

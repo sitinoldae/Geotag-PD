@@ -3,17 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/a9"
-    android:gravity="center_vertical"
+    android:gravity="center"
+    android:layout_gravity="center"
     android:orientation="vertical">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginLeft="50dp"
         android:fontFamily="sans-serif-black"
-        android:gravity="start"
         android:shadowColor="#000"
+        android:paddingLeft="50dp"
         android:shadowDx="5"
         android:shadowDy="5"
         android:text="REGISTRATION"
@@ -25,11 +24,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:layout_marginLeft="50dp"
         android:layout_marginTop="40dp"
+        android:paddingLeft="50dp"
         android:layout_marginBottom="5dp"
         android:fontFamily="sans-serif-black"
-        android:gravity="start"
         android:shadowColor="#000"
         android:shadowDx="5"
         android:shadowDy="5"
@@ -42,7 +40,6 @@
         android:id="@+id/editName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
         android:background="@drawable/shadow_black"
         android:elevation="5dp"
         android:ems="15"
@@ -55,12 +52,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:layout_marginLeft="50dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         android:fontFamily="sans-serif-black"
-        android:gravity="start"
         android:shadowColor="#000"
+        android:paddingLeft="50dp"
         android:shadowDx="5"
         android:shadowDy="5"
         android:text="Email"
@@ -72,7 +68,6 @@
         android:id="@+id/editEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
         android:background="@drawable/shadow_black"
         android:elevation="5dp"
         android:ems="15"
@@ -85,12 +80,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:layout_marginLeft="50dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         android:fontFamily="sans-serif-black"
-        android:gravity="start"
         android:shadowColor="#000"
+        android:paddingLeft="50dp"
         android:shadowDx="5"
         android:shadowDy="5"
         android:text="Mobile"
@@ -102,7 +96,6 @@
         android:id="@+id/editMob"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
         android:background="@drawable/shadow_black"
         android:elevation="5dp"
         android:ems="15"
@@ -115,12 +108,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:layout_marginLeft="50dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         android:fontFamily="sans-serif-black"
-        android:gravity="start"
         android:shadowColor="#000"
+        android:paddingLeft="50dp"
         android:shadowDx="5"
         android:shadowDy="5"
         android:text="Password"
@@ -132,7 +124,6 @@
         android:id="@+id/editPass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
         android:background="@drawable/shadow_black"
         android:elevation="5dp"
         android:ems="15"
@@ -144,35 +135,35 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginHorizontal="50sp"
         android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <Spinner
-            android:id="@+id/spinnerdpt"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shadow_black"
-            android:elevation="5dp"
-            android:ems="15"
-            android:minHeight="40dp"
-            android:padding="10dp" />
+        android:gravity="left"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:text="Select Department"
+            android:paddingLeft="50dp"
+            android:text="Select\nDepartment"
             android:textColor="#2196F3"
-            android:textSize="15sp"
+            android:textSize="10sp"
             android:textStyle="bold" />
-
+        <Spinner
+            android:id="@+id/spinnerdpt"
+            android:layout_width="150dp"
+            android:layout_marginLeft="48dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shadow_black"
+            android:elevation="5dp"
+            android:ems="15"
+            android:layout_marginTop="5dp"
+            android:minHeight="40dp" />
         <include
             android:id="@+id/my_loading_layout"
-            layout="@layout/my_loading_layout" />
+            layout="@layout/my_loading_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"/>
 
     </LinearLayout>
 
@@ -180,13 +171,13 @@
         android:id="@+id/buttonAcount"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/shadow_color"
+        android:background="@drawable/shadow_btn_layer_list"
         android:ems="15"
         android:text="Sign Up"
+        android:drawableTint="#2196F3"
         android:textAllCaps="false"
-        android:textColor="#000000" />
+        android:textColor="#fff" />
 
 
 </LinearLayout>
