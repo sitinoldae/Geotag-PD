@@ -8,15 +8,16 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Looper;
 import android.os.StrictMode;
-import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Base64;
 import android.util.Log;
@@ -51,7 +52,13 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -85,7 +92,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class ReportFormActivity extends AppCompatActivity implements Callback<User>, Runnable {
 
     public static User user = new User();
-
+    boolean PHOTO_LOADED = false;
     private static String dateString;
 
     FusedLocationProviderClient fusedLocationProviderClient;
@@ -97,8 +104,9 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
     ImageView ivReportImage;
     @BindView(R.id.location_addr)
     TextView location_tv;
+    @BindView(R.id.tv_progress)
+    TextView tv_progress;
     RequestQueue requestQueue2;
-
     FusedLocationProviderClient mFusedLocationClient;
 
     int PERMISSION_ID = 44;
@@ -108,7 +116,7 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
     Spinner spinnerStage;
     private View progressbarLayout;
     private Spinner projectNameSpinner, spinnerProjectCompleted;
-    private AlertDialog alertDialoggg;
+    private AlertDialog AlertDialogImageChooser;
     private Geocoder geocoder;
     private Sharedpreferences mpref;
     private ApiInterface repost_form_interface;
@@ -118,12 +126,19 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
     private String my_value;*/
     private RequestQueue requestQueue;
     EasyImage easyImage;
+    private File usableImageFile;
+    private boolean ImageLoaded=false;
+    private boolean ImageUploaded=false;
+    private ProgressBar masterProgressBar;
+    private String USABLE_IMAGE_DOWNLOAD_LINK="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_form);
         setUIRef();
+        generateAppId();
+        masterProgressBar = findViewById(R.id.progressbarReport);
         int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
             Nammu.askForPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE, new PermissionCallback() {
@@ -231,6 +246,14 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
 
             }
         });
+    }
+
+    private void generateAppId() {
+        Random random = new Random();
+        Calendar calender = Calendar.getInstance();
+        appID = "UAP" + random.nextInt(1000) + calender.get(Calendar.YEAR) + "" + (calender.get(Calendar.MONTH) + 1) + "" + calender.get(Calendar.DATE) + "" +
+                (calender.get(Calendar.HOUR)) + "" + calender.get(Calendar.MINUTE) + "" + calender.get(Calendar.SECOND);
+        Toast.makeText(this, "Application Id generated: "+appID, Toast.LENGTH_SHORT).show();
     }
 
     private void setUIRef() {
@@ -379,11 +402,10 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
                         JSONObject j = null;
                         List<String> arrayList = new ArrayList<>();
                         HashMap<String, String> dataall = new HashMap<String, String>();
-                        ProgressBar progressBar = findViewById(R.id.progressbarReport);
-                        progressBar.setMax(response.length()-1);
+                        masterProgressBar.setMax(response.length()-1);
                         try {
                             for (int i = 0; i < response.length(); i++) {
-                                progressBar.setProgress(i);
+                                masterProgressBar.setProgress(i);
                                 JSONObject object = response.getJSONObject(i);
                                 String projectname = object.getString("project");
                                 String status = object.getString("status");
@@ -476,8 +498,8 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ReportFormActivity.this);
         alertDialogBuilder.setView(promptsView);
-        alertDialoggg = alertDialogBuilder.create();
-        alertDialoggg.show();
+        AlertDialogImageChooser = alertDialogBuilder.create();
+        AlertDialogImageChooser.show();
 
         button_camera.setOnClickListener(v -> {
             int permissionCheck = ContextCompat.checkSelfPermission(ReportFormActivity.this, Manifest.permission.CAMERA);
@@ -496,12 +518,18 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
             }else if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
                         EasyImage.openCameraForImage(ReportFormActivity.this,0);
                     }
+            if(AlertDialogImageChooser.isShowing()){
+                AlertDialogImageChooser.dismiss();
+            }
         });
 
         button_gallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EasyImage.openChooserWithGallery(ReportFormActivity.this,"Choose GeoTag Image",0);
+                if(AlertDialogImageChooser.isShowing()){
+                    AlertDialogImageChooser.dismiss();
+                }
             }
         });
     }
@@ -554,67 +582,120 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
     }*/
    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
        super.onActivityResult(requestCode, resultCode, data);
-        if(alertDialoggg.isShowing()){
-            alertDialoggg.dismiss();
-        }
+
        EasyImage.handleActivityResult(requestCode, resultCode, data, this, new DefaultCallback() {
            @Override
            public void onImagesPicked(@NonNull List<File> imageFiles, EasyImage.ImageSource source, int type) {
-           Toast.makeText(getApplicationContext(),"The number of files returned : "+imageFiles.size(),Toast.LENGTH_SHORT).show();
+               Toast.makeText(getApplicationContext(), "The number of files returned : " + imageFiles.size(), Toast.LENGTH_SHORT).show();
+               File ImageFile= null;
+               File imagepath= null;
+               try {
+                   ImageFile = imageFiles.get(0);
+                   imagepath = ImageFile.getParentFile();
+                   usableImageFile = new File(imagepath,appID+".jpg");
+                   ImageFile.renameTo(usableImageFile);
+                   Toast.makeText(ReportFormActivity.this, "Image Renamed : "+usableImageFile.getPath(), Toast.LENGTH_SHORT).show();
+               } catch (Exception e) {
+                   e.printStackTrace();
+               }
+               Toast.makeText(ReportFormActivity.this, "File Info :\n"+usableImageFile.getPath()+"\n"+usableImageFile.getPath(), Toast.LENGTH_SHORT).show();
+               try {
+                   ivReportImage.setVisibility(View.VISIBLE);
+                   ivReportImage.setImageBitmap(BitmapFactory.decodeFile(usableImageFile.getPath()));
+                   Toast.makeText(ReportFormActivity.this, "Image loaded " + usableImageFile.getName(), Toast.LENGTH_SHORT).show();
+                   ImageLoaded=true;
+               } catch (Exception e) {
+                   Toast.makeText(ReportFormActivity.this, "Error loading Image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                   e.printStackTrace();
+               }
+               if(ImageLoaded){
+                 sendFileToUploadOnFirebase(usableImageFile);
+               }
            }
-
        });
    }
 
+    private void sendFileToUploadOnFirebase(File usableImageFile) {
+        masterProgressBar.setIndeterminate(true);
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+        Uri UsableFileUri = Uri.fromFile(usableImageFile);
+        StorageReference uploadReference = storageRef.child("images/"+UsableFileUri.getLastPathSegment());
+        UploadTask uploadTask = uploadReference.putFile(UsableFileUri);
+        Toast.makeText(getApplicationContext(), "Uploading "+usableImageFile.getName()+" to firebase", Toast.LENGTH_SHORT).show();
+// Register observers to listen for when the download is done or if it fails
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+                Toast.makeText(getApplicationContext(), "Uploading "+usableImageFile.getName()+" to firebase Failed\n"+exception.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(getApplicationContext(), "Upload "+usableImageFile.getName()+" to firebase Success !", Toast.LENGTH_SHORT).show();
+                uploadReference.getDownloadUrl().addOnSuccessListener(uri -> {
+                    Toast.makeText(getApplicationContext(),"Download url : "+uri.toString(),Toast.LENGTH_LONG).show();
+                    USABLE_IMAGE_DOWNLOAD_LINK=uri.toString();
+                    tv_progress.setText("Geotag Image Uploaded !");
+                    ImageUploaded=true;
+                });
+            }
+        }).addOnProgressListener(taskSnapshot -> {
+            int progress = (int) ((100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount());
+            tv_progress.setText("UPLOADING "+progress+"%");
+            masterProgressBar.setIndeterminate(false);
+            masterProgressBar.setProgress(progress);
+        });
+
+
+    }
 
 
     @OnClick(R.id.btn_submit)
     public void submit_form(View view) {
 
-        try {
-            Random random = new Random();
-            Calendar calender = Calendar.getInstance();
-            appID = "UAP" + random.nextInt(1000) + calender.get(Calendar.YEAR) + "" + (calender.get(Calendar.MONTH) + 1) + "" + calender.get(Calendar.DATE) + "" +
-                    (calender.get(Calendar.HOUR)) + "" + calender.get(Calendar.MINUTE) + "" + calender.get(Calendar.SECOND);
-
-            user.setReportid(appID);
-// TODO: 3/16/2021  
-      //      user.setImages(my_value);
-
-            String dscn = etDescription.getText().toString();
-            user.setDescription(dscn);
+        if(!USABLE_IMAGE_DOWNLOAD_LINK.matches("")){
+            //image has been uploaded so we can continue
+            try {
+                user.setReportid(appID);
+                user.setImages(USABLE_IMAGE_DOWNLOAD_LINK);
+                String USER_DESCRIPTION = etDescription.getText().toString();
+                user.setDescription(USER_DESCRIPTION);
 
 
-            if (user.getLat().equals("0.0") || user.getLog().equals("0.0") || user.getLat().equals("") || user.getLog().equals("")) {
+                if (user.getLat().equals("0.0") || user.getLog().equals("0.0") || user.getLat().equals("") || user.getLog().equals("")) {
+                    AlertDialog alert = builder.create();
+                    //Setting the title manually
+                    alert.setTitle("Please check your internet connection or GPS setting");
+                    alert.show();
+                    return;
+                }
+                builder.setMessage("Do you want to submit your request?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                IssueFormHit();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //  Action for 'NO' Button
+                                dialog.cancel();
+
+                            }
+                        });
+                //Creating dialog box
                 AlertDialog alert = builder.create();
                 //Setting the title manually
-                alert.setTitle("Please check your internet connection or GPS setting");
+                alert.setTitle("Confirmation");
                 alert.show();
-                return;
-            }
-            builder.setMessage("Do you want to submit your request?")
-                    .setCancelable(false)
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            IssueFormHit();
-                        }
-                    })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            //  Action for 'NO' Button
-                            dialog.cancel();
-
-                        }
-                    });
-            //Creating dialog box
-            AlertDialog alert = builder.create();
-            //Setting the title manually
-            alert.setTitle("Confirmation");
-            alert.show();
 
             } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(getApplicationContext(), "Error : " + e.getMessage(), Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+                Toast.makeText(getApplicationContext(), "Error : " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }else {
+            Toast.makeText(getApplicationContext(),"Please Select ISSUE/GEOTAG image first",Toast.LENGTH_SHORT).show();
         }
 
     }
