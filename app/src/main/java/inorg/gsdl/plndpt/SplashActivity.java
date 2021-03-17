@@ -21,13 +21,14 @@ import java.util.TimerTask;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class SplashActivity extends AppCompatActivity {
 
     private final static int ALL_PERMISSIONS_RESULT = 101;
-    private static int splace_time = 5000;
+    private static int splace_time = 3000;
     private ArrayList permissionsToRequest;
     private ArrayList permissionsRejected = new ArrayList();
     private ArrayList permissions = new ArrayList();
@@ -50,6 +51,7 @@ public class SplashActivity extends AppCompatActivity {
         permissions.add(ACCESS_COARSE_LOCATION);
         permissions.add(WRITE_EXTERNAL_STORAGE);
         permissions.add(READ_EXTERNAL_STORAGE);
+        permissions.add(CAMERA);
         permissionsToRequest = findUnAskedPermissions(permissions);
         //get the permissions we have asked for before but are not granted.
         //we will store this in a global list to access later.
@@ -156,12 +158,12 @@ public class SplashActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            if (MPREFS.get_user_id().isEmpty()) {
+            if (MPREFS.get_user_id().isEmpty()|MPREFS.get_user_id()==null) {
                 Intent i = new Intent(SplashActivity.this, MainActivity.class);
                 finish();
                 startActivity(i);
             } else {
-                Intent i = new Intent(SplashActivity.this, MainActivity.class);
+                Intent i = new Intent(SplashActivity.this, LoginMainActivity.class);
                 finish();
                 startActivity(i);
             }

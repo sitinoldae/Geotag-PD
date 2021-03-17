@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_gravity="center"
-        android:background="@color/colorPrimary"
+        android:background="@color/black"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@color/colorPrimary"
+        android:background="@color/black"
             android:fontFamily="sans-serif-condensed"
             android:gravity="center"
             android:text="Select Picture"
@@ -51,9 +51,12 @@
             android:id="@+id/camera_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/shadow_color"
+            android:background="@drawable/shadow_btn_layer_list"
             android:text="take photo via camera"
-            android:textColor="@color/black" />
+            android:drawableLeft="@drawable/ic_camera"
+            android:drawableTint="@color/white"
+            android:paddingHorizontal="20dp"
+            android:textColor="@color/white" />
 
     </RelativeLayout>
 
@@ -74,9 +77,12 @@
             android:id="@+id/gallery_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/shadow_color"
+            android:background="@drawable/shadow_btn_layer_list"
             android:text="choose photo from gallery"
-            android:textColor="@color/black" />
+            android:drawableLeft="@drawable/ic_gallery"
+            android:drawableTint="@color/white"
+            android:paddingHorizontal="20dp"
+            android:textColor="@color/white" />
 
     </RelativeLayout>
 

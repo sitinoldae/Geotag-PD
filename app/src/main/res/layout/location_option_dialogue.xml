@@ -15,8 +15,9 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_gravity="center"
-        android:background="@color/colorPrimary"
+        android:background="@color/black"
         android:gravity="center"
+        style="@style/TextAppearance.AppCompat.Button"
         android:orientation="horizontal">
 
         <TextView
@@ -24,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@color/colorPrimary"
+            android:background="@color/black"
             android:fontFamily="sans-serif-condensed"
             android:gravity="center"
             android:text="Select Location"
@@ -51,9 +52,12 @@
             android:id="@+id/current_location_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/shadow_color"
+            android:drawableLeft="@drawable/ic_map"
+            android:drawableTint="@color/white"
+            android:paddingHorizontal="20dp"
+            android:background="@drawable/shadow_btn_layer_list"
             android:text="Use my current location"
-            android:textColor="@color/black" />
+            android:textColor="@color/white" />
 
     </RelativeLayout>
 
