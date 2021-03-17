@@ -471,35 +471,31 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
         LayoutInflater li = LayoutInflater.from(ReportFormActivity.this);
         View promptsView = li.inflate(R.layout.camera_option_dialogue, null);
 
-        Button button_camera = (Button) promptsView.findViewById(R.id.camera_btn);
-        Button button_gallery = (Button) promptsView.findViewById(R.id.gallery_btn);
+        Button button_camera = promptsView.findViewById(R.id.camera_btn);
+        Button button_gallery = promptsView.findViewById(R.id.gallery_btn);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ReportFormActivity.this);
         alertDialogBuilder.setView(promptsView);
         alertDialoggg = alertDialogBuilder.create();
         alertDialoggg.show();
 
-        button_camera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int permissionCheck = ContextCompat.checkSelfPermission(ReportFormActivity.this, Manifest.permission.CAMERA);
-                if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-                    Nammu.askForPermission(ReportFormActivity.this, Manifest.permission.CAMERA, new PermissionCallback() {
-                        @Override
-                        public void permissionGranted() {
-                            //Nothing, this sample saves to Public gallery so it needs permission
-                            EasyImage.openCameraForImage(ReportFormActivity.this,0);
-
-                        }
-
-                        @Override
-                        public void permissionRefused() {
-                            Toast.makeText(ReportFormActivity.this, "Cannot take photos because camera permission was refused !", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-
-            }
+        button_camera.setOnClickListener(v -> {
+            int permissionCheck = ContextCompat.checkSelfPermission(ReportFormActivity.this, Manifest.permission.CAMERA);
+            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                Nammu.askForPermission(ReportFormActivity.this, Manifest.permission.CAMERA, new PermissionCallback() {
+                    @Override
+                    public void permissionGranted() {
+                        //Nothing, this sample saves to Public gallery so it needs permission
+                        EasyImage.openCameraForImage(ReportFormActivity.this,0);
+                    }
+                    @Override
+                    public void permissionRefused() {
+                        Toast.makeText(ReportFormActivity.this, "Cannot take photos because camera permission was refused !", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }else if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+                        EasyImage.openCameraForImage(ReportFormActivity.this,0);
+                    }
         });
 
         button_gallery.setOnClickListener(new View.OnClickListener() {
@@ -558,8 +554,10 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
     }*/
    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
        super.onActivityResult(requestCode, resultCode, data);
-
-       easyImage.handleActivityResult(requestCode, resultCode, data, this, new DefaultCallback() {
+        if(alertDialoggg.isShowing()){
+            alertDialoggg.dismiss();
+        }
+       EasyImage.handleActivityResult(requestCode, resultCode, data, this, new DefaultCallback() {
            @Override
            public void onImagesPicked(@NonNull List<File> imageFiles, EasyImage.ImageSource source, int type) {
            Toast.makeText(getApplicationContext(),"The number of files returned : "+imageFiles.size(),Toast.LENGTH_SHORT).show();
@@ -629,7 +627,7 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
         LayoutInflater li = LayoutInflater.from(ReportFormActivity.this);
         View promptsView = li.inflate(R.layout.location_option_dialogue, null);
 
-        Button current_btn_location = (Button) promptsView.findViewById(R.id.current_location_btn);
+        Button current_btn_location = promptsView.findViewById(R.id.current_location_btn);
 
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ReportFormActivity.this);
@@ -673,7 +671,6 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
                         public void onClick(DialogInterface dialog, int id) {
 
                             finish();
-
 
                         }
                     })
@@ -915,5 +912,4 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
         getLastLocation();
 
     }
-
 }
