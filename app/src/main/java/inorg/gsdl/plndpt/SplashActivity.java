@@ -28,10 +28,10 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 public class SplashActivity extends AppCompatActivity {
 
     private final static int ALL_PERMISSIONS_RESULT = 101;
-    private static int splace_time = 3000;
+    private static final int splace_time = 5000;
     private ArrayList permissionsToRequest;
-    private ArrayList permissionsRejected = new ArrayList();
-    private ArrayList permissions = new ArrayList();
+    private final ArrayList permissionsRejected = new ArrayList();
+    private final ArrayList permissions = new ArrayList();
     private Sharedpreferences MPREFS;
 
     @SuppressLint("WrongConstant")
