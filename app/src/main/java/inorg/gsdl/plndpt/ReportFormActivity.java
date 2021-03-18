@@ -385,39 +385,39 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
                                 dataall.get("status").equalsIgnoreCase("YES")) {
 
                             List<String> arrayList1 = new ArrayList<>();
-                            arrayList1.add("During Execution");
+                            arrayList1.add("On-Going");
 
 
                             spinnerStage.setAdapter(new ArrayAdapter<>(ReportFormActivity.this, R.layout.simple_spinner, arrayList1));
-                        } else if (dataall.get("project").equalsIgnoreCase(project) && dataall.get("progress").equalsIgnoreCase("During Execution") &&
+                        } else if (dataall.get("project").equalsIgnoreCase(project) && dataall.get("progress").equalsIgnoreCase("On-Going") &&
                                 dataall.get("status").equalsIgnoreCase("NO")) {
 
                             List<String> arrayList1 = new ArrayList<>();
-                            arrayList1.add("During Execution");
+                            arrayList1.add("On-Going");
 
 
                             spinnerStage.setAdapter(new ArrayAdapter<>(ReportFormActivity.this, R.layout.simple_spinner, arrayList1));
-                        } else if (dataall.get("project").equalsIgnoreCase(project) && dataall.get("progress").equalsIgnoreCase("During Execution") &&
+                        } else if (dataall.get("project").equalsIgnoreCase(project) && dataall.get("progress").equalsIgnoreCase("On-Going") &&
                                 dataall.get("status").equalsIgnoreCase("YES")) {
 
                             List<String> arrayList1 = new ArrayList<>();
-                            arrayList1.add("Final Completion");
+                            arrayList1.add("Completed");
 
 
                             spinnerStage.setAdapter(new ArrayAdapter<>(ReportFormActivity.this, R.layout.simple_spinner, arrayList1));
-                        } else if (dataall.get("project").equalsIgnoreCase(project) && dataall.get("progress").equalsIgnoreCase("Final Completion") &&
+                        } else if (dataall.get("project").equalsIgnoreCase(project) && dataall.get("progress").equalsIgnoreCase("Completed") &&
                                 dataall.get("status").equalsIgnoreCase("NO")) {
 
                             List<String> arrayList1 = new ArrayList<>();
-                            arrayList1.add("Final Completion");
+                            arrayList1.add("Completed");
 
 
                             spinnerStage.setAdapter(new ArrayAdapter<>(ReportFormActivity.this, R.layout.simple_spinner, arrayList1));
-                        } else if (dataall.get("project").equalsIgnoreCase(project) && dataall.get("progress").equalsIgnoreCase("Final Completion") &&
+                        } else if (dataall.get("project").equalsIgnoreCase(project) && dataall.get("progress").equalsIgnoreCase("Completed") &&
                                 dataall.get("status").equalsIgnoreCase("YES")) {
 
                             List<String> arrayList1 = new ArrayList<>();
-                            arrayList1.add("Final Completion");
+                            arrayList1.add("Completed");
 
 
                             spinnerStage.setAdapter(new ArrayAdapter<>(ReportFormActivity.this, R.layout.simple_spinner, arrayList1));
@@ -629,7 +629,7 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
     private void IssueFormHit() {
 
         try {
-            if ((user.getProgress().equals("Pre-construction") || user.getProgress().equals("During Execution") || user.getProgress().equals("Final Completion")) && user.getStatus().equals("YES")) {
+            if ((user.getProgress().equals("Pre-construction") || user.getProgress().equals("On-Going") || user.getProgress().equals("Completed")) && user.getStatus().equals("YES")) {
                 formSubmit();
                 updateStatus();
             } else {
