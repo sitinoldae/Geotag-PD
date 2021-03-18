@@ -192,7 +192,7 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
         ApiClient2.getClient().create(ApiInterface2.class);
         geocoder = new Geocoder(this, Locale.getDefault());
         date = System.currentTimeMillis();
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         String dateString = sdf.format(date);
         Log.d("date_ccc", dateString);
         user.setTimestamp(dateString);
