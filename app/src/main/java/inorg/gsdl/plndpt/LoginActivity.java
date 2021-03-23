@@ -24,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText etemail, etpass;
     int c = 0;
     private Sharedpreferences mpref;
-    private Boolean VERIFIED;
+    private int VERIFIED=0;
     private ProgressBar progressBar;
     private final boolean USER_FOUND=false;
     private String message;
@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                             object = response.getJSONObject(i);
                             String password = object.getString("password");
                             String userid = object.getString("userid");
-                            VERIFIED = Boolean.valueOf(object.getString("status"));
+                            VERIFIED = Integer.valueOf(object.getString("status"));
                             if (email.equalsIgnoreCase(userid) && pass.equals(password)) {
                                 c++;
                                 mpref.set_User_Mobile_verif(object.getString("mobile"));
@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
 
                         if (c > 0) {
-                            if(VERIFIED==true) {
+
                                 Intent intent = new Intent(LoginActivity.this, VerifyOTPActivity.class);
                                 intent.putExtra("phone_number", mpref.get_User_Mobile_verif());
                                 intent.putExtra("name", mpref.get_user_name_verif());
@@ -96,9 +96,6 @@ public class LoginActivity extends AppCompatActivity {
                                 progressBar.setVisibility(View.GONE);
                                 message="Login Success !";
                                 startActivity(intent);
-                            }else if(VERIFIED==false){
-                             message="Unverified User, Please contact Administrator ";
-                            }
                         } else {
                             message="Invalid Credentials, Please Check Credentials";
                         }
@@ -108,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     progressBar.setVisibility(View.GONE);
                     Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
-                    },
+                    message=""; },
                 error -> System.out.println("Error :" + error.getMessage()));
 
         //Creating a request queue
