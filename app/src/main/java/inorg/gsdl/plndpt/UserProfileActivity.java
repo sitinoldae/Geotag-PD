@@ -89,7 +89,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private void final_update() {
 
-        progressShow.showProgress(UserProfileActivity.this);
+        ProgressShow.showProgress(UserProfileActivity.this);
 
         Call<JsonElement> get_log_in_data = edit_profile_service.get_Log_IN_Info(mpref.get_User_Mobile_verif());
 
@@ -97,7 +97,7 @@ public class UserProfileActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
 
-                progressShow.stopProgress(UserProfileActivity.this);
+                ProgressShow.stopProgress(UserProfileActivity.this);
 
                 if (response.isSuccessful()) {
                     JsonElement jsonElement_login = response.body();
@@ -134,7 +134,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<JsonElement> call, Throwable t) {
-                progressShow.stopProgress(UserProfileActivity.this);
+                ProgressShow.stopProgress(UserProfileActivity.this);
                 Log.d("log_in_error", t.toString());
             }
         });
@@ -176,7 +176,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private void Edit_profile() {
 
-        progressShow.showProgress(UserProfileActivity.this);
+        ProgressShow.showProgress(UserProfileActivity.this);
 
         Call<JsonElement> get_user_registered = edit_profile_service.getUser_profile_update(name_et.getText().toString(),
                 email_et.getText().toString(), mpref.get_User_Mobile_verif(), dateString);
@@ -187,7 +187,7 @@ public class UserProfileActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
 
-                progressShow.stopProgress(UserProfileActivity.this);
+                ProgressShow.stopProgress(UserProfileActivity.this);
 
                 if (response.isSuccessful()) {
                     JsonElement json__Element = response.body();
@@ -197,7 +197,7 @@ public class UserProfileActivity extends AppCompatActivity {
                         String carr = json.getString("Cargo");
                         if (carr.equals("0")) {
                             Log.d("edit_cargo_respo", carr);
-                            Intent intent = new Intent(UserProfileActivity.this, MainActivity.class);
+                            Intent intent = new Intent(UserProfileActivity.this, LoginSelector.class);
                             startActivity(intent);
                         } else {
                             Toast.makeText(UserProfileActivity.this, "failed", Toast.LENGTH_SHORT).show();
@@ -212,7 +212,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<JsonElement> call, Throwable t) {
-                progressShow.stopProgress(UserProfileActivity.this);
+                ProgressShow.stopProgress(UserProfileActivity.this);
                 Log.d("edit_profile_error", t.toString());
             }
         });
@@ -222,7 +222,7 @@ public class UserProfileActivity extends AppCompatActivity {
     @OnClick(R.id.update_profile_user)
     public void click(View view) {
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, LoginSelector.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         SharedPreferences preferences = getSharedPreferences("com.waterflood.gsdl_app", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();

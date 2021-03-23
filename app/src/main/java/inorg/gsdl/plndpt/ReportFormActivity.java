@@ -95,7 +95,7 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
     @BindView(R.id.tv_progress)
     TextView tv_progress;
     FusedLocationProviderClient mFusedLocationClient;
-
+    Toast ToastMaster;
     int PERMISSION_ID = 44;
     String appID;
     EditText etDescription;
@@ -236,7 +236,7 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
         Calendar calender = Calendar.getInstance();
         appID = "UAP" + random.nextInt(1000) + calender.get(Calendar.YEAR) + "" + (calender.get(Calendar.MONTH) + 1) + "" + calender.get(Calendar.DATE) + "" +
                 (calender.get(Calendar.HOUR)) + "" + calender.get(Calendar.MINUTE) + "" + calender.get(Calendar.SECOND);
-        Toast.makeText(this, "Application Id generated: "+appID, Toast.LENGTH_SHORT).show();
+        QToast( "Application Id generated: "+appID);
     }
 
     private void setUIRef() {
@@ -425,12 +425,12 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
 
                         } catch (JSONException e) {
                         System.out.println("Json Error:" + e.getMessage());
-                        Toast.makeText(getApplicationContext(), "Json Error :"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        QToast( "Json Error :"+e.getMessage());
                     }
                 },
                 error -> {
                     System.out.println("Volley Error :" + error.getMessage());
-                    Toast.makeText(getApplicationContext(), "Json Error :"+error.getMessage(), Toast.LENGTH_SHORT).show();
+                    QToast( "Json Error :"+error.getMessage());
                 });
 
         RequestQueue requestQueue2 = Volley.newRequestQueue(this);
@@ -467,7 +467,7 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
                     }
                     @Override
                     public void permissionRefused() {
-                        Toast.makeText(ReportFormActivity.this, "Cannot take photos because camera permission was refused !", Toast.LENGTH_SHORT).show();
+                        QToast( "Cannot take photos because camera permission was refused !");
                     }
                 });
             }else if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
@@ -492,7 +492,7 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
        EasyImage.handleActivityResult(requestCode, resultCode, data, this, new DefaultCallback() {
            @Override
            public void onImagesPicked(@NonNull List<File> imageFiles, EasyImage.ImageSource source, int type) {
-               Toast.makeText(getApplicationContext(), "The number of files returned : " + imageFiles.size(), Toast.LENGTH_SHORT).show();
+               QToast( "The number of files returned : " + imageFiles.size());
                File ImageFile;
                File imagepath;
                try {
@@ -500,18 +500,18 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
                    imagepath = ImageFile.getParentFile();
                    usableImageFile = new File(imagepath,appID+".jpg");
                    ImageFile.renameTo(usableImageFile);
-                   Toast.makeText(ReportFormActivity.this, "Image Renamed : "+usableImageFile.getPath(), Toast.LENGTH_SHORT).show();
+                   QToast( "Image Renamed : "+usableImageFile.getPath());
                } catch (Exception e) {
                    e.printStackTrace();
                }
-               Toast.makeText(ReportFormActivity.this, "File Info :\n"+usableImageFile.getPath()+"\n"+usableImageFile.getPath(), Toast.LENGTH_SHORT).show();
+               QToast( "File Info :\n"+usableImageFile.getPath()+"\n"+usableImageFile.getPath());
                try {
                    ivReportImage.setVisibility(View.VISIBLE);
                    ivReportImage.setImageBitmap(BitmapFactory.decodeFile(usableImageFile.getPath()));
-                   Toast.makeText(ReportFormActivity.this, "Image loaded " + usableImageFile.getName(), Toast.LENGTH_SHORT).show();
+                   QToast( "Image loaded " + usableImageFile.getName());
                    ImageLoaded=true;
                } catch (Exception e) {
-                   Toast.makeText(ReportFormActivity.this, "Error loading Image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                   QToast( "Error loading Image: " + e.getMessage());
                    e.printStackTrace();
                }
                if(ImageLoaded){
@@ -528,15 +528,15 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
         Uri UsableFileUri = Uri.fromFile(usableImageFile);
         StorageReference uploadReference = storageRef.child("images/"+UsableFileUri.getLastPathSegment());
         UploadTask uploadTask = uploadReference.putFile(UsableFileUri);
-        Toast.makeText(getApplicationContext(), "Uploading "+usableImageFile.getName()+" to firebase", Toast.LENGTH_SHORT).show();
+        QToast( "Uploading "+usableImageFile.getName()+" to firebase");
 // Register observers to listen for when the download is done or if it fails
         uploadTask.addOnFailureListener(exception -> {
             // Handle unsuccessful uploads
-            Toast.makeText(getApplicationContext(), "Uploading "+usableImageFile.getName()+" to firebase Failed\n"+exception.getMessage(), Toast.LENGTH_SHORT).show();
+            QToast( "Uploading "+usableImageFile.getName()+" to firebase Failed\n"+exception.getMessage());
         }).addOnSuccessListener(taskSnapshot -> {
-            Toast.makeText(getApplicationContext(), "Upload "+usableImageFile.getName()+" to firebase Success !", Toast.LENGTH_SHORT).show();
+            QToast( "Upload "+usableImageFile.getName()+" to firebase Success !");
             uploadReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                Toast.makeText(getApplicationContext(),"Download url : "+uri.toString(),Toast.LENGTH_LONG).show();
+                QToast("Download url : "+uri.toString());
                 USABLE_IMAGE_DOWNLOAD_LINK=uri.toString();
                 tv_progress.setText("Geotag Image Uploaded !");
                 ImageUploaded=true;
@@ -583,10 +583,10 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
                 alert.show();
             } catch (Exception e) {
                 e.printStackTrace();
-                Toast.makeText(getApplicationContext(), "Error : " + e.getMessage(), Toast.LENGTH_LONG).show();
+                QToast( "Error : " + e.getMessage());
             }
         }else {
-            Toast.makeText(getApplicationContext(),"Please Select ISSUE/GEOTAG image first",Toast.LENGTH_SHORT).show();
+            QToast("Please Select ISSUE/GEOTAG image first");
         }
 
     }
@@ -611,13 +611,13 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
         current_btn_location.setOnClickListener(v -> {
 //nit
             if (!checkPermissions()) {
-                Toast.makeText(getApplicationContext(), "Check GPS or Related Permission", Toast.LENGTH_SHORT).show();
+                QToast( "Check GPS or Related Permission");
             } else {
                 try {
                     getLastLocation();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "Error : " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    QToast( "Error : " + e.getMessage());
                 }
             }
             alertDialog.dismiss();
@@ -646,7 +646,7 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
             alert.show();
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(getApplicationContext(), "Error :" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            QToast( "Error :" + e.getMessage());
         }
     }
 
@@ -760,7 +760,7 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
                                     location_tv.setVisibility(View.GONE);
                                 }
                                 System.out.println("Address >> " + address);
-                                Toast.makeText(getApplicationContext(), "" + location.getLatitude() + "" + location.getLongitude() + "", Toast.LENGTH_SHORT).show();
+                                QToast( "" + location.getLatitude() + "" + location.getLongitude() + "");
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -768,7 +768,7 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
                     }
                 });
             } else {
-                Toast.makeText(this, "Please turn on" + " your location...", Toast.LENGTH_LONG).show();
+                QToast("Please turn on" + " your location...");
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 startActivity(intent);
             }
@@ -791,18 +791,20 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 super.onLocationResult(locationResult);
-                Toast.makeText(ReportFormActivity.this, locationResult.toString(), Toast.LENGTH_SHORT).show();
+                QToast(locationResult.toString());
             }
 
             @Override
             public void onLocationAvailability(@NonNull LocationAvailability locationAvailability) {
                 super.onLocationAvailability(locationAvailability);
-                Toast.makeText(ReportFormActivity.this, locationAvailability.toString(), Toast.LENGTH_SHORT).show();
+                QToast(locationAvailability.toString());
             }
         };
 
         mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
     }
+
+
 
     private boolean checkPermissions() {
         return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
@@ -849,5 +851,15 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
     public void run() {
         getLastLocation();
 
+    }
+    public void QToast(String message){
+        if(ToastMaster == null)
+        {
+            ToastMaster = Toast.makeText(this, message, Toast.LENGTH_LONG);
+        }
+
+        ToastMaster.setText(message);
+        ToastMaster.setDuration(Toast.LENGTH_LONG);
+        ToastMaster.show();
     }
 }

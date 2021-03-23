@@ -1,11 +1,7 @@
 package inorg.gsdl.plndpt;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -15,24 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.plndpt.R;
 
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
-import static android.Manifest.permission.ACCESS_FINE_LOCATION;
-import static android.Manifest.permission.CAMERA;
-import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
-
 public class SplashActivity extends AppCompatActivity {
 
-    private final static int ALL_PERMISSIONS_RESULT = 101;
-    private static final int splace_time = 5000;
-    private ArrayList permissionsToRequest;
-    private final ArrayList permissionsRejected = new ArrayList();
-    private final ArrayList permissions = new ArrayList();
-    private Sharedpreferences MPREFS;
 
     @SuppressLint("WrongConstant")
     @Override
@@ -46,26 +29,9 @@ public class SplashActivity extends AppCompatActivity {
                     }
                 });
         setContentView(R.layout.activity_splash);
-        MPREFS = Sharedpreferences.getUserDataObj(this);
-        permissions.add(ACCESS_FINE_LOCATION);
-        permissions.add(ACCESS_COARSE_LOCATION);
-        permissions.add(WRITE_EXTERNAL_STORAGE);
-        permissions.add(READ_EXTERNAL_STORAGE);
-        permissions.add(CAMERA);
-        permissionsToRequest = findUnAskedPermissions(permissions);
-        //get the permissions we have asked for before but are not granted.
-        //we will store this in a global list to access later.
-
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-            if (permissionsToRequest.size() > 0)
-                requestPermissions((String[]) permissionsToRequest.toArray(new String[permissionsToRequest.size()]),
-                        ALL_PERMISSIONS_RESULT);
-        }
-
         Timer t = new Timer();
         boolean checkConnection = new ApplicationUtility().checkConnection(SplashActivity.this);
+        int splace_time = 1500;
         if (checkConnection) {
             t.schedule(new splash(), splace_time);
         } else {
@@ -74,76 +40,12 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
-    private ArrayList findUnAskedPermissions(ArrayList wanted) {
-        ArrayList result = new ArrayList();
 
-        for (Object perm : wanted) {
-            if (!hasPermission(String.valueOf(perm))) {
-                result.add(perm);
-            }
-        }
-        return result;
-    }
 
-    private boolean hasPermission(String permission) {
-        if (canMakeSmores()) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                return (checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED);
-            }
-        }
-        return true;
-    }
-
-    private boolean canMakeSmores() {
-        return (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1);
-    }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-
-        switch (requestCode) {
-
-            case ALL_PERMISSIONS_RESULT:
-                for (Object perms : permissionsToRequest) {
-                    if (!hasPermission(String.valueOf(perms))) {
-                        permissionsRejected.add(perms);
-                    }
-                }
-
-                if (permissionsRejected.size() > 0) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        if (shouldShowRequestPermissionRationale(String.valueOf(permissionsRejected.get(0)))) {
-                            showMessageOKCancel("These permissions are mandatory for the application. Please allow access.",
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                                requestPermissions((String[]) permissionsRejected.toArray(new String[permissionsRejected.size()]), ALL_PERMISSIONS_RESULT);
-                                            }
-                                        }
-                                    });
-                            return;
-                        }
-                    }
-                }
-                break;
-        }
-    }
-
-    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
-        new AlertDialog.Builder(SplashActivity.this)
-                .setMessage(message)
-                .setPositiveButton("OK", okListener)
-                .setNegativeButton("Cancel", null)
-                .create()
-                .show();
-    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // locationTrack.stopListener();
     }
 
     private void hideNavigationBar() {
@@ -158,15 +60,10 @@ public class SplashActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            if (MPREFS.get_user_id().isEmpty()|MPREFS.get_user_id()==null) {
-                Intent i = new Intent(SplashActivity.this, MainActivity.class);
-                finish();
-                startActivity(i);
-            } else {
-                Intent i = new Intent(SplashActivity.this, LoginMainActivity.class);
-                finish();
-                startActivity(i);
-            }
+            runOnUiThread(() -> Toast.makeText(getApplicationContext(),"Welcome to GeoTag Planning",Toast.LENGTH_SHORT).show());
+            Intent i = new Intent(SplashActivity.this, LoginSelector.class);
+            finish();
+            startActivity(i);
         }
     }
 }

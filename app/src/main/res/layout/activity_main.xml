@@ -8,7 +8,7 @@
     android:background="@drawable/a9"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="inorg.gsdl.plndpt.MainActivity">
+    tools:context="inorg.gsdl.plndpt.LoginSelector">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/main_logo"

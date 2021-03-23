@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/img3"
     android:orientation="vertical"
-    tools:context="inorg.gsdl.plndpt.MainActivity">
+    tools:context="inorg.gsdl.plndpt.LoginSelector">
 
     <Button
         android:id="@+id/report_grievence_tv"
