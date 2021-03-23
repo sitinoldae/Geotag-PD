@@ -1,7 +1,7 @@
 package inorg.gsdl.plndpt;
 
 import android.Manifest;
-import android.app.ActionBar;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -17,6 +17,7 @@ import com.example.plndpt.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 import butterknife.BindView;
@@ -30,15 +31,17 @@ import static android.text.TextUtils.isEmpty;
 public class PhoneNumberVerifyActivity extends AppCompatActivity {
 
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.enter_otp_et)
     EditText otp_edit_txt;
-    private String id;
 
-    private ProgressShow progressShow;
     private Sharedpreferences mpref;
     private String iddd;
 
     private ApiInterface mobile_number_service;
+
+    public PhoneNumberVerifyActivity(ProgressShow progressShow) {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,24 +53,17 @@ public class PhoneNumberVerifyActivity extends AppCompatActivity {
 
         mobile_number_service = ApiClient.getClient().create(ApiInterface.class);
 
-        ActionBar actionBar = getActionBar();
-        getSupportActionBar().setTitle("Verify Number");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Verify Number");
 
         Random random = new Random();
-        id = String.format("%04d", random.nextInt(10000));
-
+        @SuppressLint("DefaultLocale") String id = String.format("%04d", random.nextInt(10000));
         mpref.set_otp_verification(id);
-
         iddd = "Your OTP for water logging is " + id + ". Please use this code for the verification process.";
-
         Log.d("value_rand", id);
-
-        if (checkAndRequestPermissions()) {
-            // carry on the normal flow, as the case of  permissions  granted.
-        }
-
+        checkAndRequestPermissions();// carry on the normal flow, as the case of  permissions  granted.
     }
 
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.verify_num_btn)
     public void btn(View view) {
         // hit_number_for_otp();
@@ -84,16 +80,15 @@ public class PhoneNumberVerifyActivity extends AppCompatActivity {
             return;
         }
 
-        progressShow.showProgress(PhoneNumberVerifyActivity.this);
+        ProgressShow.showProgress(PhoneNumberVerifyActivity.this);
 
         Call<String> call_number = mobile_number_service.getVerifyMobileNumber(otp_edit_txt.getText().toString(), iddd);
         call_number.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, retrofit2.Response<String> response) {
-                progressShow.stopProgress(PhoneNumberVerifyActivity.this);
+                ProgressShow.stopProgress(PhoneNumberVerifyActivity.this);
 
                 // if (response.isSuccessful()) {
-                String responseString = response.body();
                 // todo: do something with the response string
                 //  Log.d("my_repo",responseString);
 
@@ -108,7 +103,7 @@ public class PhoneNumberVerifyActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 Log.e("Error", t.toString());
-                progressShow.stopProgress(PhoneNumberVerifyActivity.this);
+                ProgressShow.stopProgress(PhoneNumberVerifyActivity.this);
             }
         });
 
@@ -157,7 +152,7 @@ public class PhoneNumberVerifyActivity extends AppCompatActivity {
 //        AppController.getInstance().addToRequestQueue(strrequest_otp);
 //    }
 
-    private boolean checkAndRequestPermissions() {
+    private void checkAndRequestPermissions() {
         int permissionSendMessage = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.SEND_SMS);
 
@@ -179,10 +174,8 @@ public class PhoneNumberVerifyActivity extends AppCompatActivity {
             listPermissionsNeeded.add(Manifest.permission.SEND_SMS);
         }
         if (!listPermissionsNeeded.isEmpty()) {
-            ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]),
+            ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[0]),
                     REQUEST_ID_MULTIPLE_PERMISSIONS);
-            return false;
         }
-        return true;
     }
 }

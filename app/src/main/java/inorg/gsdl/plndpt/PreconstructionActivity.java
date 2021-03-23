@@ -31,7 +31,7 @@ public class PreconstructionActivity extends AppCompatActivity {
     MyListAdapter adapter;
     RequestQueue requestQueue;
     List<User> myListData = new ArrayList<User>();
-    String abc[] = {"india", "UK", "US"};
+    String[] abc = {"india", "UK", "US"};
     ProgressBar progressBar;
     private Sharedpreferences mpref;
 
@@ -106,7 +106,7 @@ public class PreconstructionActivity extends AppCompatActivity {
     private void getDataFromList(List<User> users) {
 
         Log.d("method getdata", "" + users);
-        adapter = new MyListAdapter(PreconstructionActivity.this, users);
+        adapter = new MyListAdapter(users);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);

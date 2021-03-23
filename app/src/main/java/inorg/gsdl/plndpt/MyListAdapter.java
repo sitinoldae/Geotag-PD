@@ -1,6 +1,5 @@
 package inorg.gsdl.plndpt;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.plndpt.R;
@@ -16,13 +16,11 @@ import java.util.List;
 
 
 public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder> {
-    private Context context;
-    private List<User> listdata;
+    private final List<User> listdata;
 
 
     // RecyclerView recyclerView;
-    public MyListAdapter(Context context, List<User> listdata) {
-        this.context = context;
+    public MyListAdapter(List<User> listdata) {
         this.listdata = listdata;
 
         for (User ss : listdata) {
@@ -30,10 +28,9 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
         }
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-        //  LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View listItem = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_item, parent, false);
         return new ViewHolder(listItem);
@@ -44,14 +41,11 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
         final User myListData = listdata.get(position);
         holder.textView.setText(myListData.getProject());
         holder.imageView.setText(myListData.getTimestamp());
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        holder.relativeLayout.setOnClickListener(view -> {
 
 //                Intent intent = new Intent(view.getContext(), TrackIssueActivity.class);
 //                view.getContext().startActivity(intent);
 
-            }
         });
     }
 
@@ -63,18 +57,15 @@ public class MyListAdapter extends RecyclerView.Adapter<MyListAdapter.ViewHolder
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final Context context;
         public TextView imageView;
         public TextView textView;
         public LinearLayout relativeLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            this.imageView = (TextView) itemView.findViewById(R.id.imageView);
-            this.textView = (TextView) itemView.findViewById(R.id.textView);
-            relativeLayout = (LinearLayout) itemView.findViewById(R.id.relativeLayout);
-
-            context = itemView.getContext();
+            this.imageView = itemView.findViewById(R.id.imageView);
+            this.textView = itemView.findViewById(R.id.textView);
+            relativeLayout = itemView.findViewById(R.id.relativeLayout);
         }
     }
 }

@@ -32,7 +32,7 @@ public class DuringExcutionActivity extends AppCompatActivity {
     MyListAdapter adapter;
     RequestQueue requestQueue;
     List<User> myListData = new ArrayList<User>();
-    String abc[] = {"india", "UK", "US"};
+    String[] abc = {"india", "UK", "US"};
     ProgressBar progressbar2;
     private Sharedpreferences mpref;
 
@@ -46,7 +46,7 @@ public class DuringExcutionActivity extends AppCompatActivity {
 
         mpref = Sharedpreferences.getUserDataObj(this);
         requestQueue = Volley.newRequestQueue(this);
-        String URL_Officer = "http://map.gsdl.org.in:8080/planningdpt/viewReports/During Execution";
+        String URL_Officer = "http://map.gsdl.org.in:8080/planningdpt/viewReports/DuringExecution";
 
 
         JsonArrayRequest requestOfficer = new JsonArrayRequest(Request.Method.GET, URL_Officer,
@@ -99,16 +99,12 @@ public class DuringExcutionActivity extends AppCompatActivity {
         requestQueue.add(requestOfficer);
 
 
-        //    myListData = new User[]{
-        //          new User("abc","xyz")};
-
-
     }
 
     private void getDataFromList(List<User> users) {
 
         Log.d("method getdata", "" + users);
-        adapter = new MyListAdapter(DuringExcutionActivity.this, users);
+        adapter = new MyListAdapter(users);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);

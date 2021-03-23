@@ -31,7 +31,7 @@ public class FinalCompletionActivity extends AppCompatActivity {
     MyListAdapter adapter;
     RequestQueue requestQueue;
     List<User> myListData = new ArrayList<User>();
-    String abc[] = {"india", "UK", "US"};
+    String[] abc = {"india", "UK", "US"};
     ProgressBar progressbar3;
     private Sharedpreferences mpref;
 
@@ -44,7 +44,7 @@ public class FinalCompletionActivity extends AppCompatActivity {
         progressbar3 = findViewById(R.id.progressbar3);
         mpref = Sharedpreferences.getUserDataObj(this);
         requestQueue = Volley.newRequestQueue(this);
-        String URL_Officer = "http://map.gsdl.org.in:8080/planningdpt/viewReports/Final Completion";
+        String URL_Officer = "http://map.gsdl.org.in:8080/planningdpt/viewReports/FinalCompletion";
 
 
         JsonArrayRequest requestOfficer = new JsonArrayRequest(Request.Method.GET, URL_Officer,
@@ -106,7 +106,7 @@ public class FinalCompletionActivity extends AppCompatActivity {
     private void getDataFromList(List<User> users) {
 
         Log.d("method getdata", "" + users);
-        adapter = new MyListAdapter(FinalCompletionActivity.this, users);
+        adapter = new MyListAdapter(users);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);

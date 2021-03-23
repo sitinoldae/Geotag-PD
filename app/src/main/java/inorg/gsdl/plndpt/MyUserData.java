@@ -1,6 +1,8 @@
 package inorg.gsdl.plndpt;
 
 
+import androidx.annotation.NonNull;
+
 public class MyUserData {
 
 
@@ -19,14 +21,6 @@ public class MyUserData {
 
     public void setUserId(String userId) {
         this.userid = userId;
-    }
-
-    public String getUserid() {
-        return userid;
-    }
-
-    public void setUserid(String userid) {
-        this.userid = userid;
     }
 
     public String getDptname() {
@@ -69,14 +63,6 @@ public class MyUserData {
         this.deptcode = deptcode;
     }
 
-    public String getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
-    }
-
     public String getName() {
         return name;
     }
@@ -85,6 +71,7 @@ public class MyUserData {
         this.name = name;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "MyUserData{" +

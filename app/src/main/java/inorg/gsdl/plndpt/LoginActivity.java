@@ -26,7 +26,6 @@ public class LoginActivity extends AppCompatActivity {
     private Sharedpreferences mpref;
     private int VERIFIED=0;
     private ProgressBar progressBar;
-    private final boolean USER_FOUND=false;
     private String message;
 
     @Override
@@ -65,7 +64,6 @@ public class LoginActivity extends AppCompatActivity {
         //Creating a string request
         message="";
         ProcessJsonFromUrl(APPROVED_USERS,email,pass);
-        ProcessJsonFromUrl(UNAPPROVED_USERS,email,pass);
     }
     private void ProcessJsonFromUrl(String url,String email,String pass){
         JsonArrayRequest stringRequest = new JsonArrayRequest(url,
@@ -76,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                             object = response.getJSONObject(i);
                             String password = object.getString("password");
                             String userid = object.getString("userid");
-                            VERIFIED = Integer.valueOf(object.getString("status"));
+                            VERIFIED = Integer.parseInt(object.getString("status"));
                             if (email.equalsIgnoreCase(userid) && pass.equals(password)) {
                                 c++;
                                 mpref.set_User_Mobile_verif(object.getString("mobile"));

@@ -1,7 +1,7 @@
 package inorg.gsdl.plndpt;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +23,7 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.report_grievence_tv)
     public void repost_form(View v) {
         Intent intent = new Intent(HomeActivity.this, ReportFormActivity.class);
@@ -30,6 +31,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.user_profille)
     public void profile_click() {
         Intent intent = new Intent(HomeActivity.this, UserProfileActivity.class);
@@ -41,12 +43,9 @@ public class HomeActivity extends AppCompatActivity {
 
         new AlertDialog.Builder(this).setTitle("Really Exit?").setMessage("Are you sure you want to exit?")
                 .setNegativeButton(android.R.string.no, null)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        HomeActivity.super.onBackPressed();
-                        quit();
-                    }
+                .setPositiveButton(android.R.string.yes, (dialog, which) -> {
+                    HomeActivity.super.onBackPressed();
+                    quit();
                 }).create().show();
     }
 

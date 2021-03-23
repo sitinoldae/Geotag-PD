@@ -39,7 +39,6 @@ public class RegisterationActivity extends AppCompatActivity implements Callback
     //public static final String DATA_URL = "http://10.0.2.2:8080/viewprojectnameonly";
     public static final String DATA_URL = "http://map.gsdl.org.in:8080/planningdpt/viewprojectnameonly";
     EditText etname, etemail, etpass, mobile;
-    MyApi myApi;
     MyUserData d1 = new MyUserData();
     private View mLoading;
     private Spinner spinner;

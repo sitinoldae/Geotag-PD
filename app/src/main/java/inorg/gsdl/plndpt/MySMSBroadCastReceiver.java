@@ -53,12 +53,11 @@ public class MySMSBroadCastReceiver extends BroadcastReceiver {
 
                 final Object[] pdusObj = (Object[]) bundle.get("pdus");
 
-                for (int i = 0; i < pdusObj.length; i++) {
+                for (Object o : pdusObj) {
 
-                    SmsMessage currentMessage = SmsMessage.createFromPdu((byte[]) pdusObj[i]);
-                    String phoneNumber = currentMessage.getDisplayOriginatingAddress();
+                    SmsMessage currentMessage = SmsMessage.createFromPdu((byte[]) o);
 
-                    String senderNum = phoneNumber;
+                    String senderNum = currentMessage.getDisplayOriginatingAddress();
                     String message = currentMessage.getDisplayMessageBody().split(":")[1];
 
                     message = message.substring(0, message.length() - 1);
