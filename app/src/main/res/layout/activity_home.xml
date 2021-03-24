@@ -23,7 +23,7 @@
         android:padding="10dp"
         android:text="Capture GeoTag"
         android:textColor="@color/black"
-        android:textSize="20dp"
+        android:textSize="20sp"
         tools:ignore="UnusedAttribute" />
 
 
@@ -46,7 +46,8 @@
             android:layout_gravity="center"
             android:layout_weight="0.5"
             android:src="@drawable/ic_baseline_person_24"
-            app:tint="#000000" />
+            app:tint="#000000"
+            tools:ignore="ContentDescription" />
 
         <!--<ImageView-->
         <!--android:layout_width="0dp"-->
@@ -61,7 +62,7 @@
             android:layout_weight="1.5"
             android:text="Planning Department"
             android:textColor="#000000"
-            android:textSize="30dp" />
+            android:textSize="30sp" />
 
     </LinearLayout>
 
@@ -72,7 +73,7 @@
         android:layout_marginTop="25dp"
         android:gravity="center"
         android:text="Developed By"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
 
@@ -83,7 +84,7 @@
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="Geospatial Delhi Limited"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
     <!--<TextView-->
@@ -102,7 +103,7 @@
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="(A Govt. Of NCT Of Delhi Company)"
-        android:textSize="10dp"
+        android:textSize="10sp"
         android:textStyle="bold" />
 
     <View

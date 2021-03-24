@@ -20,7 +20,8 @@
         android:outlineAmbientShadowColor="@color/black"
         android:outlineSpotShadowColor="@color/black"
         android:translationZ="2dp"
-        app:tint="@color/black" />
+        app:tint="@color/black"
+        tools:targetApi="lollipop" />
 
     <TextView
         android:layout_width="match_parent"
@@ -35,27 +36,26 @@
         android:id="@+id/login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/main_logo"
         android:layout_marginHorizontal="50dp"
         android:background="@drawable/shadow_btn_layer_list"
         android:backgroundTint="@android:color/holo_blue_light"
         android:text="Log In"
         android:textColor="#fff"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:targetApi="lollipop" />
 
     <Button
         android:id="@+id/signup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/login"
-        android:layout_centerHorizontal="true"
         android:layout_marginHorizontal="50dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/shadow_btn_layer_list"
         android:backgroundTint="@color/black"
         android:text="Sign Up"
         android:textColor="#fff"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:targetApi="lollipop" />
 
     <ImageView
         android:layout_width="match_parent"
@@ -64,6 +64,7 @@
         android:fontFamily="sans-serif-thin"
         android:paddingHorizontal="10dp"
         android:textColor="@color/black"
-        android:textSize="24dp"
-        android:textStyle="bold" />
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:contentDescription="TODO" />
 </LinearLayout>

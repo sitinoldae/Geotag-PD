@@ -12,13 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.plndpt.R;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,56 +41,35 @@ public class FinalCompletionActivity extends AppCompatActivity {
         progressbar3 = findViewById(R.id.progressbar3);
         mpref = Sharedpreferences.getUserDataObj(this);
         requestQueue = Volley.newRequestQueue(this);
-        String URL_Officer = "http://map.gsdl.org.in:8080/planningdpt/viewReports/FinalCompletion";
+        String URL_Officer = "http://map.gsdl.org.in:8080/planningdpt/viewReports/Completed";
 
 
         JsonArrayRequest requestOfficer = new JsonArrayRequest(Request.Method.GET, URL_Officer,
-                null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                try {
+                null, response -> {
+                    try {
 
-                    for (int ii = 0; ii < response.length(); ii++) {
+                        for (int ii = 0; ii < response.length(); ii++) {
 
-                        JSONObject jsonObject = response.getJSONObject(ii);
-                        String d = jsonObject.getString("reportid");
-                        String e = jsonObject.getString("timestamp");
-                        String i = jsonObject.getString("project");
+                            JSONObject jsonObject = response.getJSONObject(ii);
+                            String d = jsonObject.getString("reportid");
+                            String e = jsonObject.getString("timestamp");
+                            String i = jsonObject.getString("project");
+                            System.out.print("yoyo" + d);
+                            mpref.set_user_id(d);
+                            mpref.setImages(i);
+                            User u = new User(i, e, d);
+                            myListData.add(u);
 
-
-                        System.out.print("yoyo" + d);
-
-                        mpref.set_user_id(d);
-                        mpref.setImages(i);
-
-                        User u = new User(i, e, d);
-
-
-                        myListData.add(u);
-
-
-                        Log.d("info", "" + myListData);
-
-                        for (User ss : myListData) {
-                            Log.d("datadata", "" + ss.getProject() + " " + ss.getTimestamp());
+                            Log.d("info", "" + myListData);
+                            for (User ss : myListData) {
+                                Log.d("datadata", "" + ss.getProject() + " " + ss.getTimestamp());
+                            }
                         }
-
+                        getDataFromList(myListData);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-
-                    getDataFromList(myListData);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("error", error.getMessage());
-            }
-        });
+                }, error -> Log.d("error", error.getMessage()));
         requestQueue.add(requestOfficer);
 
 

@@ -612,6 +612,7 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
 //nit
             if (!checkPermissions()) {
                 QToast( "Check GPS or Related Permission");
+                requestPermissions();
             } else {
                 try {
                     getLastLocation();
@@ -815,6 +816,7 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.CAMERA
+
         }, PERMISSION_ID);
     }
 

@@ -46,7 +46,7 @@ public class DuringExcutionActivity extends AppCompatActivity {
 
         mpref = Sharedpreferences.getUserDataObj(this);
         requestQueue = Volley.newRequestQueue(this);
-        String URL_Officer = "http://map.gsdl.org.in:8080/planningdpt/viewReports/DuringExecution";
+        String URL_Officer = "http://map.gsdl.org.in:8080/planningdpt/viewReports/On-Going";
 
 
         JsonArrayRequest requestOfficer = new JsonArrayRequest(Request.Method.GET, URL_Officer,

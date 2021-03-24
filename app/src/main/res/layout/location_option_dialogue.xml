@@ -3,11 +3,13 @@
 <RelativeLayout
 
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/shadows"
     android:elevation="10dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:targetApi="lollipop">
 
     <LinearLayout
 
@@ -45,7 +47,8 @@
         android:layout_marginTop="40dp"
         android:layout_marginRight="30dp"
         android:background="@drawable/shadows"
-        android:elevation="10dp">
+        android:elevation="10dp"
+        tools:targetApi="lollipop">
 
         <Button
 
@@ -57,7 +60,8 @@
             android:paddingHorizontal="20dp"
             android:background="@drawable/shadow_btn_layer_list"
             android:text="Use my current location"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            tools:targetApi="m" />
 
     </RelativeLayout>
 
@@ -71,7 +75,8 @@
         android:layout_marginRight="30dp"
         android:layout_marginBottom="50dp"
         android:background="@drawable/shadows"
-        android:elevation="10dp">
+        android:elevation="10dp"
+        tools:targetApi="lollipop">
 
         <include
             android:id="@+id/my_loading_layout"

@@ -3,11 +3,13 @@
 <RelativeLayout
 
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/shadows"
     android:elevation="10dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:targetApi="lollipop">
 
     <LinearLayout
 
@@ -44,7 +46,8 @@
         android:layout_marginTop="40dp"
         android:layout_marginRight="30dp"
         android:background="@drawable/shadows"
-        android:elevation="10dp">
+        android:elevation="10dp"
+        tools:targetApi="lollipop">
 
         <Button
 
@@ -56,7 +59,8 @@
             android:drawableLeft="@drawable/ic_camera"
             android:drawableTint="@color/white"
             android:paddingHorizontal="20dp"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            tools:targetApi="m" />
 
     </RelativeLayout>
 
@@ -70,7 +74,8 @@
         android:layout_marginRight="30dp"
         android:layout_marginBottom="50dp"
         android:background="@drawable/shadows"
-        android:elevation="10dp">
+        android:elevation="10dp"
+        tools:targetApi="lollipop">
 
         <Button
 
@@ -82,7 +87,8 @@
             android:drawableLeft="@drawable/ic_gallery"
             android:drawableTint="@color/white"
             android:paddingHorizontal="20dp"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            tools:targetApi="m" />
 
     </RelativeLayout>
 

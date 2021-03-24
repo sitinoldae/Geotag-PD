@@ -15,7 +15,8 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/img3" />
+        android:background="@drawable/img3"
+        android:contentDescription="TODO" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,7 +30,6 @@
             android:id="@+id/display_one_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/info"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="18dp"
             android:layout_marginRight="15dp"
@@ -44,7 +44,9 @@
             android:padding="10dp"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="15dp" />
+            android:textSize="15sp"
+            tools:targetApi="m"
+            android:autofillHints="" />
 
         <!--<RelativeLayout-->
 
@@ -75,7 +77,6 @@
             android:id="@+id/display_two_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/display_one_name"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="15dp"
@@ -90,14 +91,16 @@
             android:padding="10dp"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="15dp" />
+            android:textSize="15sp"
+            tools:targetApi="m"
+            tools:ignore="TextFields"
+            android:autofillHints="" />
 
         <EditText
 
             android:id="@+id/display_three_mobile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/display_two_email"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="18dp"
             android:layout_marginRight="15dp"
@@ -113,17 +116,19 @@
             android:singleLine="true"
             android:src="@drawable/shadow_black"
             android:textColor="@color/black"
-            android:textSize="15dp" />
+            android:textSize="15sp"
+            tools:targetApi="m"
+            android:autofillHints="" />
 
         <LinearLayout
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:layout_gravity="center"
             android:elevation="10dp"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:targetApi="lollipop">
 
             <LinearLayout
 
@@ -144,7 +149,8 @@
 
                     <RelativeLayout
                         android:layout_width="130dp"
-                        android:layout_height="130dp">
+                        android:layout_height="130dp"
+                        tools:ignore="UselessParent">
 
                         <ImageView
 
@@ -154,7 +160,9 @@
                             android:layout_alignParentRight="true"
                             android:layout_alignParentBottom="true"
                             android:background="@drawable/pencil_woo"
-                            android:backgroundTint="#2196F3" />
+                            android:backgroundTint="#2196F3"
+                            android:contentDescription="TODO"
+                            tools:targetApi="lollipop" />
 
                         <de.hdodenhof.circleimageview.CircleImageView
 
@@ -171,7 +179,8 @@
                             android:backgroundTint="@color/black"
                             android:paddingTop="8dp"
                             app:civ_border_color="#2196F3"
-                            app:civ_border_width="2dp" />
+                            app:civ_border_width="2dp"
+                            tools:targetApi="lollipop" />
 
                     </RelativeLayout>
 
@@ -185,7 +194,7 @@
                     android:gravity="center"
                     android:text="Edit Profile"
                     android:textColor="@color/black"
-                    android:textSize="16dp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
             </LinearLayout>

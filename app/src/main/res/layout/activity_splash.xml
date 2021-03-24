@@ -16,7 +16,8 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="58dp"
         android:layout_marginTop="4dp"
-        android:src="@drawable/header_logo" />
+        android:src="@drawable/header_logo"
+        android:contentDescription="TODO" />
 
     <ImageView
         android:layout_width="203dp"
@@ -27,7 +28,9 @@
         android:layout_marginBottom="11dp"
         android:src="@drawable/bottom_logo"
         android:tintMode="multiply"
-        app:tint="#fff" />
+        app:tint="#fff"
+        android:contentDescription="TODO"
+        tools:targetApi="lollipop" />
 
     <TextView
         android:id="@+id/tv1"
@@ -64,5 +67,6 @@
         android:layout_height="150dp"
         android:layout_above="@id/tv1"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/app_icon" />
+        android:src="@drawable/app_icon"
+        android:contentDescription="TODO" />
 </RelativeLayout>

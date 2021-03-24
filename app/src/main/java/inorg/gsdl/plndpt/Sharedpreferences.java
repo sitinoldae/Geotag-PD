@@ -6,8 +6,12 @@ import android.content.SharedPreferences;
 import java.util.List;
 
 public class Sharedpreferences {
+    public static String getTag_fcm_token() {
+        return Tag_fcm_token;
+    }
 
     public static final String Tag_user_id = "user_id";
+    public static final String Tag_fcm_token = "fcm_token";
     public static final String Tag_form_name = "form_name";
     public static final String Tag_search_latitude = "search_latitude";
     public static final String Tag_search_Longitude = "search_longitude";
@@ -27,7 +31,7 @@ public class Sharedpreferences {
     private static Sharedpreferences userData = null;
     Context context;
     private SharedPreferences pref;
-    private int PRIVATE_MODE = 0;
+    private final int PRIVATE_MODE = 0;
 
 
     public Sharedpreferences(Context c) {

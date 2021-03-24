@@ -24,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText etemail, etpass;
     int c = 0;
     private Sharedpreferences mpref;
-    private int VERIFIED=0;
+    private final String VERIFIED="";
     private ProgressBar progressBar;
     private String message;
 
@@ -49,21 +49,21 @@ public class LoginActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(email)) {
             etemail.setError("Please Enter Email");
             etemail.requestFocus();
-            progressBar.setVisibility(View.GONE);
+            hideProgressBar();
             return;
         }
         if (TextUtils.isEmpty(pass)) {
             etpass.setError("Please Enter Password");
-            progressBar.setVisibility(View.GONE);
+            hideProgressBar();
             etpass.requestFocus();
             return;
         }
-        String APPROVED_USERS = "http://map.gsdl.org.in:8080/planningdpt/viewLogin/1";
-        String UNAPPROVED_USERS = "http://map.gsdl.org.in:8080/planningdpt/viewLogin/0";
+        String ALL_USER = "http://map.gsdl.org.in:8080/planningdpt/dptlogin/viewAllLogin";
+        // String UNAPPROVED_USERS = "http://map.gsdl.org.in:8080/planningdpt/viewLogin/0";
         // String DATA_URL = "http://map.gsdl.org.in:8080/viewLogin/1";
-        //Creating a string request
+        //Creating a string request.
         message="";
-        ProcessJsonFromUrl(APPROVED_USERS,email,pass);
+        ProcessJsonFromUrl(ALL_USER,email,pass);
     }
     private void ProcessJsonFromUrl(String url,String email,String pass){
         JsonArrayRequest stringRequest = new JsonArrayRequest(url,
@@ -72,43 +72,64 @@ public class LoginActivity extends AppCompatActivity {
                     try {
                         for (int i = 0; i < response.length(); i++) {
                             object = response.getJSONObject(i);
-                            String password = object.getString("password");
-                            String userid = object.getString("userid");
-                            VERIFIED = Integer.parseInt(object.getString("status"));
-                            if (email.equalsIgnoreCase(userid) && pass.equals(password)) {
+                            String userPassword = object.getString("password");
+                            String userId = object.getString("userid");
+                            String userStatus = object.getString("status");
+                            if (email.equalsIgnoreCase(userId) && pass.equals(userPassword)) {
                                 c++;
                                 mpref.set_User_Mobile_verif(object.getString("mobile"));
                                 mpref.set_user_name_verif(object.getString("name"));
                                 mpref.set_user_email_verif(object.getString("userid"));
                                 mpref.setCircle_concerned_officer_mob(object.getString("dptname"));
-                            }
-                        }
-
-                        if (c > 0) {
-
-                                Intent intent = new Intent(LoginActivity.this, VerifyOTPActivity.class);
-                                intent.putExtra("phone_number", mpref.get_User_Mobile_verif());
-                                intent.putExtra("name", mpref.get_user_name_verif());
-                                intent.putExtra("userid", mpref.get_user_email_verif());
-                                intent.putExtra("dptname", mpref.getCircle_concerned_officer_mob());
-                                progressBar.setVisibility(View.GONE);
-                                message="Login Success !";
-                                startActivity(intent);
-                        } else {
-                            message="Invalid Credentials, Please Check Credentials";
+                                if(userStatus.matches("1")){
+                                    Intent intent = new Intent(LoginActivity.this, VerifyOTPActivity.class);
+                                    intent.putExtra("phone_number", mpref.get_User_Mobile_verif());
+                                    intent.putExtra("name", mpref.get_user_name_verif());
+                                    intent.putExtra("userid", mpref.get_user_email_verif());
+                                    intent.putExtra("dptname", mpref.getCircle_concerned_officer_mob());
+                                    hideProgressBar();
+                                    proceedLogin(intent,mpref.get_user_name_verif());
+                                    return;
+                                }else if(userStatus.matches("0")){
+                                    Qtoast("User not approved ! Contact administrator");
+                                    return;
+                                }
+                            }else if(i==response.length()-1){
+                               Qtoast("Login Failed ! Check Credentials");
+                               hideProgressBar();
+                                return;
+                                }
                         }
                     } catch (JSONException e) {
-                        progressBar.setVisibility(View.GONE);
+                        hideProgressBar();
                         e.printStackTrace();
                     }
-                    progressBar.setVisibility(View.GONE);
-                    Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
-                    message=""; },
+                    hideProgressBar();
+                },
                 error -> System.out.println("Error :" + error.getMessage()));
 
         //Creating a request queue
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         //Adding request to the queue
         requestQueue.add(stringRequest);
+    }
+
+    private void hideProgressBar() {
+        try {
+            if(progressBar.getVisibility()==View.VISIBLE){
+                progressBar.setVisibility(View.GONE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void proceedLogin(Intent intent,String user) {
+    startActivity(intent);
+    Qtoast("Login Success !\nWelcome "+user);
+    }
+
+    private void Qtoast(String s) {
+        Toast.makeText(getApplicationContext(),s,Toast.LENGTH_SHORT).show();
     }
 }

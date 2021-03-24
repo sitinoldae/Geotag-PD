@@ -61,21 +61,16 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name="inorg.gsdl.plndpt.ui.login.LoginActivity"
+            android:name="inorg.gsdl.plndpt.LoginActivity"
             android:label="@string/title_activity_login" />
 
         <activity
             android:name="inorg.gsdl.plndpt.VerifyOTPActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name="inorg.gsdl.plndpt.PhoneNumberVerifyActivity" />
 
         <activity
             android:name="inorg.gsdl.plndpt.MainActivityHome"
-            android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity
-            android:name="inorg.gsdl.plndpt.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity android:name="inorg.gsdl.plndpt.EmailActivity" />
@@ -139,5 +134,17 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_list" />
         </provider>
+        <service
+            android:name="inorg.gsdl.plndpt.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+        <service
+            android:name="inorg.gsdl.plndpt.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
     </application>
 </manifest>
