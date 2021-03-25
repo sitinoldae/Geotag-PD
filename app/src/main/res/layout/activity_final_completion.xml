@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="inorg.gsdl.plndpt.FinalCompletionActivity">
+    tools:context="inorg.gsdl.plndpt.FinalCompletionActivity"
+    tools:ignore="MergeRootFrame">
 
     <ProgressBar
         android:id="@+id/progressbar3"

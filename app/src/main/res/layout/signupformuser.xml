@@ -6,7 +6,8 @@
     android:background="@drawable/a9"
     android:gravity="center"
     android:layout_gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="Overdraw">
 
     <TextView
         android:layout_width="match_parent"

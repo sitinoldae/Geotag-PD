@@ -20,13 +20,10 @@ public class MainActivityHome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_mainhome);
-        findViewById(R.id.user_profille).setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                Intent intent = new Intent(MainActivityHome.this, CapturePictureActivity.class);
-                startActivity(intent);
-                return true;
-            }
+        findViewById(R.id.user_profille).setOnLongClickListener(view -> {
+            Intent intent = new Intent(MainActivityHome.this, CapturePictureActivity.class);
+            startActivity(intent);
+            return true;
         });
 
         ButterKnife.bind(this);
@@ -42,6 +39,7 @@ public class MainActivityHome extends AppCompatActivity {
     }
 
 
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.user_profille)
     public void profile_click() {
         Intent intent = new Intent(MainActivityHome.this, UserProfileActivity.class);

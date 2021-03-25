@@ -8,7 +8,8 @@
     android:background="@drawable/a9"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="inorg.gsdl.plndpt.LoginSelector">
+    tools:context="inorg.gsdl.plndpt.LoginSelector"
+    tools:ignore="Overdraw">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/main_logo"
@@ -21,7 +22,7 @@
         android:outlineSpotShadowColor="@color/black"
         android:translationZ="2dp"
         app:tint="@color/black"
-        tools:targetApi="lollipop" />
+        tools:targetApi="p" />
 
     <TextView
         android:layout_width="match_parent"

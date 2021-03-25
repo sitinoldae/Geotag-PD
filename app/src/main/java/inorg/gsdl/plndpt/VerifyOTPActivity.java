@@ -1,6 +1,7 @@
 package inorg.gsdl.plndpt;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -20,8 +21,6 @@ import androidx.core.content.ContextCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.plndpt.R;
@@ -42,17 +41,17 @@ import static android.text.TextUtils.isEmpty;
 
 public class VerifyOTPActivity extends AppCompatActivity {
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.verify_otrp_et)
     EditText otp_tv;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.text_resend)
     TextView resend_tv;
     RequestQueue requestQueue;
     private ApiInterface mobile_number_service;
     private Sharedpreferences mpref;
     private String phone_number_for_otp, id, dptname;
-    private BroadcastReceiver receiver;
     private ProgressShow progressShow;
-    private ApiInterface api_service;
     private CountDownTimer countTimer;
 
     @Override
@@ -60,7 +59,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_otp);
         System.out.print("verify OTP");
-        api_service = ApiClient.getClient().create(ApiInterface.class);
+        ApiInterface api_service = ApiClient.getClient().create(ApiInterface.class);
         ButterKnife.bind(this);
         mpref = Sharedpreferences.getUserDataObj(this);
 
@@ -92,7 +91,8 @@ public class VerifyOTPActivity extends AppCompatActivity {
             }
         };
 
-        receiver = new BroadcastReceiver() {
+        // message is the fetching OTP
+        BroadcastReceiver receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (intent.getAction().equalsIgnoreCase("otp")) {
@@ -112,13 +112,13 @@ public class VerifyOTPActivity extends AppCompatActivity {
         if (phone_number_for_otp.equals("")) {
             Toast.makeText(getApplicationContext(), "Please Register your mobile number", Toast.LENGTH_LONG).show();
         }
-        progressShow.showProgress(VerifyOTPActivity.this);
+        ProgressShow.showProgress(VerifyOTPActivity.this);
 
         Call<String> call_number = mobile_number_service.getVerifyMobileNumber(phone_number_for_otp, id);
         call_number.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, retrofit2.Response<String> response) {
-                progressShow.stopProgress(VerifyOTPActivity.this);
+                ProgressShow.stopProgress(VerifyOTPActivity.this);
 
                 if(response.code()==200){
                     Toast.makeText(getApplicationContext(),"Otp Sent",Toast.LENGTH_SHORT).show();
@@ -140,12 +140,13 @@ public class VerifyOTPActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<String> call, Throwable t) {
                 Log.e("Error", t.toString());
-                progressShow.stopProgress(VerifyOTPActivity.this);
+                ProgressShow.stopProgress(VerifyOTPActivity.this);
             }
         });
 
     }
 
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.text_resend)
     public void resend_otp(View view) {
 
@@ -176,26 +177,14 @@ public class VerifyOTPActivity extends AppCompatActivity {
 
         Log.d("url_value", URL_resend_otp);
 
-        StringRequest strrequest_resend_otp = new StringRequest(Request.Method.GET, URL_resend_otp, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                Log.d("new_repo", response);
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                Log.i("new_respo_error", "" + error);
-            }
-        }) {
+        StringRequest strrequest_resend_otp = new StringRequest(Request.Method.GET, URL_resend_otp, response -> Log.d("new_repo", response), error -> Log.i("new_respo_error", "" + error)) {
         };
 //        strrequest_resend_otp.setRetryPolicy(new DefaultRetryPolicy(0,-1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 //        AppController.getInstance().addToRequestQueue(strrequest_resend_otp);
         requestQueue.add(strrequest_resend_otp);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.otp_conti_btn)
     public void btn(View view) {
 
@@ -215,7 +204,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
 
     private void hit_log_in() {
 
-        progressShow.showProgress(VerifyOTPActivity.this);
+        ProgressShow.showProgress(VerifyOTPActivity.this);
 
 //        Call<JsonElement> get_log_in_data_check = api_service.get_Log_IN_Info(mpref.get_User_Mobile_verif());
 //

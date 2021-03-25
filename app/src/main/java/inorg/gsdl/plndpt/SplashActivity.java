@@ -41,13 +41,6 @@ public class SplashActivity extends AppCompatActivity {
     }
 
 
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
     private void hideNavigationBar() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().getDecorView().setSystemUiVisibility(

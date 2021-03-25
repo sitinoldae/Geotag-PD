@@ -14,7 +14,6 @@ import android.widget.Spinner;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.plndpt.R;
@@ -25,7 +24,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,7 +33,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class RegisterationActivity extends AppCompatActivity implements Callback<MyUserData> {
-    //  public static final String DATA_URL = "http://map.gsdl.org.in:8080/planningdpt/viewProjects";
+    //public static final String DATA_URL = "http://map.gsdl.org.in:8080/planningdpt/viewProjects";
     //public static final String DATA_URL = "http://10.0.2.2:8080/viewprojectnameonly";
     public static final String DATA_URL = "http://map.gsdl.org.in:8080/planningdpt/viewprojectnameonly";
     EditText etname, etemail, etpass, mobile;
@@ -51,7 +49,6 @@ public class RegisterationActivity extends AppCompatActivity implements Callback
         etemail = findViewById(R.id.editEmail);
         etpass = findViewById(R.id.editPass);
         mobile = findViewById(R.id.editMob);
-
         Button btn_new = findViewById(R.id.buttonAcount);
         setUIRef();
 
@@ -194,7 +191,7 @@ public class RegisterationActivity extends AppCompatActivity implements Callback
         JsonArrayRequest stringRequest = new JsonArrayRequest(DATA_URL,
                 response -> {
                     JSONObject j = null;
-                    List<String> arrayList = new ArrayList<String>();
+                    List<String> arrayList = new ArrayList<>();
 
                     try {
                         for (int i = 0; i < response.length(); i++) {
@@ -204,8 +201,8 @@ public class RegisterationActivity extends AppCompatActivity implements Callback
                             arrayList.add(dptname);
                         }
 
-                        Set<Integer> hashSet = new LinkedHashSet(arrayList);
-                        ArrayList<String> removedDuplicates = new ArrayList(hashSet);
+                        @SuppressWarnings("rawtypes") LinkedHashSet<String> hashSet = new LinkedHashSet<>(arrayList);
+                        @SuppressWarnings("rawtypes") ArrayList<String> removedDuplicates = new ArrayList<>(hashSet);
                         spinner.setAdapter(new ArrayAdapter<>(RegisterationActivity.this, android.R.layout.simple_spinner_dropdown_item, removedDuplicates));
                         //Parsing the fetched Json String to JSON Object
                         //j = new JSONObject(response);
@@ -218,12 +215,7 @@ public class RegisterationActivity extends AppCompatActivity implements Callback
                         e.printStackTrace();
                     }
                 },
-                new com.android.volley.Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        System.out.println("dpterror" + error.getMessage());
-                    }
-                });
+                error -> System.out.println("dpterror" + error.getMessage()));
         //Creating a request queue
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         //Adding request to the queue

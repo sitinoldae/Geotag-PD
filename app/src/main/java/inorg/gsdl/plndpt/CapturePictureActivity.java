@@ -1,5 +1,6 @@
 package inorg.gsdl.plndpt;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,24 +9,18 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import com.example.plndpt.BuildConfig;
 import com.example.plndpt.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,14 +53,12 @@ if(!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
         getInstallationIdentifier();
     }
 
-    private View.OnClickListener capture = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-                if(getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
-                    sendTakePictureIntent();
-                }
-        }
+    private final View.OnClickListener capture = view -> {
+            if(getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
+                sendTakePictureIntent();
+            }
     };
+    @SuppressLint("QueryPermissionsNeeded")
     private void sendTakePictureIntent() {
 
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -73,7 +66,7 @@ if(!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
         if (cameraIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(cameraIntent, REQUEST_PICTURE_CAPTURE);
 
-            File pictureFile = null;
+            @SuppressWarnings("UnusedAssignment") File pictureFile = null;
             try {
                 pictureFile = getPictureFile();
             } catch (IOException ex) {
@@ -91,10 +84,8 @@ if(!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
         }
     }
     private File getPictureFile() throws IOException {
-        String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-        String pictureFile = timeStamp;
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(pictureFile,  ".jpg", storageDir);
+        File image = File.createTempFile(new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()),  ".jpg", storageDir);
         pictureFilePath = image.getAbsolutePath();
         return image;
     }
@@ -109,12 +100,7 @@ if(!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
         }
     }
     //save captured picture in gallery
-    private View.OnClickListener saveGallery = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            addToGallery();
-        }
-    };
+    private final View.OnClickListener saveGallery = view -> addToGallery();
     private void addToGallery() {
         Intent galleryIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         File f = new File(pictureFilePath);
@@ -123,17 +109,12 @@ if(!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
         this.sendBroadcast(galleryIntent);
     }
     //save captured picture on cloud storage
-    private View.OnClickListener saveCloud = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            addToCloudStorage();
-        }
-    };
+    private final View.OnClickListener saveCloud = view -> addToCloudStorage();
     private void addToCloudStorage() {
         File f = new File(pictureFilePath);
         Uri picUri = Uri.fromFile(f);
     }
-    protected synchronized String getInstallationIdentifier() {
+    protected synchronized void getInstallationIdentifier() {
         if (deviceIdentifier == null) {
             SharedPreferences sharedPrefs = this.getSharedPreferences(
                     "DEVICE_ID", Context.MODE_PRIVATE);
@@ -142,36 +123,26 @@ if(!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
                 deviceIdentifier = UUID.randomUUID().toString();
                 SharedPreferences.Editor editor = sharedPrefs.edit();
                 editor.putString("DEVICE_ID", deviceIdentifier);
-                editor.commit();
+                editor.apply();
             }
         }
-        return deviceIdentifier;
     }
     public void uploadFile(File f1,String path){
         Uri file = Uri.fromFile(f1);
         StorageReference riversRef = mStorageRef.child(path);
 
         riversRef.putFile(file)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        // Get a URL to the uploaded content
-                        Toast.makeText(getApplicationContext(),"Uploaded",Toast.LENGTH_SHORT).show();
-                        riversRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(@NonNull Uri uri) {
-                                Toast.makeText(getApplicationContext(),"The Download url is : \n"+uri.toString(),Toast.LENGTH_SHORT).show();
-                                //downloaded url
-                            }
-                        });
-                    }
+                .addOnSuccessListener(taskSnapshot -> {
+                    // Get a URL to the uploaded content
+                    Toast.makeText(getApplicationContext(),"Uploaded",Toast.LENGTH_SHORT).show();
+                    riversRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                        Toast.makeText(getApplicationContext(), "The Download url is : \n" + uri.toString(), Toast.LENGTH_SHORT).show();
+                        //downloaded url
+                    });
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Handle unsuccessful uploads
-                        Toast.makeText(getApplicationContext(),exception.getMessage(),Toast.LENGTH_SHORT).show();
-                    }
+                .addOnFailureListener(exception -> {
+                    // Handle unsuccessful uploads
+                    Toast.makeText(getApplicationContext(),exception.getMessage(),Toast.LENGTH_SHORT).show();
                 });
     }
 }

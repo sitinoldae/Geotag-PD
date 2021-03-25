@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/a10"
     android:orientation="vertical"
-    tools:context="inorg.gsdl.plndpt.SplashActivity">
+    tools:context="inorg.gsdl.plndpt.SplashActivity"
+    tools:ignore="Overdraw">
 
     <ImageView
         android:layout_width="220dp"

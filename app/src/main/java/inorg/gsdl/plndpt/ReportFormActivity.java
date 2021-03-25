@@ -499,6 +499,7 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
                    ImageFile = imageFiles.get(0);
                    imagepath = ImageFile.getParentFile();
                    usableImageFile = new File(imagepath,appID+".jpg");
+                   //noinspection ResultOfMethodCallIgnored
                    ImageFile.renameTo(usableImageFile);
                    QToast( "Image Renamed : "+usableImageFile.getPath());
                } catch (Exception e) {
@@ -838,11 +839,6 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         if (checkPermissions()) {
@@ -854,6 +850,7 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
         getLastLocation();
 
     }
+    @SuppressLint("ShowToast")
     public void QToast(String message){
         if(ToastMaster == null)
         {

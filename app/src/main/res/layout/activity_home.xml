@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/img3"
     android:orientation="vertical"
-    tools:context="inorg.gsdl.plndpt.LoginSelector">
+    tools:context="inorg.gsdl.plndpt.LoginSelector"
+    tools:ignore="Overdraw">
 
     <Button
         android:id="@+id/report_grievence_tv"

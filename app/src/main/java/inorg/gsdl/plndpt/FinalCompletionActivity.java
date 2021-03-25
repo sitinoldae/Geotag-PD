@@ -27,7 +27,7 @@ public class FinalCompletionActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     MyListAdapter adapter;
     RequestQueue requestQueue;
-    List<User> myListData = new ArrayList<User>();
+    List<User> myListData = new ArrayList<>();
     String[] abc = {"india", "UK", "US"};
     ProgressBar progressbar3;
     private Sharedpreferences mpref;

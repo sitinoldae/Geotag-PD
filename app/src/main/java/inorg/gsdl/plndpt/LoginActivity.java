@@ -26,7 +26,6 @@ public class LoginActivity extends AppCompatActivity {
     private Sharedpreferences mpref;
     private final String VERIFIED="";
     private ProgressBar progressBar;
-    private String message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
         // String UNAPPROVED_USERS = "http://map.gsdl.org.in:8080/planningdpt/viewLogin/0";
         // String DATA_URL = "http://map.gsdl.org.in:8080/viewLogin/1";
         //Creating a string request.
-        message="";
+        String message = "";
         ProcessJsonFromUrl(ALL_USER,email,pass);
     }
     private void ProcessJsonFromUrl(String url,String email,String pass){

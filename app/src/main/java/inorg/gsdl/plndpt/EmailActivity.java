@@ -1,5 +1,6 @@
 package inorg.gsdl.plndpt;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +33,7 @@ import static android.text.TextUtils.isEmpty;
 public class EmailActivity extends AppCompatActivity {
 
     private static String dateString;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.email_app)
     EditText email_edit_et;
     long date;
@@ -62,6 +64,7 @@ public class EmailActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.email_btn_verify)
     public void clicl_email(View view) {
 
@@ -80,7 +83,7 @@ public class EmailActivity extends AppCompatActivity {
 
     private void hit_register_user() {
 
-        progressShow.showProgress(EmailActivity.this);
+        ProgressShow.showProgress(EmailActivity.this);
 
         Call<JsonElement> get_user_registered = reg_in_service.getUser_Registration(mpref.get_user_name_verif(),
                 email_edit_et.getText().toString(), mpref.get_User_Mobile_verif(), dateString);
@@ -92,7 +95,7 @@ public class EmailActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
 
-                progressShow.stopProgress(EmailActivity.this);
+                ProgressShow.stopProgress(EmailActivity.this);
 
                 if (response.isSuccessful()) {
                     JsonElement json__Element = response.body();
@@ -118,7 +121,7 @@ public class EmailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<JsonElement> call, Throwable t) {
-                progressShow.stopProgress(EmailActivity.this);
+                ProgressShow.stopProgress(EmailActivity.this);
                 Log.d("reg_in_error", t.toString());
             }
         });
@@ -211,7 +214,7 @@ public class EmailActivity extends AppCompatActivity {
 
     private void hit_login_final() {
 
-        progressShow.showProgress(EmailActivity.this);
+        ProgressShow.showProgress(EmailActivity.this);
 
         Call<JsonElement> get_log_in_data = reg_in_service.get_Log_IN_Info(mpref.get_User_Mobile_verif());
 
@@ -219,7 +222,7 @@ public class EmailActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
 
-                progressShow.stopProgress(EmailActivity.this);
+                ProgressShow.stopProgress(EmailActivity.this);
 
                 if (response.isSuccessful()) {
                     JsonElement jsonElement_login = response.body();
@@ -230,6 +233,7 @@ public class EmailActivity extends AppCompatActivity {
 
                         Log.d("_cargo_val", cargo_check_now);
 
+                        //noinspection StatementWithEmptyBody
                         if (cargo_check_now.equals("0")) {
 
                         } else {
@@ -256,7 +260,7 @@ public class EmailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<JsonElement> call, Throwable t) {
-                progressShow.stopProgress(EmailActivity.this);
+                ProgressShow.stopProgress(EmailActivity.this);
                 Log.d("log_in_error", t.toString());
             }
         });

@@ -7,7 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/a9"
-    tools:context="inorg.gsdl.plndpt.ReportFormActivity">
+    tools:context="inorg.gsdl.plndpt.ReportFormActivity"
+    tools:ignore="Overdraw">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,7 +46,8 @@
             android:singleLine="true"
             android:textSize="15sp"
             tools:targetApi="m"
-            android:autofillHints="" />
+            android:autofillHints=""
+            android:inputType="textPersonName" />
 
 
         <EditText
@@ -64,7 +66,8 @@
             android:textColorHint="#2196F3"
             android:textSize="15sp"
             tools:targetApi="m"
-            android:autofillHints="" />
+            android:autofillHints=""
+            android:inputType="phone" />
 
         <EditText
             android:id="@+id/etEmail"
@@ -81,7 +84,7 @@
             android:singleLine="true"
             android:textColorHint="#2196F3"
             android:textSize="15sp"
-            tools:targetApi="lollipop"
+            tools:targetApi="m"
             android:autofillHints="" />
 
         <LinearLayout
@@ -195,8 +198,9 @@
             android:textColorHint="@color/colorPrimary"
             android:singleLine="true"
             android:textSize="15sp"
-            tools:targetApi="lollipop"
-            android:autofillHints="" />
+            tools:targetApi="m"
+            android:autofillHints=""
+            android:inputType="textAutoComplete" />
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -238,8 +242,7 @@
                 android:layout_gravity="center"
                 android:padding="2dp"
                 android:src="@drawable/gps_position"
-                app:tint="#2196F3"
-                android:contentDescription="TODO" />
+                app:tint="#2196F3" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -283,8 +286,7 @@
                 android:layout_gravity="center"
                 android:padding="9dp"
                 android:src="@drawable/camera"
-                app:tint="#2196F3"
-                android:contentDescription="TODO" />
+                app:tint="#2196F3" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -305,14 +307,13 @@
             android:adjustViewBounds="true"
             android:rotation="90"
             android:scaleType="fitXY"
-            android:visibility="gone"
-            android:contentDescription="TODO" />
+            android:visibility="gone" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_marginVertical="10dp"
-            android:background="#80FFFFFF"
+            android:background="#D9836F"
             android:layout_gravity="center"
             android:orientation="horizontal">
             <TextView

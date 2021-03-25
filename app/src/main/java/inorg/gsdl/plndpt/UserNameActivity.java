@@ -1,5 +1,6 @@
 package inorg.gsdl.plndpt;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +18,7 @@ import static android.text.TextUtils.isEmpty;
 
 public class UserNameActivity extends AppCompatActivity {
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.username_app)
     EditText edit_name_et;
 
@@ -31,6 +33,7 @@ public class UserNameActivity extends AppCompatActivity {
         mpref = Sharedpreferences.getUserDataObj(this);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.username_btn_verify)
     public void click_on(View view) {
         if (isEmpty(edit_name_et.getText().toString())) {

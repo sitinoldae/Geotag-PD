@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="inorg.gsdl.plndpt.LoginSelector">
+    tools:context="inorg.gsdl.plndpt.LoginSelector"
+    tools:ignore="MergeRootFrame">
 
 
     <LinearLayout

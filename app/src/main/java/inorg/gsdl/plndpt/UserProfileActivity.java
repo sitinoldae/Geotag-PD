@@ -1,5 +1,6 @@
 package inorg.gsdl.plndpt;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,6 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,15 +34,19 @@ import retrofit2.Response;
 public class UserProfileActivity extends AppCompatActivity {
 
     private static String dateString;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.display_one_name)
     AppCompatEditText name_et;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.display_two_email)
     AppCompatEditText email_et;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.display_three_mobile)
     AppCompatEditText mobile_et;
 
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.edit_update_profile)
     Button update_edut_btn;
     long date;
@@ -48,7 +54,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private KeyListener listener;
     private ProgressShow progressShow;
     private ApiInterface edit_profile_service;
-    private String name, email;
+    private String name;
 
 
     @Override
@@ -152,6 +158,7 @@ public class UserProfileActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.upload_photo_tv)
     public void edit_profile_click(View view) {
 
@@ -159,7 +166,7 @@ public class UserProfileActivity extends AppCompatActivity {
         email_et.setFocusable(true);
         email_et.setEnabled(true);
 
-        email = email_et.getText().toString();
+        String email = Objects.requireNonNull(email_et.getText()).toString();
 
         name_et.setKeyListener(listener);
         name_et.setFocusable(true);
@@ -169,6 +176,7 @@ public class UserProfileActivity extends AppCompatActivity {
         update_edut_btn.setVisibility(View.VISIBLE);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.edit_update_profile)
     public void update_profile_btnn(View view) {
         Edit_profile();
@@ -178,8 +186,8 @@ public class UserProfileActivity extends AppCompatActivity {
 
         ProgressShow.showProgress(UserProfileActivity.this);
 
-        Call<JsonElement> get_user_registered = edit_profile_service.getUser_profile_update(name_et.getText().toString(),
-                email_et.getText().toString(), mpref.get_User_Mobile_verif(), dateString);
+        Call<JsonElement> get_user_registered = edit_profile_service.getUser_profile_update(Objects.requireNonNull(name_et.getText()).toString(),
+                Objects.requireNonNull(email_et.getText()).toString(), mpref.get_User_Mobile_verif(), dateString);
 
         Log.d("cv", name_et.getText().toString() + " " + email_et.getText().toString() + " " + mpref.get_User_Mobile_verif() + " " + dateString);
 
@@ -219,6 +227,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.update_profile_user)
     public void click(View view) {
 
@@ -227,7 +236,7 @@ public class UserProfileActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("com.waterflood.gsdl_app", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
-        editor.commit();
+        editor.apply();
         finish();
         startActivity(intent);
     }

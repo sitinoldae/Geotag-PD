@@ -23,18 +23,6 @@ public class ProgressShow {
         }
     }
 
-    public static void showProgress(Context context, String message) {
-
-      /*      progressSimple = new ProgressDialog(context);
-            progressSimple.setMessage(message);
-            progressSimple.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressSimple.setCancelable(true);
-            progressSimple.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
-    }
-
     public static void stopProgress(Context context) {
         try {
             progressSimple.dismiss();

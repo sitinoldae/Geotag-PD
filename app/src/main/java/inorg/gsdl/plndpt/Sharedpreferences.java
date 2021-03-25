@@ -1,5 +1,6 @@
 package inorg.gsdl.plndpt;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -28,12 +29,14 @@ public class Sharedpreferences {
     public static final List<User> myListData = null;
     private static final String PREF_NAME = "com.waterflood.gsdl_app";
     public static SharedPreferences.Editor editor;
+    @SuppressLint("StaticFieldLeak")
     private static Sharedpreferences userData = null;
     Context context;
     private SharedPreferences pref;
     private final int PRIVATE_MODE = 0;
 
 
+    @SuppressLint("CommitPrefEdits")
     public Sharedpreferences(Context c) {
         try {
             this.context = c;
@@ -57,11 +60,12 @@ public class Sharedpreferences {
         return myListData;
     }
 
+    @SuppressLint("CommitPrefEdits")
     public void clearAll(Context c) {
         this.context = c;
         pref = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = pref.edit();
-        pref.edit().clear().commit();
+        pref.edit().clear().apply();
     }
 
     public String get_otp_verification() {
@@ -73,6 +77,7 @@ public class Sharedpreferences {
             editor.putString(Tag_otp_verification, otp_verification);
             editor.commit();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -85,6 +90,7 @@ public class Sharedpreferences {
             editor.putString(Tag_user_name_verif, user_name_verif);
             editor.commit();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -97,6 +103,7 @@ public class Sharedpreferences {
             editor.putString(Tag_User_Mobile_verif, User_Mobile_verif);
             editor.commit();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -109,6 +116,7 @@ public class Sharedpreferences {
             editor.putString(Tag_user_email_verif, user_email_verif);
             editor.commit();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -121,6 +129,7 @@ public class Sharedpreferences {
             editor.putString(Tag_user_id, user_id);
             editor.commit();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -133,6 +142,7 @@ public class Sharedpreferences {
             editor.putString(Tag_form_name, form_name);
             editor.commit();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -145,6 +155,7 @@ public class Sharedpreferences {
             editor.putString(Tag_search_latitude, search_latitude);
             editor.commit();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -157,6 +168,7 @@ public class Sharedpreferences {
             editor.putString(Tag_search_Longitude, search_Longitude);
             editor.commit();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -169,6 +181,7 @@ public class Sharedpreferences {
             editor.putString(Division, division);
             editor.commit();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -181,6 +194,7 @@ public class Sharedpreferences {
             editor.putString(circle_concerned_officer, circle_concerned_offi);
             editor.commit();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -193,6 +207,7 @@ public class Sharedpreferences {
             editor.putString(circle_concerned_officer_mob, circle_concerned_officer_m);
             editor.commit();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -205,6 +220,7 @@ public class Sharedpreferences {
             editor.putString(officeaddress, officeaddre);
             editor.commit();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -217,6 +233,7 @@ public class Sharedpreferences {
             editor.putString(emailofficer, emailoff);
             editor.commit();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -229,6 +246,7 @@ public class Sharedpreferences {
             editor.putString(images, imag);
             editor.commit();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
