@@ -3,6 +3,7 @@
 <RelativeLayout
 
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,30 +20,39 @@
         android:orientation="vertical"
         tools:ignore="UselessParent">
         <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
         android:shadowColor="#000"
         android:shadowDx="5"
+        android:textAlignment="center"
         android:shadowDy="5"
         android:paddingHorizontal="20dp"
+        android:layout_marginVertical="30dp"
         android:text="Two Factor Authentication"
         android:textColor="#1E88E5"
         android:textSize="30sp"
         android:layout_gravity="top|center"
         android:textStyle="normal" />
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_two_factor"
+            app:tint="@color/black" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:fontFamily="sans-serif-black"
+            android:paddingHorizontal="30sp"
             android:gravity="center"
+            android:textAlignment="center"
             android:shadowColor="#fff"
             android:shadowDx="5"
             android:shadowDy="5"
             android:text="A One Time Password will be sent to your registered mobile number"
-            android:textColor="#000"
-            android:paddingBottom="100dp"
+            android:textColor="#9000"
             android:textSize="15sp"
             android:textStyle="italic" />
         <TextView

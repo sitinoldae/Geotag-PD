@@ -59,5 +59,6 @@ dependencies {
     implementation 'com.github.jkwiecien:EasyImage:2.1.1' //do not update this library
     implementation 'com.github.tajchert:nammu:1.1.1'
     implementation 'id.zelory:compressor:3.0.0'
-
+    implementation 'com.github.rrsaikat:ConnectionStatusLikeYoutube:v1.0.1'
+    implementation 'com.github.matecode:Snacky:1.1.5'
 }

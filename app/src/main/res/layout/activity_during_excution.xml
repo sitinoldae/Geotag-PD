@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context="inorg.gsdl.plndpt.DuringExcutionActivity"
     tools:ignore="MergeRootFrame">
 
@@ -17,6 +18,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10.0sp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical" />

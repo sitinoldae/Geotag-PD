@@ -2,30 +2,55 @@
 
  import android.content.Intent;
  import android.os.Bundle;
+ import android.text.Editable;
  import android.text.TextUtils;
+ import android.text.TextWatcher;
  import android.view.View;
  import android.widget.Button;
  import android.widget.EditText;
+ import android.widget.ImageView;
  import android.widget.ProgressBar;
  import android.widget.TextView;
  import android.widget.Toast;
 
+ import androidx.appcompat.app.AlertDialog;
  import androidx.appcompat.app.AppCompatActivity;
 
  import com.android.volley.RequestQueue;
  import com.android.volley.toolbox.JsonArrayRequest;
  import com.android.volley.toolbox.Volley;
  import com.example.plndpt.R;
+ import com.google.android.material.snackbar.Snackbar;
 
  import org.json.JSONException;
  import org.json.JSONObject;
 
-public class LoginActivity extends AppCompatActivity {
+ import de.mateware.snacky.Snacky;
+ import rezwan.pstu.cse12.youtubeonlinestatus.recievers.NetworkChangeReceiver;
+
+ public class LoginActivity extends AppCompatActivity {
     EditText etemail, etpass;
     int c = 0;
     private Sharedpreferences mpref;
     private final String VERIFIED="";
     private ProgressBar progressBar;
+    private final boolean username_verified=false;
+    String ALL_USER = "http://map.gsdl.org.in:8080/planningdpt/dptlogin/viewAllLogin";
+    private ImageView iv_verification;
+     private Button check_username_btn;
+     private Button btnlogin;
+     private ImageView iv_verification2;
+
+     @Override
+    protected void onStart() {
+        try {
+            NetworkChangeReceiver changeReceiver = new NetworkChangeReceiver(this);
+            changeReceiver.build();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        super.onStart();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +58,34 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activityloginuser);
         TextView createnewac = findViewById(R.id.createnewac);
         etemail = findViewById(R.id.etemail);
+        TextView tvpass = findViewById(R.id.tv_password);
         etpass = findViewById(R.id.mypass);
         progressBar = findViewById(R.id.progressLogin);
+        check_username_btn = findViewById(R.id.checkUsernameBtn);
         mpref = Sharedpreferences.getUserDataObj(this);
-        Button btnlogin = findViewById(R.id.btnlogin);
+        iv_verification=(findViewById(R.id.iv_verification));
+        iv_verification2=(findViewById(R.id.iv_verification2));
+         btnlogin = findViewById(R.id.btnlogin);
+        check_username_btn.setOnClickListener(v ->
+                VerifyUsername(ALL_USER,etemail.getText().toString()));
+
         btnlogin.setOnClickListener(v -> logIn());
         createnewac.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, RegisterationActivity.class)));
+        etemail.addTextChangedListener(new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            VerifyUsername(ALL_USER,s.toString());
+        }
+    });
     }
 
     private void logIn() {
@@ -57,11 +104,9 @@ public class LoginActivity extends AppCompatActivity {
             etpass.requestFocus();
             return;
         }
-        String ALL_USER = "http://map.gsdl.org.in:8080/planningdpt/dptlogin/viewAllLogin";
         // String UNAPPROVED_USERS = "http://map.gsdl.org.in:8080/planningdpt/viewLogin/0";
         // String DATA_URL = "http://map.gsdl.org.in:8080/viewLogin/1";
         //Creating a string request.
-        String message = "";
         ProcessJsonFromUrl(ALL_USER,email,pass);
     }
     private void ProcessJsonFromUrl(String url,String email,String pass){
@@ -90,11 +135,11 @@ public class LoginActivity extends AppCompatActivity {
                                     proceedLogin(intent,mpref.get_user_name_verif());
                                     return;
                                 }else if(userStatus.matches("0")){
-                                    Qtoast("User not approved ! Contact administrator");
+                                    Qsnack("User not approved ! Contact administrator");
                                     return;
                                 }
                             }else if(i==response.length()-1){
-                               Qtoast("Login Failed ! Check Credentials");
+                               Qsnack("Login Failed ! Check Credentials");
                                hideProgressBar();
                                 return;
                                 }
@@ -113,6 +158,60 @@ public class LoginActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+     @Override
+     public void onBackPressed() {
+         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+         builder.setMessage("Do you want to start from the beginning ?")
+                 .setCancelable(false)
+                 .setPositiveButton("Yes", (dialog, id) -> {
+                     try {
+                         etemail.setText("");
+                         etpass.setText("");
+                     } catch (Exception e) {
+                         e.printStackTrace();
+                     }
+                     LoginActivity.this.recreate();
+                 })
+                 .setNegativeButton("No", (dialog, id) -> dialog.cancel());
+         AlertDialog alert = builder.create();
+         alert.show();
+
+     }
+
+     private void VerifyUsername(String url, String email){
+         showProgressBar();
+        JsonArrayRequest stringRequest = new JsonArrayRequest(url,
+                response -> {
+                    JSONObject object;
+                    try {
+                        for (int i = 0; i < response.length(); i++) {
+                            object = response.getJSONObject(i);
+                            String userId = object.getString("userid");
+                            if (email.equalsIgnoreCase(userId)) {
+                                Toast.makeText(getApplicationContext(),"Username Verified",Toast.LENGTH_LONG).show();
+                                etemail.setVisibility(View.GONE);
+                                etpass.setVisibility(View.VISIBLE);
+                                btnlogin.setVisibility(View.VISIBLE);
+                                iv_verification2.setVisibility(View.VISIBLE);
+                                iv_verification.setVisibility(View.GONE);
+                                check_username_btn.setVisibility(View.GONE);
+                              }else {
+                                iv_verification2.setVisibility(View.GONE);
+                                iv_verification.setVisibility(View.VISIBLE);}
+                        }
+                    } catch (JSONException e) {
+                        hideProgressBar();
+                        e.printStackTrace();
+                    }
+                    hideProgressBar();
+                },
+                error -> System.out.println("Error :" + error.getMessage()));
+
+        //Creating a request queue
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        //Adding request to the queue
+        requestQueue.add(stringRequest);
+    }
     private void hideProgressBar() {
         try {
             if(progressBar.getVisibility()==View.VISIBLE){
@@ -121,14 +220,29 @@ public class LoginActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    } private void showProgressBar() {
+        try {
+            if(progressBar.getVisibility()==View.GONE|progressBar==null){
+                progressBar.setVisibility(View.VISIBLE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void proceedLogin(Intent intent,String user) {
     startActivity(intent);
-    Qtoast("Login Success !\nWelcome "+user);
+    Qsnack("Login Success !\nWelcome "+user);
     }
 
     private void Qtoast(String s) {
         Toast.makeText(getApplicationContext(),s,Toast.LENGTH_SHORT).show();
+    }
+    private void Qsnack(String message){
+        Snackbar warningSnackBar = Snacky.builder()
+                .setActivity(LoginActivity.this)
+                .setText(message)
+                .setDuration(Snacky.LENGTH_LONG).build();
+        warningSnackBar.show();
     }
 }

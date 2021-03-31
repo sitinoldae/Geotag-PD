@@ -75,6 +75,7 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+import rezwan.pstu.cse12.youtubeonlinestatus.recievers.NetworkChangeReceiver;
 
 public class ReportFormActivity extends AppCompatActivity implements Callback<User>, Runnable {
 
@@ -111,7 +112,16 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
     private boolean ImageUploaded=false;
     private ProgressBar masterProgressBar;
     private String USABLE_IMAGE_DOWNLOAD_LINK="";
-
+    @Override
+    protected void onStart() {
+        try {
+            NetworkChangeReceiver changeReceiver = new NetworkChangeReceiver(this);
+            changeReceiver.build();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        super.onStart();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
