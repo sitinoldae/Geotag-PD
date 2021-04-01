@@ -8,8 +8,8 @@ android {
         applicationId "inorg.gsdl.plndpt"
         minSdkVersion 16
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "2.0"
         multiDexEnabled true
     }
     buildTypes {
@@ -60,5 +60,7 @@ dependencies {
     implementation 'com.github.tajchert:nammu:1.1.1'
     implementation 'id.zelory:compressor:3.0.0'
     implementation 'com.github.rrsaikat:ConnectionStatusLikeYoutube:v1.0.1'
-    implementation 'com.github.matecode:Snacky:1.1.5'
+    implementation 'com.github.matecode:Snacky:1.1.5' //todo
+    implementation 'com.github.onurkagan:KSnack:1.1.2'
+
 }

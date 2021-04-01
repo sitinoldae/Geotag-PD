@@ -2,6 +2,7 @@ package inorg.gsdl.plndpt;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -80,7 +81,7 @@ import rezwan.pstu.cse12.youtubeonlinestatus.recievers.NetworkChangeReceiver;
 public class ReportFormActivity extends AppCompatActivity implements Callback<User>, Runnable {
 
     public static User user = new User();
-
+    ApplicationUtility applicationUtility;
     FusedLocationProviderClient fusedLocationProviderClient;
 
     String[] status = {"NO", "YES"};
@@ -126,6 +127,7 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_form);
+        applicationUtility = new ApplicationUtility();
         setUIRef();
         generateAppId();
         masterProgressBar = findViewById(R.id.progressbarReport);
@@ -246,7 +248,7 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
         Calendar calender = Calendar.getInstance();
         appID = "UAP" + random.nextInt(1000) + calender.get(Calendar.YEAR) + "" + (calender.get(Calendar.MONTH) + 1) + "" + calender.get(Calendar.DATE) + "" +
                 (calender.get(Calendar.HOUR)) + "" + calender.get(Calendar.MINUTE) + "" + calender.get(Calendar.SECOND);
-        QToast( "Application Id generated: "+appID);
+        applicationUtility.showSnack((Activity) getApplicationContext(),"Application Id generated: "+appID);
     }
 
     private void setUIRef() {
@@ -435,12 +437,12 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
 
                         } catch (JSONException e) {
                         System.out.println("Json Error:" + e.getMessage());
-                        QToast( "Json Error :"+e.getMessage());
+                        applicationUtility.showSnack((Activity) getApplicationContext(),"Json Error :"+e.getMessage());
                     }
                 },
                 error -> {
                     System.out.println("Volley Error :" + error.getMessage());
-                    QToast( "Json Error :"+error.getMessage());
+                    applicationUtility.showSnack((Activity) getApplicationContext(),"Json Error :"+error.getMessage());
                 });
 
         RequestQueue requestQueue2 = Volley.newRequestQueue(this);
@@ -477,7 +479,7 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
                     }
                     @Override
                     public void permissionRefused() {
-                        QToast( "Cannot take photos because camera permission was refused !");
+                        applicationUtility.showSnack(ReportFormActivity.this,"Cannot take photos because camera permission was refused !");
                     }
                 });
             }else if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
@@ -502,7 +504,7 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
        EasyImage.handleActivityResult(requestCode, resultCode, data, this, new DefaultCallback() {
            @Override
            public void onImagesPicked(@NonNull List<File> imageFiles, EasyImage.ImageSource source, int type) {
-               QToast( "The number of files returned : " + imageFiles.size());
+               applicationUtility.showSnack((Activity) getApplicationContext(),"The number of files returned : " + imageFiles.size());
                File ImageFile;
                File imagepath;
                try {
@@ -511,18 +513,18 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
                    usableImageFile = new File(imagepath,appID+".jpg");
                    //noinspection ResultOfMethodCallIgnored
                    ImageFile.renameTo(usableImageFile);
-                   QToast( "Image Renamed : "+usableImageFile.getPath());
+                   applicationUtility.showSnack((Activity) getApplicationContext(),"Image Renamed : "+usableImageFile.getPath());
                } catch (Exception e) {
                    e.printStackTrace();
                }
-               QToast( "File Info :\n"+usableImageFile.getPath()+"\n"+usableImageFile.getPath());
+               applicationUtility.showSnack((Activity) getApplicationContext(),"File Info :\n"+usableImageFile.getPath()+"\n"+usableImageFile.getPath());
                try {
                    ivReportImage.setVisibility(View.VISIBLE);
                    ivReportImage.setImageBitmap(BitmapFactory.decodeFile(usableImageFile.getPath()));
-                   QToast( "Image loaded " + usableImageFile.getName());
+                   applicationUtility.showSnack((Activity) getApplicationContext(),"Image loaded " + usableImageFile.getName());
                    ImageLoaded=true;
                } catch (Exception e) {
-                   QToast( "Error loading Image: " + e.getMessage());
+                   applicationUtility.showSnack((Activity) getApplicationContext(),"Error loading Image: " + e.getMessage());
                    e.printStackTrace();
                }
                if(ImageLoaded){
@@ -539,13 +541,13 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
         Uri UsableFileUri = Uri.fromFile(usableImageFile);
         StorageReference uploadReference = storageRef.child("images/"+UsableFileUri.getLastPathSegment());
         UploadTask uploadTask = uploadReference.putFile(UsableFileUri);
-        QToast( "Uploading "+usableImageFile.getName()+" to firebase");
+        applicationUtility.showSnack(this,"Uploading "+usableImageFile.getName()+" to firebase");
 // Register observers to listen for when the download is done or if it fails
         uploadTask.addOnFailureListener(exception -> {
             // Handle unsuccessful uploads
-            QToast( "Uploading "+usableImageFile.getName()+" to firebase Failed\n"+exception.getMessage());
+            applicationUtility.showSnack((Activity) getApplicationContext(),"Uploading "+usableImageFile.getName()+" to firebase Failed\n"+exception.getMessage());
         }).addOnSuccessListener(taskSnapshot -> {
-            QToast( "Upload "+usableImageFile.getName()+" to firebase Success !");
+            applicationUtility.showSnack((Activity) getApplicationContext(),"Upload "+usableImageFile.getName()+" to firebase Success !");
             uploadReference.getDownloadUrl().addOnSuccessListener(uri -> {
                 QToast("Download url : "+uri.toString());
                 USABLE_IMAGE_DOWNLOAD_LINK=uri.toString();
@@ -594,7 +596,7 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
                 alert.show();
             } catch (Exception e) {
                 e.printStackTrace();
-                QToast( "Error : " + e.getMessage());
+                applicationUtility.showSnack(this,"Error : " + e.getMessage());
             }
         }else {
             QToast("Please Select ISSUE/GEOTAG image first");
@@ -622,14 +624,14 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
         current_btn_location.setOnClickListener(v -> {
 //nit
             if (!checkPermissions()) {
-                QToast( "Check GPS or Related Permission");
+                applicationUtility.showSnack(this,"Check GPS or Related Permission");
                 requestPermissions();
             } else {
                 try {
                     getLastLocation();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    QToast( "Error : " + e.getMessage());
+                    applicationUtility.showSnack(this,"Error : " + e.getMessage());
                 }
             }
             alertDialog.dismiss();
@@ -658,7 +660,7 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
             alert.show();
         } catch (Exception e) {
             e.printStackTrace();
-            QToast( "Error :" + e.getMessage());
+            applicationUtility.showSnack((Activity) getApplicationContext(),"Error :" + e.getMessage());
         }
     }
 
@@ -772,7 +774,7 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
                                     location_tv.setVisibility(View.GONE);
                                 }
                                 System.out.println("Address >> " + address);
-                                QToast( "" + location.getLatitude() + "" + location.getLongitude() + "");
+                                applicationUtility.showSnack((Activity) getApplicationContext(),"" + location.getLatitude() + "" + location.getLongitude() + "");
                             }
                         } catch (IOException e) {
                             e.printStackTrace();

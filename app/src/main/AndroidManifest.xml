@@ -67,7 +67,7 @@
         <activity
             android:name="inorg.gsdl.plndpt.LoginActivity"
             android:screenOrientation="sensorPortrait"
-            android:windowSoftInputMode="adjustPan"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
             android:label="@string/title_activity_login" />
 
         <activity
