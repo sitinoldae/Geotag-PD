@@ -248,7 +248,7 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
         Calendar calender = Calendar.getInstance();
         appID = "UAP" + random.nextInt(1000) + calender.get(Calendar.YEAR) + "" + (calender.get(Calendar.MONTH) + 1) + "" + calender.get(Calendar.DATE) + "" +
                 (calender.get(Calendar.HOUR)) + "" + calender.get(Calendar.MINUTE) + "" + calender.get(Calendar.SECOND);
-        applicationUtility.showSnack((Activity) getApplicationContext(),"Application Id generated: "+appID);
+        applicationUtility.showSnack(ReportFormActivity.this,"Application Id generated: "+appID);
     }
 
     private void setUIRef() {
@@ -774,7 +774,7 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
                                     location_tv.setVisibility(View.GONE);
                                 }
                                 System.out.println("Address >> " + address);
-                                applicationUtility.showSnack((Activity) getApplicationContext(),"" + location.getLatitude() + "" + location.getLongitude() + "");
+                                applicationUtility.showSnack(ReportFormActivity.this,"" + location.getLatitude() + "" + location.getLongitude() + "");
                             }
                         } catch (IOException e) {
                             e.printStackTrace();

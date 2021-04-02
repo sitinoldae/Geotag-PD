@@ -228,12 +228,4 @@
     private void Qtoast(String s) {
         Toast.makeText(getApplicationContext(),s,Toast.LENGTH_SHORT).show();
     }
-    private void Qsnack(String message){
-
-        Snackbar warningSnackBar = Snacky.builder()
-                .setActivity(LoginActivity.this)
-                .setText(message)
-                .setDuration(Snacky.LENGTH_LONG).build();
-        warningSnackBar.show();
-    }
 }

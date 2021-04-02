@@ -14,14 +14,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class HomeActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+      //  setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
-
-    }
+       }
 
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.report_grievence_tv)
@@ -50,7 +48,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void quit() {
-
         Intent start = new Intent(Intent.ACTION_MAIN);
         start.addCategory(Intent.CATEGORY_HOME);
         start.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

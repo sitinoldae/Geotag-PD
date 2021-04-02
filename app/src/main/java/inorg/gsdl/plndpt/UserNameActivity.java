@@ -19,7 +19,7 @@ import static android.text.TextUtils.isEmpty;
 public class UserNameActivity extends AppCompatActivity {
 
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.username_app)
+    //@BindView(R.id.username_app)
     EditText edit_name_et;
 
     private Sharedpreferences mpref;
@@ -27,14 +27,13 @@ public class UserNameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_name);
-
+        //setContentView(R.layout.activity_user_name);
         ButterKnife.bind(this);
         mpref = Sharedpreferences.getUserDataObj(this);
     }
 
     @SuppressLint("NonConstantResourceId")
-    @OnClick(R.id.username_btn_verify)
+    //@OnClick(R.id.username_btn_verify)
     public void click_on(View view) {
         if (isEmpty(edit_name_et.getText().toString())) {
             edit_name_et.setError("please enter name");

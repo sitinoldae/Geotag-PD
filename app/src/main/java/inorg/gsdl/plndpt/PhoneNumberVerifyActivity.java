@@ -32,7 +32,7 @@ public class PhoneNumberVerifyActivity extends AppCompatActivity {
 
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.enter_otp_et)
+    //@BindView(R.id.enter_otp_et)
     EditText otp_edit_txt;
 
     private Sharedpreferences mpref;
@@ -46,7 +46,7 @@ public class PhoneNumberVerifyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_phone_number_verify);
+        //setContentView(R.layout.activity_phone_number_verify);
 
         ButterKnife.bind(this);
         mpref = Sharedpreferences.getUserDataObj(this);
@@ -63,8 +63,8 @@ public class PhoneNumberVerifyActivity extends AppCompatActivity {
         checkAndRequestPermissions();// carry on the normal flow, as the case of  permissions  granted.
     }
 
-    @SuppressLint("NonConstantResourceId")
-    @OnClick(R.id.verify_num_btn)
+    //@SuppressLint("NonConstantResourceId")
+    //@OnClick(R.id.verify_num_btn)
     public void btn(View view) {
         // hit_number_for_otp();
 

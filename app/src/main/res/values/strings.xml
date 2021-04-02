@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">GeoTag Planning</string>
     <string name="title_activity_login">LoginActivity</string>
-    <string name="invalid_email">Invalid EmailId</string>
     <string name="spinner_title">Select Issue</string>
 </resources>

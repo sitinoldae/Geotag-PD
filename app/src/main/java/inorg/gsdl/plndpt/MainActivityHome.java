@@ -20,12 +20,6 @@ public class MainActivityHome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_mainhome);
-        findViewById(R.id.user_profille).setOnLongClickListener(view -> {
-            Intent intent = new Intent(MainActivityHome.this, CapturePictureActivity.class);
-            startActivity(intent);
-            return true;
-        });
-
         ButterKnife.bind(this);
 
     }
@@ -34,7 +28,6 @@ public class MainActivityHome extends AppCompatActivity {
     @OnClick(R.id.report_grievence_tv)
     public void repost_form(View v) {
         Intent intent = new Intent(MainActivityHome.this, ReportFormActivity.class);
-
         startActivity(intent);
     }
 

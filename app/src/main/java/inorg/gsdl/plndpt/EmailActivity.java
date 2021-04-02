@@ -34,7 +34,7 @@ public class EmailActivity extends AppCompatActivity {
 
     private static String dateString;
     @SuppressLint("NonConstantResourceId")
-    @BindView(R.id.email_app)
+    //@BindView(R.id.email_app)
     EditText email_edit_et;
     long date;
     private Sharedpreferences mpref;
@@ -45,7 +45,7 @@ public class EmailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_email);
+        //setContentView(R.layout.activity_email);
 
         ButterKnife.bind(this);
 
@@ -65,7 +65,7 @@ public class EmailActivity extends AppCompatActivity {
     }
 
     @SuppressLint("NonConstantResourceId")
-    @OnClick(R.id.email_btn_verify)
+   // @OnClick(R.id.email_btn_verify)
     public void clicl_email(View view) {
 
         if (isEmpty(email_edit_et.getText().toString())) {
@@ -207,7 +207,7 @@ public class EmailActivity extends AppCompatActivity {
 
     public void addValidationToViews() {
 
-        awesomeValidation.addValidation(EmailActivity.this, R.id.email_app, Patterns.EMAIL_ADDRESS, R.string.invalid_email);
+       // awesomeValidation.addValidation(EmailActivity.this, R.id.email_app, Patterns.EMAIL_ADDRESS, R.string.invalid_email);
 
     }
 

@@ -15,7 +15,6 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
     tools:ignore="ScopedStorage" />
@@ -33,6 +32,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute"
+        android:name="inorg.gsdl.plndpt.YouApplication"
         android:fullBackupContent="@xml/backup_descriptor">
 
         <activity
@@ -40,10 +40,6 @@
             android:screenOrientation="sensorPortrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity
-            android:name="inorg.gsdl.plndpt.CapturePictureActivity"
-            android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="inorg.gsdl.plndpt.DuringExcutionActivity"
             android:screenOrientation="sensorPortrait"

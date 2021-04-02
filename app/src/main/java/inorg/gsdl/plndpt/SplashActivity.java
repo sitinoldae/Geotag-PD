@@ -15,7 +15,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class SplashActivity extends AppCompatActivity {
-
+ApplicationUtility applicationUtility;
 
     @SuppressLint("WrongConstant")
     @Override
@@ -29,14 +29,14 @@ public class SplashActivity extends AppCompatActivity {
                     }
                 });
         setContentView(R.layout.activity_splash);
+        applicationUtility=new ApplicationUtility();
         Timer t = new Timer();
         boolean checkConnection = new ApplicationUtility().checkConnection(SplashActivity.this);
         int splace_time = 1500;
         if (checkConnection) {
             t.schedule(new splash(), splace_time);
         } else {
-            Toast.makeText(SplashActivity.this,
-                    "connection not found...please check internet connection", splace_time).show();
+            applicationUtility.showSnack(SplashActivity.this,"connection not found...please check internet connection");
         }
     }
 
@@ -53,7 +53,8 @@ public class SplashActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            runOnUiThread(() -> Toast.makeText(getApplicationContext(),"Welcome to GeoTag Planning",Toast.LENGTH_SHORT).show());
+            runOnUiThread(() ->
+            applicationUtility.showSnack(SplashActivity.this,"Welcome to GeoTag Planning"));
             Intent i = new Intent(SplashActivity.this, LoginSelector.class);
             finish();
             startActivity(i);
