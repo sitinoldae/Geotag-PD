@@ -62,9 +62,9 @@
 
         <activity
             android:name="inorg.gsdl.plndpt.LoginActivity"
+            android:label="@string/title_activity_login"
             android:screenOrientation="sensorPortrait"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
-            android:label="@string/title_activity_login" />
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
 
         <activity
             android:name="inorg.gsdl.plndpt.VerifyOTPActivity"
@@ -129,12 +129,12 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <receiver android:name="inorg.gsdl.plndpt.MySMSBroadCastReceiver"
+    <!--    <receiver android:name="inorg.gsdl.plndpt.MySMSBroadCastReceiver"
             tools:ignore="UnprotectedSMSBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
-        </receiver>
+        </receiver>-->
         <!-- cache directory file provider paths -->
         <provider
             android:name="androidx.core.content.FileProvider"

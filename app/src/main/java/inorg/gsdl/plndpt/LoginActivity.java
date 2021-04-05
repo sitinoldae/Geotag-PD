@@ -18,12 +18,10 @@
  import com.android.volley.toolbox.JsonArrayRequest;
  import com.android.volley.toolbox.Volley;
  import com.example.plndpt.R;
- import com.google.android.material.snackbar.Snackbar;
 
  import org.json.JSONException;
  import org.json.JSONObject;
 
- import de.mateware.snacky.Snacky;
  import rezwan.pstu.cse12.youtubeonlinestatus.recievers.NetworkChangeReceiver;
 
  public class LoginActivity extends AppCompatActivity {
@@ -121,7 +119,16 @@
                                     return;
                                 }else if(userStatus.matches("0")){
                                     applicationUtility.showSnack(LoginActivity.this,"User not approved ! Contact administrator");
-                                    return;
+                                    // TODO: 05-04-2021
+                                    String Description = object.getString("description");
+                                    if(!Description.isEmpty()){
+                                        showUserUnapproved(Description);
+                                    }else {
+                                        applicationUtility.showSnack(LoginActivity.this,"User Description is " +
+                                                "NULL");
+                                        return;
+                                    }
+
                                 }
                             }else if(i==response.length()-1){
                                 applicationUtility.showSnack(LoginActivity.this,"Login Failed ! Check Credentials");
@@ -142,6 +149,15 @@
         //Adding request to the queue
         requestQueue.add(stringRequest);
     }
+
+     private void showUserUnapproved(String Description) {
+         AlertDialog alertDialog;
+         		alertDialog = new AlertDialog.Builder(LoginActivity.this)
+                .setTitle("User Not Approved ! contact Admin")
+                .setMessage("Reason : "+Description)
+                .create();
+         		alertDialog.show();
+     }
 
      @Override
      public void onBackPressed() {
