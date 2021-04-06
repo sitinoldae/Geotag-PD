@@ -2,7 +2,6 @@ package inorg.gsdl.plndpt;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -81,9 +80,9 @@ import rezwan.pstu.cse12.youtubeonlinestatus.recievers.NetworkChangeReceiver;
 public class ReportFormActivity extends AppCompatActivity implements Callback<User>, Runnable {
 
     public static User user = new User();
-    ApplicationUtility applicationUtility;
-    FusedLocationProviderClient fusedLocationProviderClient;
 
+    FusedLocationProviderClient fusedLocationProviderClient;
+    ApplicationUtility applicationUtility;
     String[] status = {"NO", "YES"};
     HashMap<String, String> hashMap;
     AlertDialog.Builder builder;
@@ -113,6 +112,8 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
     private boolean ImageUploaded=false;
     private ProgressBar masterProgressBar;
     private String USABLE_IMAGE_DOWNLOAD_LINK="";
+    private String message="";
+
     @Override
     protected void onStart() {
         try {
@@ -127,8 +128,8 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_form);
-        applicationUtility = new ApplicationUtility();
         setUIRef();
+        applicationUtility=new ApplicationUtility();
         generateAppId();
         masterProgressBar = findViewById(R.id.progressbarReport);
         int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -248,6 +249,7 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
         Calendar calender = Calendar.getInstance();
         appID = "UAP" + random.nextInt(1000) + calender.get(Calendar.YEAR) + "" + (calender.get(Calendar.MONTH) + 1) + "" + calender.get(Calendar.DATE) + "" +
                 (calender.get(Calendar.HOUR)) + "" + calender.get(Calendar.MINUTE) + "" + calender.get(Calendar.SECOND);
+        /*QToast( "Application Id generated: "+appID);*/
         applicationUtility.showSnack(ReportFormActivity.this,"Application Id generated: "+appID);
     }
 
@@ -437,12 +439,12 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
 
                         } catch (JSONException e) {
                         System.out.println("Json Error:" + e.getMessage());
-                        applicationUtility.showSnack((Activity) getApplicationContext(),"Json Error :"+e.getMessage());
+                      //  QToast( "Json Error :"+e.getMessage());
                     }
                 },
                 error -> {
                     System.out.println("Volley Error :" + error.getMessage());
-                    applicationUtility.showSnack((Activity) getApplicationContext(),"Json Error :"+error.getMessage());
+                  //  QToast( "Json Error :"+error.getMessage());
                 });
 
         RequestQueue requestQueue2 = Volley.newRequestQueue(this);
@@ -479,7 +481,9 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
                     }
                     @Override
                     public void permissionRefused() {
-                        applicationUtility.showSnack(ReportFormActivity.this,"Cannot take photos because camera permission was refused !");
+                         message= "Cannot take photos because camera permission was refused !";
+                        applicationUtility.showSnack(ReportFormActivity.this,message);
+
                     }
                 });
             }else if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
@@ -504,7 +508,8 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
        EasyImage.handleActivityResult(requestCode, resultCode, data, this, new DefaultCallback() {
            @Override
            public void onImagesPicked(@NonNull List<File> imageFiles, EasyImage.ImageSource source, int type) {
-               applicationUtility.showSnack((Activity) getApplicationContext(),"The number of files returned : " + imageFiles.size());
+                message= "The number of files returned : " + imageFiles.size();
+               applicationUtility.showSnack(ReportFormActivity.this,message);
                File ImageFile;
                File imagepath;
                try {
@@ -513,18 +518,22 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
                    usableImageFile = new File(imagepath,appID+".jpg");
                    //noinspection ResultOfMethodCallIgnored
                    ImageFile.renameTo(usableImageFile);
-                   applicationUtility.showSnack((Activity) getApplicationContext(),"Image Renamed : "+usableImageFile.getPath());
+                   message= "Image Renamed : "+usableImageFile.getPath();
+                   applicationUtility.showSnack(ReportFormActivity.this,message);
                } catch (Exception e) {
                    e.printStackTrace();
                }
-               applicationUtility.showSnack((Activity) getApplicationContext(),"File Info :\n"+usableImageFile.getPath()+"\n"+usableImageFile.getPath());
+               message= "File Info :\n"+usableImageFile.getPath()+"\n"+usableImageFile.getPath();
+               applicationUtility.showSnack(ReportFormActivity.this,message);
                try {
                    ivReportImage.setVisibility(View.VISIBLE);
                    ivReportImage.setImageBitmap(BitmapFactory.decodeFile(usableImageFile.getPath()));
-                   applicationUtility.showSnack((Activity) getApplicationContext(),"Image loaded " + usableImageFile.getName());
+                   message= "Image loaded " + usableImageFile.getName();
+                   applicationUtility.showSnack(ReportFormActivity.this,message);
                    ImageLoaded=true;
                } catch (Exception e) {
-                   applicationUtility.showSnack((Activity) getApplicationContext(),"Error loading Image: " + e.getMessage());
+                   message="Error loading Image: " + e.getMessage();
+                   applicationUtility.showSnack(ReportFormActivity.this,message);
                    e.printStackTrace();
                }
                if(ImageLoaded){
@@ -541,15 +550,20 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
         Uri UsableFileUri = Uri.fromFile(usableImageFile);
         StorageReference uploadReference = storageRef.child("images/"+UsableFileUri.getLastPathSegment());
         UploadTask uploadTask = uploadReference.putFile(UsableFileUri);
-        applicationUtility.showSnack(this,"Uploading "+usableImageFile.getName()+" to firebase");
+        message="Uploading "+usableImageFile.getName()+" to firebase";
+        applicationUtility.showSnack(ReportFormActivity.this,message);
 // Register observers to listen for when the download is done or if it fails
         uploadTask.addOnFailureListener(exception -> {
             // Handle unsuccessful uploads
-            applicationUtility.showSnack((Activity) getApplicationContext(),"Uploading "+usableImageFile.getName()+" to firebase Failed\n"+exception.getMessage());
+            message="Uploading "+usableImageFile.getName()+" to firebase Failed\n"+exception.getMessage();
+            applicationUtility.showSnack(ReportFormActivity.this,message);
         }).addOnSuccessListener(taskSnapshot -> {
-            applicationUtility.showSnack((Activity) getApplicationContext(),"Upload "+usableImageFile.getName()+" to firebase Success !");
+            message="Upload "+usableImageFile.getName()+" to firebase Success !";
+            applicationUtility.showSnack(ReportFormActivity.this,message);
+
             uploadReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                QToast("Download url : "+uri.toString());
+                message="Download url : "+uri.toString();
+                applicationUtility.showSnack(ReportFormActivity.this,message);
                 USABLE_IMAGE_DOWNLOAD_LINK=uri.toString();
                 tv_progress.setText("Geotag Image Uploaded !");
                 ImageUploaded=true;
@@ -596,7 +610,7 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
                 alert.show();
             } catch (Exception e) {
                 e.printStackTrace();
-                applicationUtility.showSnack(this,"Error : " + e.getMessage());
+                //QToast( "Error : " + e.getMessage());
             }
         }else {
             QToast("Please Select ISSUE/GEOTAG image first");
@@ -624,14 +638,14 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
         current_btn_location.setOnClickListener(v -> {
 //nit
             if (!checkPermissions()) {
-                applicationUtility.showSnack(this,"Check GPS or Related Permission");
+                QToast( "Check GPS or Related Permission");
                 requestPermissions();
             } else {
                 try {
                     getLastLocation();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    applicationUtility.showSnack(this,"Error : " + e.getMessage());
+                    //QToast( "Error : " + e.getMessage());
                 }
             }
             alertDialog.dismiss();
@@ -660,7 +674,7 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
             alert.show();
         } catch (Exception e) {
             e.printStackTrace();
-            applicationUtility.showSnack((Activity) getApplicationContext(),"Error :" + e.getMessage());
+            //QToast( "Error :" + e.getMessage());
         }
     }
 
@@ -774,7 +788,7 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
                                     location_tv.setVisibility(View.GONE);
                                 }
                                 System.out.println("Address >> " + address);
-                                applicationUtility.showSnack(ReportFormActivity.this,"" + location.getLatitude() + "" + location.getLongitude() + "");
+                                //QToast( "" + location.getLatitude() + "" + location.getLongitude() + "");
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -805,13 +819,13 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 super.onLocationResult(locationResult);
-                QToast(locationResult.toString());
+                applicationUtility.showSnack(ReportFormActivity.this,locationResult.toString());
             }
 
             @Override
             public void onLocationAvailability(@NonNull LocationAvailability locationAvailability) {
                 super.onLocationAvailability(locationAvailability);
-                QToast(locationAvailability.toString());
+                applicationUtility.showSnack(ReportFormActivity.this,locationAvailability.toString());
             }
         };
 
