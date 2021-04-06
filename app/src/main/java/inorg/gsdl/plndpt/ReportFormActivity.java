@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
@@ -113,6 +114,7 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
     private ProgressBar masterProgressBar;
     private String USABLE_IMAGE_DOWNLOAD_LINK="";
     private String message="";
+    private AlertDialog.Builder dialog_builder;
 
     @Override
     protected void onStart() {
@@ -132,20 +134,6 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
         applicationUtility=new ApplicationUtility();
         generateAppId();
         masterProgressBar = findViewById(R.id.progressbarReport);
-        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            Nammu.askForPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE, new PermissionCallback() {
-                @Override
-                public void permissionGranted() {
-                    //Nothing, this sample saves to Public gallery so it needs permission
-                }
-
-                @Override
-                public void permissionRefused() {
-                    finish();
-                }
-            });
-        }
         EasyImage.configuration(ReportFormActivity.this).setImagesFolderName("GeoTags")
                 .setCopyTakenPhotosToPublicGalleryAppFolder(true)
                 .setCopyPickedImagesToPublicGalleryAppFolder(true)
@@ -473,19 +461,40 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
         button_camera.setOnClickListener(v -> {
             int permissionCheck = ContextCompat.checkSelfPermission(ReportFormActivity.this, Manifest.permission.CAMERA);
             if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-                Nammu.askForPermission(ReportFormActivity.this, Manifest.permission.CAMERA, new PermissionCallback() {
-                    @Override
-                    public void permissionGranted() {
-                        //Nothing, this sample saves to Public gallery so it needs permission
-                        EasyImage.openCameraForImage(ReportFormActivity.this,0);
-                    }
-                    @Override
-                    public void permissionRefused() {
-                         message= "Cannot take photos because camera permission was refused !";
-                        applicationUtility.showSnack(ReportFormActivity.this,message);
+                dialog_builder=new AlertDialog.Builder(ReportFormActivity.this);
+                dialog_builder.setTitle("Disclosure")
+                        .setMessage(R.string.camera_disclosure)
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                             final String[] permissions = {Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE};
+                            public void onClick(DialogInterface dialog, int id) {
+                                Nammu.askForPermission(ReportFormActivity.this, permissions, new PermissionCallback() {
+                                    @Override
+                                    public void permissionGranted() {
+                                        //Nothing, this sample saves to Public gallery so it needs permission
+                                        EasyImage.openCameraForImage(ReportFormActivity.this,0);
+                                    }
+                                    @Override
+                                    public void permissionRefused() {
+                                        message= "Cannot take photos because camera permission was refused !";
+                                        applicationUtility.showSnack(ReportFormActivity.this,message);
 
-                    }
-                });
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //  Action for 'NO' Button
+                                dialog.cancel();
+                            }
+                        });
+                //Creating dialog box
+                AlertDialog alert = dialog_builder.create();
+                //Setting the title manually
+                alert.setTitle("Camera/Storage use Disclosure");
+                alert.show();
+
             }else if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
                         EasyImage.openCameraForImage(ReportFormActivity.this,0);
                     }
@@ -495,7 +504,45 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
         });
 
         button_gallery.setOnClickListener(v -> {
-            EasyImage.openChooserWithGallery(ReportFormActivity.this,"Choose GeoTag Image",0);
+            int permissionCheck = ContextCompat.checkSelfPermission(ReportFormActivity.this, Manifest.permission.CAMERA);
+            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+                dialog_builder=new AlertDialog.Builder(ReportFormActivity.this);
+                dialog_builder.setTitle("Disclosure")
+                        .setMessage(R.string.camera_disclosure)
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            final String[] permissions = {Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE};
+                            public void onClick(DialogInterface dialog, int id) {
+                                Nammu.askForPermission(ReportFormActivity.this, permissions, new PermissionCallback() {
+                                    @Override
+                                    public void permissionGranted() {
+                                        //Nothing, this sample saves to Public gallery so it needs permission
+                                        EasyImage.openChooserWithGallery(ReportFormActivity.this,"Choose GeoTag Image",0);
+                                    }
+                                    @Override
+                                    public void permissionRefused() {
+                                        message= "Cannot take photos because camera permission was refused !";
+                                        applicationUtility.showSnack(ReportFormActivity.this,message);
+
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //  Action for 'NO' Button
+                                dialog.cancel();
+                            }
+                        });
+                //Creating dialog box
+                AlertDialog alert = dialog_builder.create();
+                //Setting the title manually
+                alert.setTitle("Camera/Storage use Disclosure");
+                alert.show();
+
+            }else if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+                EasyImage.openCameraForImage(ReportFormActivity.this,0);
+            }
             if(AlertDialogImageChooser.isShowing()){
                 AlertDialogImageChooser.dismiss();
             }
@@ -839,12 +886,29 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
     }
 
     private void requestPermissions() {
-        ActivityCompat.requestPermissions(this, new String[]{
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.CAMERA
 
-        }, PERMISSION_ID);
+        dialog_builder.setTitle("Disclosure")
+                .setMessage(R.string.location_disclosure)
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        ActivityCompat.requestPermissions(ReportFormActivity.this, new String[]{
+                                Manifest.permission.ACCESS_COARSE_LOCATION,
+                                Manifest.permission.ACCESS_FINE_LOCATION,
+                        }, PERMISSION_ID);
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //  Action for 'NO' Button
+                        dialog.cancel();
+                    }
+                });
+        //Creating dialog box
+        AlertDialog alert = dialog_builder.create();
+        //Setting the title manually
+        alert.setTitle("Location use Disclosure");
+        alert.show();
     }
 
     private boolean isLocationEnabled() {

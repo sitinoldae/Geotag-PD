@@ -1,28 +1,18 @@
 package inorg.gsdl.plndpt;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import com.example.plndpt.R;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -60,7 +50,6 @@ public class PhoneNumberVerifyActivity extends AppCompatActivity {
         mpref.set_otp_verification(id);
         iddd = "Your OTP for water logging is " + id + ". Please use this code for the verification process.";
         Log.d("value_rand", id);
-        checkAndRequestPermissions();// carry on the normal flow, as the case of  permissions  granted.
     }
 
     //@SuppressLint("NonConstantResourceId")
@@ -152,30 +141,5 @@ public class PhoneNumberVerifyActivity extends AppCompatActivity {
 //        AppController.getInstance().addToRequestQueue(strrequest_otp);
 //    }
 
-    private void checkAndRequestPermissions() {
-        int permissionSendMessage = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.SEND_SMS);
 
-        int receiveSMS = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.RECEIVE_SMS);
-
-        int readSMS = ContextCompat.checkSelfPermission(this,
-                Manifest.permission.READ_SMS);
-
-        List<String> listPermissionsNeeded = new ArrayList<>();
-
-        if (receiveSMS != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.RECEIVE_MMS);
-        }
-        if (readSMS != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.READ_SMS);
-        }
-        if (permissionSendMessage != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.SEND_SMS);
-        }
-        if (!listPermissionsNeeded.isEmpty()) {
-            ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[0]),
-                    REQUEST_ID_MULTIPLE_PERMISSIONS);
-        }
-    }
 }

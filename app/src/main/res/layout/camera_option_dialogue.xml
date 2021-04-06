@@ -15,11 +15,11 @@
 
         android:id="@+id/wwqw"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@color/black"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <TextView
 
@@ -33,7 +33,17 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/white"
             android:textStyle="bold" />
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:paddingVertical="10dp"
+            android:textSize="15sp"
+            android:paddingHorizontal="20dp"
+            android:textAlignment="center"
+            android:text="@string/camera_disclosure"
+            android:gravity="center_horizontal">
+        </TextView>
     </LinearLayout>
 
     <RelativeLayout
