@@ -32,6 +32,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute"
+        android:name="inorg.gsdl.plndpt.App"
         android:fullBackupContent="@xml/backup_descriptor">
 
         <activity

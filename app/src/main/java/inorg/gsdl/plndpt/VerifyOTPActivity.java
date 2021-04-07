@@ -197,9 +197,8 @@ public class VerifyOTPActivity extends AppCompatActivity {
     }
 
     private void hit_log_in() {
-
         ProgressShow.showProgress(VerifyOTPActivity.this);
-
+        mpref.setLogged_in(true);
 //        Call<JsonElement> get_log_in_data_check = api_service.get_Log_IN_Info(mpref.get_User_Mobile_verif());
 //
 //        get_log_in_data_check.enqueue(new Callback<JsonElement>() {

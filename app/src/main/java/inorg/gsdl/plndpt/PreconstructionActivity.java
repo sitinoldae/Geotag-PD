@@ -31,7 +31,6 @@ public class PreconstructionActivity extends AppCompatActivity {
     String[] abc = {"india", "UK", "US"};
     ProgressBar progressBar;
     private Sharedpreferences mpref;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

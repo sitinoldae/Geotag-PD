@@ -107,13 +107,13 @@
                                 mpref.set_User_Mobile_verif(object.getString("mobile"));
                                 mpref.set_user_name_verif(object.getString("name"));
                                 mpref.set_user_email_verif(object.getString("userid"));
-                                mpref.setCircle_concerned_officer_mob(object.getString("dptname"));
+                                mpref.set_dptname(object.getString("dptname"));
                                 if(userStatus.matches("1")){
                                     Intent intent = new Intent(LoginActivity.this, VerifyOTPActivity.class);
                                     intent.putExtra("phone_number", mpref.get_User_Mobile_verif());
                                     intent.putExtra("name", mpref.get_user_name_verif());
                                     intent.putExtra("userid", mpref.get_user_email_verif());
-                                    intent.putExtra("dptname", mpref.getCircle_concerned_officer_mob());
+                                    intent.putExtra("dptname", mpref.get_dptname());
                                     hideProgressBar();
                                     proceedLogin(intent,mpref.get_user_name_verif());
                                     return;

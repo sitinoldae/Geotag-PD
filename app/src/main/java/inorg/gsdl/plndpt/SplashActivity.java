@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,6 +15,7 @@ import java.util.TimerTask;
 
 public class SplashActivity extends AppCompatActivity {
 ApplicationUtility applicationUtility;
+private Sharedpreferences mpref;
 
     @SuppressLint("WrongConstant")
     @Override
@@ -29,6 +29,7 @@ ApplicationUtility applicationUtility;
                     }
                 });
         setContentView(R.layout.activity_splash);
+        mpref = Sharedpreferences.getUserDataObj(this);
         applicationUtility=new ApplicationUtility();
         Timer t = new Timer();
         boolean checkConnection = new ApplicationUtility().checkConnection(SplashActivity.this);
@@ -53,11 +54,24 @@ ApplicationUtility applicationUtility;
 
         @Override
         public void run() {
-            runOnUiThread(() ->
-            applicationUtility.showSnack(SplashActivity.this,"Welcome to GeoTag Planning"));
+        runOnUiThread(() -> {
+        if(!mpref.isLogged_in()){
+            applicationUtility.showSnack(SplashActivity.this,"Welcome to GeoTag Planning");
             Intent i = new Intent(SplashActivity.this, LoginSelector.class);
             finish();
             startActivity(i);
+        }else if(mpref.isLogged_in()){
+            //logged in
+            Intent intent = new Intent(SplashActivity.this, MainActivityHome.class);
+            intent.putExtra("phone_number", mpref.get_User_Mobile_verif());
+            intent.putExtra("name", mpref.get_user_name_verif());
+            intent.putExtra("userid", mpref.get_user_email_verif());
+            intent.putExtra("dptname", mpref.get_dptname());
+            System.out.print("dptname==" + mpref.get_dptname());
+            startActivity(intent);
+        }
+        });
+
         }
     }
 }

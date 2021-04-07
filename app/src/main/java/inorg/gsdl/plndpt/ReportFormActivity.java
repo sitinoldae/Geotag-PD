@@ -32,7 +32,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -78,7 +77,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import rezwan.pstu.cse12.youtubeonlinestatus.recievers.NetworkChangeReceiver;
 
-public class ReportFormActivity extends AppCompatActivity implements Callback<User>, Runnable {
+public class ReportFormActivity extends BaseActivity implements Callback<User>, Runnable {
 
     public static User user = new User();
 
@@ -886,8 +885,8 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
     }
 
     private void requestPermissions() {
-
-        dialog_builder.setTitle("Disclosure")
+        dialog_builder=new AlertDialog.Builder(ReportFormActivity.this);
+        dialog_builder
                 .setMessage(R.string.location_disclosure)
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -938,7 +937,6 @@ public class ReportFormActivity extends AppCompatActivity implements Callback<Us
 
     public void run() {
         getLastLocation();
-
     }
     @SuppressLint("ShowToast")
     public void QToast(String message){

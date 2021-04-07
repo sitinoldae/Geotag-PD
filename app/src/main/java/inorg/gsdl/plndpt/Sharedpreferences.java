@@ -11,7 +11,9 @@ public class Sharedpreferences {
         return Tag_fcm_token;
     }
 
+
     public static final String Tag_user_id = "user_id";
+    public static final String Tag_dptname = "dptname";
     public static final String Tag_fcm_token = "fcm_token";
     public static final String Tag_form_name = "form_name";
     public static final String Tag_search_latitude = "search_latitude";
@@ -34,7 +36,16 @@ public class Sharedpreferences {
     Context context;
     private SharedPreferences pref;
     private final int PRIVATE_MODE = 0;
+    boolean logged_in=false;
 
+    public boolean isLogged_in() {
+        return pref.getBoolean("logged_in", false);
+    }
+
+    public void setLogged_in(boolean logged_in) {
+        editor.putBoolean("logged_in",logged_in);
+        editor.commit();
+    }
 
     @SuppressLint("CommitPrefEdits")
     public Sharedpreferences(Context c) {
@@ -75,6 +86,17 @@ public class Sharedpreferences {
     public void set_otp_verification(String otp_verification) {
         try {
             editor.putString(Tag_otp_verification, otp_verification);
+            editor.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    } public String get_dptname() {
+        return pref.getString(Tag_dptname, "");
+    }
+
+    public void set_dptname(String dpt) {
+        try {
+            editor.putString(Tag_dptname, dpt);
             editor.commit();
         } catch (Exception e) {
             e.printStackTrace();
