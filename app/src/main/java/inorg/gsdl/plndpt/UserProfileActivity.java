@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
 
@@ -101,7 +102,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         get_log_in_data.enqueue(new Callback<JsonElement>() {
             @Override
-            public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
+            public void onResponse(@NonNull Call<JsonElement> call, @NonNull Response<JsonElement> response) {
 
                 ProgressShow.stopProgress(UserProfileActivity.this);
 
@@ -139,7 +140,7 @@ public class UserProfileActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<JsonElement> call, Throwable t) {
+            public void onFailure(@NonNull Call<JsonElement> call, @NonNull Throwable t) {
                 ProgressShow.stopProgress(UserProfileActivity.this);
                 Log.d("log_in_error", t.toString());
             }
@@ -193,7 +194,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
         get_user_registered.enqueue(new Callback<JsonElement>() {
             @Override
-            public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
+            public void onResponse(@NonNull Call<JsonElement> call, @NonNull Response<JsonElement> response) {
 
                 ProgressShow.stopProgress(UserProfileActivity.this);
 
@@ -219,7 +220,7 @@ public class UserProfileActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<JsonElement> call, Throwable t) {
+            public void onFailure(@NonNull Call<JsonElement> call, @NonNull Throwable t) {
                 ProgressShow.stopProgress(UserProfileActivity.this);
                 Log.d("edit_profile_error", t.toString());
             }

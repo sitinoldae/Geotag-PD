@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Objects;
@@ -23,7 +24,7 @@ public class PhoneNumberVerifyActivity extends AppCompatActivity {
     public static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
     @SuppressLint("NonConstantResourceId")
     //@BindView(R.id.enter_otp_et)
-    EditText otp_edit_txt;
+            EditText otp_edit_txt;
 
     private Sharedpreferences mpref;
     private String iddd;
@@ -74,7 +75,7 @@ public class PhoneNumberVerifyActivity extends AppCompatActivity {
         Call<String> call_number = mobile_number_service.getVerifyMobileNumber(otp_edit_txt.getText().toString(), iddd);
         call_number.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<String> call, retrofit2.Response<String> response) {
+            public void onResponse(@NonNull Call<String> call, @NonNull retrofit2.Response<String> response) {
                 ProgressShow.stopProgress(PhoneNumberVerifyActivity.this);
 
                 // if (response.isSuccessful()) {
@@ -90,7 +91,7 @@ public class PhoneNumberVerifyActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
                 Log.e("Error", t.toString());
                 ProgressShow.stopProgress(PhoneNumberVerifyActivity.this);
             }

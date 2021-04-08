@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-class BaseActivity extends AppCompatActivity implements LogoutListener{
+class BaseActivity extends AppCompatActivity implements LogoutListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

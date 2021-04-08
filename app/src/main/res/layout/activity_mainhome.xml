@@ -21,7 +21,7 @@
         android:padding="10dp"
         android:src="@drawable/ic_baseline_edit_24"
         app:tint="#000"
-        android:contentDescription="TODO" />
+        android:contentDescription="defualt" />
 
     <Button
         android:id="@+id/report_grievence_tv"

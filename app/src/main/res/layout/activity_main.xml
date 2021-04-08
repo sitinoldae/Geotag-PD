@@ -66,5 +66,5 @@
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:contentDescription="TODO" />
+        android:contentDescription="defualt" />
 </LinearLayout>

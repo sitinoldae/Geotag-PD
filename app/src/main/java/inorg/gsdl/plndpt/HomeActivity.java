@@ -17,9 +17,9 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-      //  setContentView(R.layout.activity_home);
+        //  setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
-       }
+    }
 
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.report_grievence_tv)

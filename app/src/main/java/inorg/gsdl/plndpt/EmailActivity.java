@@ -4,16 +4,15 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
-import com.example.plndpt.R;
 import com.google.gson.JsonElement;
 
 import org.json.JSONException;
@@ -21,9 +20,7 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,7 +32,7 @@ public class EmailActivity extends AppCompatActivity {
     private static String dateString;
     @SuppressLint("NonConstantResourceId")
     //@BindView(R.id.email_app)
-    EditText email_edit_et;
+            EditText email_edit_et;
     long date;
     private Sharedpreferences mpref;
     private ApiInterface reg_in_service;
@@ -65,13 +62,12 @@ public class EmailActivity extends AppCompatActivity {
     }
 
     @SuppressLint("NonConstantResourceId")
-   // @OnClick(R.id.email_btn_verify)
+    // @OnClick(R.id.email_btn_verify)
     public void clicl_email(View view) {
 
         if (isEmpty(email_edit_et.getText().toString())) {
             email_edit_et.setError("please enter email");
             email_edit_et.requestFocus();
-            return;
         } else {
 
             if (awesomeValidation.validate()) {
@@ -93,7 +89,7 @@ public class EmailActivity extends AppCompatActivity {
 
         get_user_registered.enqueue(new Callback<JsonElement>() {
             @Override
-            public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
+            public void onResponse(@NonNull Call<JsonElement> call, @NonNull Response<JsonElement> response) {
 
                 ProgressShow.stopProgress(EmailActivity.this);
 
@@ -120,7 +116,7 @@ public class EmailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<JsonElement> call, Throwable t) {
+            public void onFailure(@NonNull Call<JsonElement> call, @NonNull Throwable t) {
                 ProgressShow.stopProgress(EmailActivity.this);
                 Log.d("reg_in_error", t.toString());
             }
@@ -207,7 +203,7 @@ public class EmailActivity extends AppCompatActivity {
 
     public void addValidationToViews() {
 
-       // awesomeValidation.addValidation(EmailActivity.this, R.id.email_app, Patterns.EMAIL_ADDRESS, R.string.invalid_email);
+        // awesomeValidation.addValidation(EmailActivity.this, R.id.email_app, Patterns.EMAIL_ADDRESS, R.string.invalid_email);
 
     }
 
@@ -220,7 +216,7 @@ public class EmailActivity extends AppCompatActivity {
 
         get_log_in_data.enqueue(new Callback<JsonElement>() {
             @Override
-            public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
+            public void onResponse(@NonNull Call<JsonElement> call, @NonNull Response<JsonElement> response) {
 
                 ProgressShow.stopProgress(EmailActivity.this);
 
@@ -259,7 +255,7 @@ public class EmailActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<JsonElement> call, Throwable t) {
+            public void onFailure(@NonNull Call<JsonElement> call, @NonNull Throwable t) {
                 ProgressShow.stopProgress(EmailActivity.this);
                 Log.d("log_in_error", t.toString());
             }

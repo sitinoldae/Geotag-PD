@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
@@ -70,7 +71,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
         dptname = intent.getStringExtra("dptname");
 
 
-        countTimer =new CountDownTimer(60000, 1000) { // adjust the milli seconds here
+        countTimer = new CountDownTimer(60000, 1000) { // adjust the milli seconds here
 
             public void onTick(long millisUntilFinished) {
                 String text = String.format(Locale.getDefault(), "Time Remaining %02d min: %02d sec",
@@ -111,14 +112,14 @@ public class VerifyOTPActivity extends AppCompatActivity {
         Call<String> call_number = mobile_number_service.getVerifyMobileNumber(phone_number_for_otp, id);
         call_number.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<String> call, retrofit2.Response<String> response) {
+            public void onResponse(@NonNull Call<String> call, @NonNull retrofit2.Response<String> response) {
                 ProgressShow.stopProgress(VerifyOTPActivity.this);
 
-                if(response.code()==200){
-                    Toast.makeText(getApplicationContext(),"Otp Sent",Toast.LENGTH_SHORT).show();
+                if (response.code() == 200) {
+                    Toast.makeText(getApplicationContext(), "Otp Sent", Toast.LENGTH_SHORT).show();
                     countTimer.start();
-                }else{
-                    Toast.makeText(getApplicationContext(),"Response Code : "+response.code(),Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Response Code : " + response.code(), Toast.LENGTH_SHORT).show();
                 }
 
                 // if (response.isSuccessful()) {
@@ -132,7 +133,7 @@ public class VerifyOTPActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
                 Log.e("Error", t.toString());
                 ProgressShow.stopProgress(VerifyOTPActivity.this);
             }
@@ -185,7 +186,6 @@ public class VerifyOTPActivity extends AppCompatActivity {
         if (isEmpty(otp_tv.getText().toString())) {
             otp_tv.setError("please enter your OTP");
             otp_tv.requestFocus();
-            return;
         } else {
             if (otp_tv.getText().toString().equals(mpref.get_otp_verification())) {
                 hit_log_in();

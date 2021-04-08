@@ -8,11 +8,7 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.plndpt.R;
-
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 import static android.text.TextUtils.isEmpty;
 
@@ -20,7 +16,7 @@ public class UserNameActivity extends AppCompatActivity {
 
     @SuppressLint("NonConstantResourceId")
     //@BindView(R.id.username_app)
-    EditText edit_name_et;
+            EditText edit_name_et;
 
     private Sharedpreferences mpref;
 
@@ -38,7 +34,6 @@ public class UserNameActivity extends AppCompatActivity {
         if (isEmpty(edit_name_et.getText().toString())) {
             edit_name_et.setError("please enter name");
             edit_name_et.requestFocus();
-            return;
         } else {
             Intent intent = new Intent(UserNameActivity.this, EmailActivity.class);
             mpref.set_user_name_verif(edit_name_et.getText().toString());

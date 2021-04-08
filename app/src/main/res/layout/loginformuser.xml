@@ -51,6 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <EditText
                 android:id="@+id/etemail"
                 android:layout_width="match_parent"
@@ -66,13 +67,16 @@
                 android:textAlignment="center"
                 tools:targetApi="lollipop"
                 android:autofillHints="" />
+
             <ImageView
                 android:layout_width="48dp"
                 android:layout_gravity="right"
                 android:layout_height="48dp"
                 android:padding="10dp"
                 android:id="@+id/iv_verification"
-                android:src="@drawable/ic_null"/>
+                android:src="@drawable/ic_null"
+                android:contentDescription="defualt" />
+
             <ImageView
                 android:layout_width="48dp"
                 android:layout_gravity="right"
@@ -80,7 +84,8 @@
                 android:padding="10dp"
                 android:visibility="gone"
                 android:id="@+id/iv_verification2"
-                android:src="@drawable/ic_verified"/>
+                android:src="@drawable/ic_verified"
+                android:contentDescription="defualt" />
         </FrameLayout>
 
         <Button
@@ -94,7 +99,9 @@
             android:textStyle="bold"
             android:backgroundTint="@android:color/black"
             android:textAllCaps="true"
-            android:textColor="#fff" />
+            android:textColor="#fff"
+            tools:targetApi="lollipop" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

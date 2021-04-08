@@ -34,7 +34,7 @@ public class ApplicationUtility {
         return flag;
     }
 
-    public void showSnack(Activity activity,String message){
+    public void showSnack(Activity activity, String message) {
         MinimalKSnack minimalKSnack = new MinimalKSnack(activity);
         minimalKSnack
                 .setMessage(message) // message

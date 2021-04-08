@@ -18,7 +18,7 @@
         android:layout_marginLeft="58dp"
         android:layout_marginTop="4dp"
         android:src="@drawable/header_logo"
-        android:contentDescription="TODO" />
+        android:contentDescription="defualt" />
 
     <ImageView
         android:layout_width="203dp"
@@ -30,7 +30,7 @@
         android:src="@drawable/bottom_logo"
         android:tintMode="multiply"
         app:tint="#fff"
-        android:contentDescription="TODO"
+        android:contentDescription="defualt"
         tools:targetApi="lollipop" />
 
     <TextView
@@ -69,5 +69,5 @@
         android:layout_above="@id/tv1"
         android:layout_centerHorizontal="true"
         android:src="@drawable/app_icon"
-        android:contentDescription="TODO" />
+        android:contentDescription="defualt" />
 </RelativeLayout>

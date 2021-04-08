@@ -6,14 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.plndpt.R;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivityHome extends AppCompatActivity {
+public class MainActivityHome extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +36,7 @@ public class MainActivityHome extends AppCompatActivity {
         Intent intent = new Intent(MainActivityHome.this, UserProfileActivity.class);
         startActivity(intent);
     }
+
     @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.progress)
     public void progress() {

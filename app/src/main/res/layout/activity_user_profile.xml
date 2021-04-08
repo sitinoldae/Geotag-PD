@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/img3"
-        android:contentDescription="TODO" />
+        android:contentDescription="defualt" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -162,7 +162,7 @@
                             android:layout_alignParentBottom="true"
                             android:background="@drawable/pencil_woo"
                             android:backgroundTint="#2196F3"
-                            android:contentDescription="TODO"
+                            android:contentDescription="defualt"
                             tools:targetApi="lollipop" />
 
                         <de.hdodenhof.circleimageview.CircleImageView

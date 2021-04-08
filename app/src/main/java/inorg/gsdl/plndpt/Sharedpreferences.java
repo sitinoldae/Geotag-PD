@@ -36,14 +36,14 @@ public class Sharedpreferences {
     Context context;
     private SharedPreferences pref;
     private final int PRIVATE_MODE = 0;
-    boolean logged_in=false;
+    boolean logged_in = false;
 
     public boolean isLogged_in() {
         return pref.getBoolean("logged_in", false);
     }
 
     public void setLogged_in(boolean logged_in) {
-        editor.putBoolean("logged_in",logged_in);
+        editor.putBoolean("logged_in", logged_in);
         editor.commit();
     }
 
@@ -90,7 +90,9 @@ public class Sharedpreferences {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    } public String get_dptname() {
+    }
+
+    public String get_dptname() {
         return pref.getString(Tag_dptname, "");
     }
 

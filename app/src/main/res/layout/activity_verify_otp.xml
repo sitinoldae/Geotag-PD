@@ -13,33 +13,38 @@
     android:background="@drawable/a9"
     tools:context="inorg.gsdl.plndpt.VerifyOTPActivity"
     tools:ignore="Overdraw">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center|left"
         android:orientation="vertical"
         tools:ignore="UselessParent">
+
         <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-black"
-        android:shadowColor="#000"
-        android:shadowDx="5"
-        android:textAlignment="center"
-        android:shadowDy="5"
-        android:paddingHorizontal="20dp"
-        android:layout_marginVertical="30dp"
-        android:text="Two Factor Authentication"
-        android:textColor="#1E88E5"
-        android:textSize="30sp"
-        android:layout_gravity="top|center"
-        android:textStyle="normal" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-black"
+            android:shadowColor="#000"
+            android:shadowDx="5"
+            android:textAlignment="center"
+            android:shadowDy="5"
+            android:paddingHorizontal="20dp"
+            android:layout_marginVertical="30dp"
+            android:text="Two Factor Authentication"
+            android:textColor="#1E88E5"
+            android:textSize="30sp"
+            android:layout_gravity="top|center"
+            android:textStyle="normal" />
+
         <ImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:src="@drawable/ic_two_factor"
-            app:tint="@color/black" />
+            app:tint="@color/black"
+            android:contentDescription="defualt" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,6 +60,7 @@
             android:textColor="#9000"
             android:textSize="15sp"
             android:textStyle="italic" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -70,6 +76,7 @@
             android:textColor="#1E88E5"
             android:textSize="10sp"
             android:textStyle="bold" />
+
         <EditText
             android:id="@+id/verify_otrp_et"
             android:layout_width="match_parent"

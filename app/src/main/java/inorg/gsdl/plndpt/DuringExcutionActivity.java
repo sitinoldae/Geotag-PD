@@ -48,43 +48,43 @@ public class DuringExcutionActivity extends AppCompatActivity {
 
         JsonArrayRequest requestOfficer = new JsonArrayRequest(Request.Method.GET, URL_Officer,
                 null, response -> {
-                    try {
+            try {
 
-                        for (int ii = 0; ii < response.length(); ii++) {
+                for (int ii = 0; ii < response.length(); ii++) {
 
-                            JSONObject jsonObject = response.getJSONObject(ii);
-                            String d = jsonObject.getString("reportid");
-                            String e = jsonObject.getString("timestamp");
-                            String i = jsonObject.getString("project");
-
-
-                            System.out.print("yoyo" + d);
-
-                            mpref.set_user_id(d);
-                            mpref.setImages(i);
-
-                            User u = new User(i, e, d);
+                    JSONObject jsonObject = response.getJSONObject(ii);
+                    String d = jsonObject.getString("reportid");
+                    String e = jsonObject.getString("timestamp");
+                    String i = jsonObject.getString("project");
 
 
-                            myListData.add(u);
+                    System.out.print("yoyo" + d);
+
+                    mpref.set_user_id(d);
+                    mpref.setImages(i);
+
+                    User u = new User(i, e, d);
 
 
-                            Log.d("info", "" + myListData);
+                    myListData.add(u);
 
-                            for (User ss : myListData) {
-                                Log.d("datadata", "" + ss.getProject() + " " + ss.getTimestamp());
-                            }
 
-                        }
+                    Log.d("info", "" + myListData);
 
-                        getDataFromList(myListData);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    for (User ss : myListData) {
+                        Log.d("datadata", "" + ss.getProject() + " " + ss.getTimestamp());
                     }
 
+                }
 
-                }, error -> Log.d("error", error.getMessage()));
+                getDataFromList(myListData);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+        }, error -> Log.d("error", error.getMessage()));
         requestQueue.add(requestOfficer);
 
 

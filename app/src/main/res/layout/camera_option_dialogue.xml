@@ -26,13 +26,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-        android:background="@color/black"
+            android:background="@color/black"
             android:fontFamily="sans-serif-condensed"
             android:gravity="center"
             android:text="Select Picture"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/white"
             android:textStyle="bold" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,8 +43,7 @@
             android:paddingHorizontal="20dp"
             android:textAlignment="center"
             android:text="@string/camera_disclosure"
-            android:gravity="center_horizontal">
-        </TextView>
+            android:gravity="center_horizontal" />
     </LinearLayout>
 
     <RelativeLayout

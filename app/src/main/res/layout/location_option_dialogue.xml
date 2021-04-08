@@ -33,17 +33,17 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/white"
             android:textStyle="bold" />
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:textColor="#fff"
-    android:paddingVertical="10dp"
-    android:textSize="15sp"
-    android:paddingHorizontal="20dp"
-    android:textAlignment="center"
-    android:text="@string/location_disclosure"
-    android:gravity="center_horizontal">
-</TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:paddingVertical="10dp"
+            android:textSize="15sp"
+            android:paddingHorizontal="20dp"
+            android:textAlignment="center"
+            android:text="@string/location_disclosure"
+            android:gravity="center_horizontal" />
     </LinearLayout>
 
     <RelativeLayout

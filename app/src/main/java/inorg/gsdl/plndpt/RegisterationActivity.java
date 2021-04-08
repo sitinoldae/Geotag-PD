@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
@@ -102,7 +103,7 @@ public class RegisterationActivity extends AppCompatActivity implements Callback
 
 
     @Override
-    public void onResponse(Call<MyUserData> call, Response<MyUserData> response) {
+    public void onResponse(@NonNull Call<MyUserData> call, Response<MyUserData> response) {
 
         if (response.code() == 200) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -129,7 +130,7 @@ public class RegisterationActivity extends AppCompatActivity implements Callback
     }
 
     @Override
-    public void onFailure(Call<MyUserData> call, Throwable t) {
+    public void onFailure(@NonNull Call<MyUserData> call, @NonNull Throwable t) {
     }
 
     private void servicecall() {
@@ -209,7 +210,7 @@ public class RegisterationActivity extends AppCompatActivity implements Callback
                         hideLoading();
                         //Storing the Array of JSON String to our JSON Array
                         //  result = object.getJSONArray(JSON_ARRAY);
-                      //Calling method getStudents to get the students from the JSON Array
+                        //Calling method getStudents to get the students from the JSON Array
                         // getStudents(result);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -228,6 +229,7 @@ public class RegisterationActivity extends AppCompatActivity implements Callback
                 d1.setDptname(spinner.getSelectedItem().toString());
                 //Creating a string request
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 

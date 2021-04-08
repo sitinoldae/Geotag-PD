@@ -108,11 +108,11 @@ public class ReportFormActivity extends BaseActivity implements Callback<User>, 
     private Geocoder geocoder;
     private Sharedpreferences mpref;
     private File usableImageFile;
-    private boolean ImageLoaded=false;
-    private boolean ImageUploaded=false;
+    private boolean ImageLoaded = false;
+    private boolean ImageUploaded = false;
     private ProgressBar masterProgressBar;
-    private String USABLE_IMAGE_DOWNLOAD_LINK="";
-    private String message="";
+    private String USABLE_IMAGE_DOWNLOAD_LINK = "";
+    private String message = "";
     private AlertDialog.Builder dialog_builder;
 
     @Override
@@ -125,12 +125,13 @@ public class ReportFormActivity extends BaseActivity implements Callback<User>, 
         }
         super.onStart();
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_form);
         setUIRef();
-        applicationUtility=new ApplicationUtility();
+        applicationUtility = new ApplicationUtility();
         generateAppId();
         masterProgressBar = findViewById(R.id.progressbarReport);
         EasyImage.configuration(ReportFormActivity.this).setImagesFolderName("GeoTags")
@@ -237,7 +238,7 @@ public class ReportFormActivity extends BaseActivity implements Callback<User>, 
         appID = "UAP" + random.nextInt(1000) + calender.get(Calendar.YEAR) + "" + (calender.get(Calendar.MONTH) + 1) + "" + calender.get(Calendar.DATE) + "" +
                 (calender.get(Calendar.HOUR)) + "" + calender.get(Calendar.MINUTE) + "" + calender.get(Calendar.SECOND);
         /*QToast( "Application Id generated: "+appID);*/
-        applicationUtility.showSnack(ReportFormActivity.this,"Application Id generated: "+appID);
+        applicationUtility.showSnack(ReportFormActivity.this, "Application Id generated: " + appID);
     }
 
     private void setUIRef() {
@@ -277,7 +278,7 @@ public class ReportFormActivity extends BaseActivity implements Callback<User>, 
                             arrayList.add(projectName);
                         }
                         projectNameSpinner.setAdapter(new ArrayAdapter<>(ReportFormActivity.this, R.layout.simple_spinner, arrayList));
-                    //    hideLoading();
+                        //    hideLoading();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -361,7 +362,7 @@ public class ReportFormActivity extends BaseActivity implements Callback<User>, 
                 response -> {
 
                     HashMap<String, String> dataall = new HashMap<>();
-                    masterProgressBar.setMax(response.length()-1);
+                    masterProgressBar.setMax(response.length() - 1);
                     try {
                         for (int i = 0; i < response.length(); i++) {
                             masterProgressBar.setProgress(i);
@@ -424,14 +425,14 @@ public class ReportFormActivity extends BaseActivity implements Callback<User>, 
                             spinnerStage.setAdapter(new ArrayAdapter<>(ReportFormActivity.this, R.layout.simple_spinner, arrayList1));
                         }
 
-                        } catch (JSONException e) {
+                    } catch (JSONException e) {
                         System.out.println("Json Error:" + e.getMessage());
-                      //  QToast( "Json Error :"+e.getMessage());
+                        //  QToast( "Json Error :"+e.getMessage());
                     }
                 },
                 error -> {
                     System.out.println("Volley Error :" + error.getMessage());
-                  //  QToast( "Json Error :"+error.getMessage());
+                    //  QToast( "Json Error :"+error.getMessage());
                 });
 
         RequestQueue requestQueue2 = Volley.newRequestQueue(this);
@@ -460,23 +461,25 @@ public class ReportFormActivity extends BaseActivity implements Callback<User>, 
         button_camera.setOnClickListener(v -> {
             int permissionCheck = ContextCompat.checkSelfPermission(ReportFormActivity.this, Manifest.permission.CAMERA);
             if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-                dialog_builder=new AlertDialog.Builder(ReportFormActivity.this);
+                dialog_builder = new AlertDialog.Builder(ReportFormActivity.this);
                 dialog_builder.setTitle("Disclosure")
                         .setMessage(R.string.camera_disclosure)
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                             final String[] permissions = {Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE};
+                            final String[] permissions = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+
                             public void onClick(DialogInterface dialog, int id) {
                                 Nammu.askForPermission(ReportFormActivity.this, permissions, new PermissionCallback() {
                                     @Override
                                     public void permissionGranted() {
                                         //Nothing, this sample saves to Public gallery so it needs permission
-                                        EasyImage.openCameraForImage(ReportFormActivity.this,0);
+                                        EasyImage.openCameraForImage(ReportFormActivity.this, 0);
                                     }
+
                                     @Override
                                     public void permissionRefused() {
-                                        message= "Cannot take photos because camera permission was refused !";
-                                        applicationUtility.showSnack(ReportFormActivity.this,message);
+                                        message = "Cannot take photos because camera permission was refused !";
+                                        applicationUtility.showSnack(ReportFormActivity.this, message);
 
                                     }
                                 });
@@ -494,10 +497,10 @@ public class ReportFormActivity extends BaseActivity implements Callback<User>, 
                 alert.setTitle("Camera/Storage use Disclosure");
                 alert.show();
 
-            }else if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
-                        EasyImage.openCameraForImage(ReportFormActivity.this,0);
-                    }
-            if(AlertDialogImageChooser.isShowing()){
+            } else if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+                EasyImage.openCameraForImage(ReportFormActivity.this, 0);
+            }
+            if (AlertDialogImageChooser.isShowing()) {
                 AlertDialogImageChooser.dismiss();
             }
         });
@@ -505,23 +508,25 @@ public class ReportFormActivity extends BaseActivity implements Callback<User>, 
         button_gallery.setOnClickListener(v -> {
             int permissionCheck = ContextCompat.checkSelfPermission(ReportFormActivity.this, Manifest.permission.CAMERA);
             if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-                dialog_builder=new AlertDialog.Builder(ReportFormActivity.this);
+                dialog_builder = new AlertDialog.Builder(ReportFormActivity.this);
                 dialog_builder.setTitle("Disclosure")
                         .setMessage(R.string.camera_disclosure)
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            final String[] permissions = {Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE};
+                            final String[] permissions = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+
                             public void onClick(DialogInterface dialog, int id) {
                                 Nammu.askForPermission(ReportFormActivity.this, permissions, new PermissionCallback() {
                                     @Override
                                     public void permissionGranted() {
                                         //Nothing, this sample saves to Public gallery so it needs permission
-                                        EasyImage.openChooserWithGallery(ReportFormActivity.this,"Choose GeoTag Image",0);
+                                        EasyImage.openChooserWithGallery(ReportFormActivity.this, "Choose GeoTag Image", 0);
                                     }
+
                                     @Override
                                     public void permissionRefused() {
-                                        message= "Cannot take photos because camera permission was refused !";
-                                        applicationUtility.showSnack(ReportFormActivity.this,message);
+                                        message = "Cannot take photos because camera permission was refused !";
+                                        applicationUtility.showSnack(ReportFormActivity.this, message);
 
                                     }
                                 });
@@ -539,84 +544,84 @@ public class ReportFormActivity extends BaseActivity implements Callback<User>, 
                 alert.setTitle("Camera/Storage use Disclosure");
                 alert.show();
 
-            }else if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
-                EasyImage.openCameraForImage(ReportFormActivity.this,0);
+            } else if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+                EasyImage.openChooserWithGallery(ReportFormActivity.this, "Choose GeoTag Image", 0);
             }
-            if(AlertDialogImageChooser.isShowing()){
+            if (AlertDialogImageChooser.isShowing()) {
                 AlertDialogImageChooser.dismiss();
             }
         });
     }
 
-   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-       super.onActivityResult(requestCode, resultCode, data);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-       EasyImage.handleActivityResult(requestCode, resultCode, data, this, new DefaultCallback() {
-           @Override
-           public void onImagesPicked(@NonNull List<File> imageFiles, EasyImage.ImageSource source, int type) {
-                message= "The number of files returned : " + imageFiles.size();
-               applicationUtility.showSnack(ReportFormActivity.this,message);
-               File ImageFile;
-               File imagepath;
-               try {
-                   ImageFile = imageFiles.get(0);
-                   imagepath = ImageFile.getParentFile();
-                   usableImageFile = new File(imagepath,appID+".jpg");
-                   //noinspection ResultOfMethodCallIgnored
-                   ImageFile.renameTo(usableImageFile);
-                   message= "Image Renamed : "+usableImageFile.getPath();
-                   applicationUtility.showSnack(ReportFormActivity.this,message);
-               } catch (Exception e) {
-                   e.printStackTrace();
-               }
-               message= "File Info :\n"+usableImageFile.getPath()+"\n"+usableImageFile.getPath();
-               applicationUtility.showSnack(ReportFormActivity.this,message);
-               try {
-                   ivReportImage.setVisibility(View.VISIBLE);
-                   ivReportImage.setImageBitmap(BitmapFactory.decodeFile(usableImageFile.getPath()));
-                   message= "Image loaded " + usableImageFile.getName();
-                   applicationUtility.showSnack(ReportFormActivity.this,message);
-                   ImageLoaded=true;
-               } catch (Exception e) {
-                   message="Error loading Image: " + e.getMessage();
-                   applicationUtility.showSnack(ReportFormActivity.this,message);
-                   e.printStackTrace();
-               }
-               if(ImageLoaded){
-                 sendFileToUploadOnFirebase(usableImageFile);
-               }
-           }
-       });
-   }
+        EasyImage.handleActivityResult(requestCode, resultCode, data, this, new DefaultCallback() {
+            @Override
+            public void onImagesPicked(@NonNull List<File> imageFiles, EasyImage.ImageSource source, int type) {
+                message = "The number of files returned : " + imageFiles.size();
+                applicationUtility.showSnack(ReportFormActivity.this, message);
+                File ImageFile;
+                File imagepath;
+                try {
+                    ImageFile = imageFiles.get(0);
+                    imagepath = ImageFile.getParentFile();
+                    usableImageFile = new File(imagepath, appID + ".jpg");
+                    //noinspection ResultOfMethodCallIgnored
+                    ImageFile.renameTo(usableImageFile);
+                    message = "Image Renamed : " + usableImageFile.getPath();
+                    applicationUtility.showSnack(ReportFormActivity.this, message);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                message = "File Info :\n" + usableImageFile.getPath() + "\n" + usableImageFile.getPath();
+                applicationUtility.showSnack(ReportFormActivity.this, message);
+                try {
+                    ivReportImage.setVisibility(View.VISIBLE);
+                    ivReportImage.setImageBitmap(BitmapFactory.decodeFile(usableImageFile.getPath()));
+                    message = "Image loaded " + usableImageFile.getName();
+                    applicationUtility.showSnack(ReportFormActivity.this, message);
+                    ImageLoaded = true;
+                } catch (Exception e) {
+                    message = "Error loading Image: " + e.getMessage();
+                    applicationUtility.showSnack(ReportFormActivity.this, message);
+                    e.printStackTrace();
+                }
+                if (ImageLoaded) {
+                    sendFileToUploadOnFirebase(usableImageFile);
+                }
+            }
+        });
+    }
 
     @SuppressLint("SetTextI18n")
     private void sendFileToUploadOnFirebase(File usableImageFile) {
         masterProgressBar.setIndeterminate(true);
         StorageReference storageRef = FirebaseStorage.getInstance().getReference();
         Uri UsableFileUri = Uri.fromFile(usableImageFile);
-        StorageReference uploadReference = storageRef.child("images/"+UsableFileUri.getLastPathSegment());
+        StorageReference uploadReference = storageRef.child("images/" + UsableFileUri.getLastPathSegment());
         UploadTask uploadTask = uploadReference.putFile(UsableFileUri);
-        message="Uploading "+usableImageFile.getName()+" to firebase";
-        applicationUtility.showSnack(ReportFormActivity.this,message);
+        message = "Uploading " + usableImageFile.getName() + " to firebase";
+        applicationUtility.showSnack(ReportFormActivity.this, message);
 // Register observers to listen for when the download is done or if it fails
         uploadTask.addOnFailureListener(exception -> {
             // Handle unsuccessful uploads
-            message="Uploading "+usableImageFile.getName()+" to firebase Failed\n"+exception.getMessage();
-            applicationUtility.showSnack(ReportFormActivity.this,message);
+            message = "Uploading " + usableImageFile.getName() + " to firebase Failed\n" + exception.getMessage();
+            applicationUtility.showSnack(ReportFormActivity.this, message);
         }).addOnSuccessListener(taskSnapshot -> {
-            message="Upload "+usableImageFile.getName()+" to firebase Success !";
-            applicationUtility.showSnack(ReportFormActivity.this,message);
+            message = "Upload " + usableImageFile.getName() + " to firebase Success !";
+            applicationUtility.showSnack(ReportFormActivity.this, message);
 
             uploadReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                message="Download url : "+uri.toString();
-                applicationUtility.showSnack(ReportFormActivity.this,message);
-                USABLE_IMAGE_DOWNLOAD_LINK=uri.toString();
+                message = "Download url : " + uri.toString();
+                applicationUtility.showSnack(ReportFormActivity.this, message);
+                USABLE_IMAGE_DOWNLOAD_LINK = uri.toString();
                 tv_progress.setText("Geotag Image Uploaded !");
-                ImageUploaded=true;
+                ImageUploaded = true;
             });
         }).addOnProgressListener(taskSnapshot -> {
             int progress = (int) ((100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount());
-            tv_progress.setText("UPLOADING "+progress+"%");
+            tv_progress.setText("UPLOADING " + progress + "%");
             masterProgressBar.setIndeterminate(false);
             masterProgressBar.setProgress(progress);
         });
@@ -627,7 +632,7 @@ public class ReportFormActivity extends BaseActivity implements Callback<User>, 
     @OnClick(R.id.btn_submit)
     public void submit_form(View view) {
 
-        if(!USABLE_IMAGE_DOWNLOAD_LINK.matches("")){
+        if (!USABLE_IMAGE_DOWNLOAD_LINK.matches("")) {
             //image has been uploaded so we can continue
             try {
                 user.setReportid(appID);
@@ -658,7 +663,7 @@ public class ReportFormActivity extends BaseActivity implements Callback<User>, 
                 e.printStackTrace();
                 //QToast( "Error : " + e.getMessage());
             }
-        }else {
+        } else {
             QToast("Please Select ISSUE/GEOTAG image first");
         }
 
@@ -684,7 +689,7 @@ public class ReportFormActivity extends BaseActivity implements Callback<User>, 
         current_btn_location.setOnClickListener(v -> {
 //nit
             if (!checkPermissions()) {
-                QToast( "Check GPS or Related Permission");
+                QToast("Check GPS or Related Permission");
                 requestPermissions();
             } else {
                 try {
@@ -730,13 +735,13 @@ public class ReportFormActivity extends BaseActivity implements Callback<User>, 
     }
 
     @Override
-    public void onResponse(Call<User> call, retrofit2.Response<User> response) {
+    public void onResponse(@NonNull Call<User> call, retrofit2.Response<User> response) {
         Log.d("INFO_NEEL", "yo" + response.body());
 
     }
 
     @Override
-    public void onFailure(Call<User> call, Throwable t) {
+    public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
         Log.d("ERROR_INFO_NEEL", "yo" + t);
     }
 
@@ -822,9 +827,9 @@ public class ReportFormActivity extends BaseActivity implements Callback<User>, 
                             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                             if (addresses != null && addresses.size() > 0) {
                                 String address = addresses.get(0).getAddressLine(0) + " ";
-                                if(addresses.get(0).getAddressLine(1)!=null) {
+                                if (addresses.get(0).getAddressLine(1) != null) {
                                     String addLineTwo = addresses.get(0).getAddressLine(1);
-                                    address=address+addLineTwo;
+                                    address = address + addLineTwo;
                                 }
                                 if (address != null) {
                                     location_tv.setVisibility(View.VISIBLE);
@@ -865,13 +870,13 @@ public class ReportFormActivity extends BaseActivity implements Callback<User>, 
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 super.onLocationResult(locationResult);
-                applicationUtility.showSnack(ReportFormActivity.this,locationResult.toString());
+                applicationUtility.showSnack(ReportFormActivity.this, locationResult.toString());
             }
 
             @Override
             public void onLocationAvailability(@NonNull LocationAvailability locationAvailability) {
                 super.onLocationAvailability(locationAvailability);
-                applicationUtility.showSnack(ReportFormActivity.this,locationAvailability.toString());
+                applicationUtility.showSnack(ReportFormActivity.this, locationAvailability.toString());
             }
         };
 
@@ -879,13 +884,12 @@ public class ReportFormActivity extends BaseActivity implements Callback<User>, 
     }
 
 
-
     private boolean checkPermissions() {
         return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 
     private void requestPermissions() {
-        dialog_builder=new AlertDialog.Builder(ReportFormActivity.this);
+        dialog_builder = new AlertDialog.Builder(ReportFormActivity.this);
         dialog_builder
                 .setMessage(R.string.location_disclosure)
                 .setCancelable(false)
@@ -938,10 +942,10 @@ public class ReportFormActivity extends BaseActivity implements Callback<User>, 
     public void run() {
         getLastLocation();
     }
+
     @SuppressLint("ShowToast")
-    public void QToast(String message){
-        if(ToastMaster == null)
-        {
+    public void QToast(String message) {
+        if (ToastMaster == null) {
             ToastMaster = Toast.makeText(this, message, Toast.LENGTH_LONG);
         }
 
