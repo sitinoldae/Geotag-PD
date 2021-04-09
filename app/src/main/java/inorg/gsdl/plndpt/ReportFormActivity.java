@@ -152,7 +152,7 @@ public class ReportFormActivity extends BaseActivity implements Callback<User>, 
         projectNameSpinner = findViewById(R.id.projectSpinner);
         etDescription = findViewById(R.id.etDescription);
 
-        final String DATA_URL = "http://map.gsdl.org.in:8080/planningdpt/viewpro/" + mpref.getCircle_concerned_officer_mob();
+        final String DATA_URL = "http://map.gsdl.org.in:8080/planningdpt/viewpro/" + mpref.get_dptname();
         Log.d("url main", DATA_URL);
 
         getprojectname(DATA_URL);
