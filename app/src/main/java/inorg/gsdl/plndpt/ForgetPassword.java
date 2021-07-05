@@ -6,16 +6,15 @@ import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.plndpt.R;
+
 import java.io.IOException;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class ForgetPassword extends AppCompatActivity {
     String FORGOT_PASSWORD_URL="http://map.gsdl.org.in/updatequery/GetData.asmx/updatepwd/";
@@ -68,7 +67,7 @@ public class ForgetPassword extends AppCompatActivity {
             OkHttpClient client = new OkHttpClient().newBuilder()
                     .build();
             Request request = new Request.Builder()
-                    .url("http://map.gsdl.org.in/updatequery/GetData.asmx/updatepwd?"+fp_email.getText().toString().trim()+"&password="+fp_password.getText().toString().trim())
+                    .url("http://map.gsdl.org.in/updatequery/GetData.asmx/updatepwd?username="+fp_email.getText().toString()+"&password="+fp_password.getText().toString())
                     .method("GET", null)
                     .build();
             client.newCall(request).enqueue(new okhttp3.Callback() {
@@ -79,7 +78,9 @@ public class ForgetPassword extends AppCompatActivity {
 
                 @Override
                 public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
-                    runOnUiThread(() -> Toast.makeText(context, response.toString(),Toast.LENGTH_SHORT).show());
+                    if(response.code()==200){
+                        runOnUiThread(() -> Toast.makeText(context,response.message()+"password reset successfull\nplease login throgh the updated password",Toast.LENGTH_SHORT).show());
+                    }
                 }
             });
         } catch (Exception e) {
@@ -87,4 +88,5 @@ public class ForgetPassword extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
         }
     }
+         
 }
