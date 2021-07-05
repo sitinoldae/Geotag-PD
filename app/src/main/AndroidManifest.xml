@@ -4,11 +4,9 @@
     package="com.example.plndpt">
 
     <uses-feature android:name="android.hardware.location.gps" />
-
     <uses-feature
         android:glEsVersion="0x00030000"
         android:required="true" />
-
     <uses-feature
         android:name="android.hardware.location.gps"
         tools:ignore="DuplicateUsesFeature" />
@@ -28,6 +26,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name="inorg.gsdl.plndpt.App"
+        android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
@@ -35,93 +35,94 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:ignore="UnusedAttribute"
-        android:name="inorg.gsdl.plndpt.App"
-        android:fullBackupContent="@xml/backup_descriptor">
-
-        <activity
-            android:name="inorg.gsdl.plndpt.FinalCompletionActivity"
-            android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity
-            android:name="inorg.gsdl.plndpt.DuringExcutionActivity"
-            android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity
-            android:name="inorg.gsdl.plndpt.PreconstructionActivity"
-            android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity
-            android:name="inorg.gsdl.plndpt.ProgressActivity"
-            android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity
-            android:name="inorg.gsdl.plndpt.UserProfileActivity"
-            android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity
-            android:name="inorg.gsdl.plndpt.LoginActivity"
-            android:label="@string/title_activity_login"
-            android:screenOrientation="sensorPortrait"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
-
-        <activity
-            android:name="inorg.gsdl.plndpt.VerifyOTPActivity"
-            android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-
-
-        <activity
-            android:name="inorg.gsdl.plndpt.MainActivityHome"
-            android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity
-            android:screenOrientation="sensorPortrait"
-            android:name="inorg.gsdl.plndpt.EmailActivity" />
-
-        <activity
-            android:name="inorg.gsdl.plndpt.RegisterationActivity"
-            android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity
-            android:screenOrientation="sensorPortrait"
-            android:name="inorg.gsdl.plndpt.UserNameActivity" />
-
-        <activity
-            android:name="inorg.gsdl.plndpt.SplashActivity"
-            android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name="inorg.gsdl.plndpt.ReportFormActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+        tools:ignore="AllowBackup,UnusedAttribute">
+        <activity android:name="inorg.gsdl.plndpt.ForgetPassword">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name="inorg.gsdl.plndpt.FinalCompletionActivity"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="inorg.gsdl.plndpt.DuringExcutionActivity"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="inorg.gsdl.plndpt.PreconstructionActivity"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="inorg.gsdl.plndpt.ProgressActivity"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="inorg.gsdl.plndpt.UserProfileActivity"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="inorg.gsdl.plndpt.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="inorg.gsdl.plndpt.VerifyOTPActivity"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="inorg.gsdl.plndpt.MainActivityHome"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="inorg.gsdl.plndpt.EmailActivity"
+            android:screenOrientation="sensorPortrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="inorg.gsdl.plndpt.RegisterationActivity"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="inorg.gsdl.plndpt.UserNameActivity"
+            android:screenOrientation="sensorPortrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name="inorg.gsdl.plndpt.SplashActivity"
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="inorg.gsdl.plndpt.ReportFormActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="inorg.gsdl.plndpt.LoginSelector"
             android:screenOrientation="sensorPortrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -132,14 +133,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
-        <!--    <receiver android:name="inorg.gsdl.plndpt.MySMSBroadCastReceiver"
-                tools:ignore="UnprotectedSMSBroadcastReceiver">
-                <intent-filter>
-                    <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-                </intent-filter>
-            </receiver>-->
-        <!-- cache directory file provider paths -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -152,7 +145,7 @@
 
         <service
             android:name="inorg.gsdl.plndpt.MyFirebaseInstanceIDService"
-            tools:ignore="ExportedService">
+            tools:ignore="ExportedService,Instantiatable">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
@@ -165,4 +158,5 @@
             </intent-filter>
         </service>
     </application>
+
 </manifest>

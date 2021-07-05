@@ -4,4 +4,14 @@
     <string name="spinner_title">Select Issue</string>
     <string name="camera_disclosure">“Geotag Planning collects Captured/Stored Image data to enable (GeoTag Capture Feature) even when the app is closed or not in use.\n by continuing you agree to our privacy policy.</string>
     <string name="location_disclosure">“Geotag Planning collects location data to enable (GeoTag Capture Feature) even when the app is closed or not in use.\n by continuing you agree to our privacy policy.</string>
+    <string name="def">default</string>
+    <string name="registration">REGISTRATION</string>
+    <string name="name">Name</string>
+    <string name="enter_your_name">Enter your Name</string>
+    <string name="email">Email</string>
+    <string name="enter_your_email">Enter your Email</string>
+    <string name="mobile">Mobile</string>
+    <string name="password">Password</string>
+    <string name="select_department">Select\nDepartment</string>
+    <string name="sign_up">Sign Up</string>
 </resources>

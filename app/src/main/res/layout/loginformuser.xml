@@ -28,7 +28,8 @@
             android:text="LOGIN"
             android:textColor="#1E88E5"
             android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginStart="50dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -44,7 +45,7 @@
             android:visibility="gone"
             android:text="Username"
             android:textColor="#1E88E5"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:textStyle="bold" />
 
         <FrameLayout
@@ -66,7 +67,7 @@
                 android:padding="10dp"
                 android:textAlignment="center"
                 tools:targetApi="lollipop"
-                android:autofillHints="" />
+                 />
 
             <ImageView
                 android:layout_width="48dp"
@@ -96,10 +97,23 @@
             android:layout_marginTop="5dp"
             android:background="@drawable/shadow_btn_layer_list"
             android:text="Continue"
+            android:padding="5dp"
             android:textStyle="bold"
             android:backgroundTint="@android:color/black"
             android:textAllCaps="true"
             android:textColor="#fff"
+            tools:targetApi="lollipop" />
+        <Button
+            android:id="@+id/forgotPasswordBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginTop="50dp"
+            android:paddingHorizontal="20dp"
+            android:text="forgot password ?"
+            android:background="@drawable/btn_shadow"
+            android:textAlignment="viewEnd"
+            android:textColor="#F44336"
             tools:targetApi="lollipop" />
 
         <TextView
@@ -116,7 +130,7 @@
             android:id="@+id/tv_password"
             android:text="Password"
             android:textColor="#1E88E5"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:visibility="gone"
             android:textStyle="bold" />
 
@@ -135,7 +149,7 @@
             android:padding="10dp"
             android:textAlignment="center"
             tools:targetApi="lollipop"
-            android:autofillHints="" />
+             />
 
 
         <Button
@@ -150,18 +164,17 @@
             android:textAllCaps="false"
             android:textColor="#fff" />
 
-        <TextView
+        <Button
             android:id="@+id/createnewac"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:gravity="end"
-            android:paddingRight="50sp"
-            android:text="Create a new Account!"
-            android:textAlignment="textEnd"
-            android:textColor="#2196F3"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:gravity="center"
+            android:text="Create a new Account"
+            android:textColor="#000"
+            android:background="@drawable/btn_shadow"
+            android:paddingHorizontal="20dp"
+            android:textSize="15sp"/>
     </LinearLayout>
 
 

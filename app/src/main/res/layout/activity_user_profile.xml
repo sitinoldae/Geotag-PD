@@ -46,7 +46,7 @@
             android:textColor="@color/black"
             android:textSize="15sp"
             tools:targetApi="m"
-            android:autofillHints="" />
+             />
 
         <!--<RelativeLayout-->
 
@@ -94,7 +94,7 @@
             android:textSize="15sp"
             tools:targetApi="m"
             tools:ignore="TextFields"
-            android:autofillHints="" />
+             />
 
         <EditText
 
@@ -118,7 +118,7 @@
             android:textColor="@color/black"
             android:textSize="15sp"
             tools:targetApi="m"
-            android:autofillHints="" />
+             />
 
         <LinearLayout
 

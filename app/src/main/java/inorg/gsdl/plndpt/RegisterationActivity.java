@@ -50,13 +50,13 @@ public class RegisterationActivity extends AppCompatActivity implements Callback
         etemail = findViewById(R.id.editEmail);
         etpass = findViewById(R.id.editPass);
         mobile = findViewById(R.id.editMob);
-        Button btn_new = findViewById(R.id.buttonAcount);
+        Button btn_new = findViewById(R.id.btn_account);
         setUIRef();
 
         //Display Loading
         showLoading();
 
-        spinner = findViewById(R.id.spinnerdpt);
+        spinner = findViewById(R.id.spinner_dpt);
         getData();
         btn_new.setOnClickListener(v -> {
             final String name = etname.getText().toString().trim();

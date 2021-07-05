@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     private ImageView iv_verification;
     private Button check_username_btn;
     private Button btnlogin;
+    private Button passwordResetBtn;
     private ImageView iv_verification2;
     private ApplicationUtility applicationUtility;
 
@@ -64,6 +65,11 @@ public class LoginActivity extends AppCompatActivity {
         iv_verification = (findViewById(R.id.iv_verification));
         iv_verification2 = (findViewById(R.id.iv_verification2));
         btnlogin = findViewById(R.id.btnlogin);
+
+        passwordResetBtn = findViewById(R.id.forgotPasswordBtn);
+        passwordResetBtn.setOnClickListener(v -> {
+         startActivity(new Intent(getApplicationContext(), ForgetPassword.class));
+        });
         check_username_btn.setOnClickListener(v ->
                 VerifyUsername(ALL_USER, etemail.getText().toString()));
         btnlogin.setOnClickListener(v -> logIn());

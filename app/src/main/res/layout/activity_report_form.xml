@@ -46,7 +46,7 @@
             android:singleLine="true"
             android:textSize="15sp"
             tools:targetApi="m"
-            android:autofillHints=""
+
             android:inputType="textPersonName" />
 
 
@@ -66,7 +66,7 @@
             android:textColorHint="#2196F3"
             android:textSize="15sp"
             tools:targetApi="m"
-            android:autofillHints=""
+
             android:inputType="phone" />
 
         <EditText
@@ -85,7 +85,8 @@
             android:textColorHint="#2196F3"
             android:textSize="15sp"
             tools:targetApi="m"
-            android:autofillHints="" />
+
+            tools:ignore="TextFields" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -198,7 +199,7 @@
             android:singleLine="true"
             android:textSize="15sp"
             tools:targetApi="m"
-            android:autofillHints=""
+
             android:inputType="textAutoComplete" />
 
         <LinearLayout

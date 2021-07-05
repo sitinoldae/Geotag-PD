@@ -74,7 +74,7 @@
             android:shadowDy="5"
             android:text="OTP"
             android:textColor="#1E88E5"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:textStyle="bold" />
 
         <EditText
@@ -92,7 +92,7 @@
             android:singleLine="true"
             android:textAlignment="center"
             tools:targetApi="lollipop"
-            android:autofillHints="" />
+             />
 
 
         <Button

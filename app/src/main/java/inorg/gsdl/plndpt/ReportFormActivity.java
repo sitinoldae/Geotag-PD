@@ -86,13 +86,10 @@ public class ReportFormActivity extends BaseActivity implements Callback<User>, 
     String[] status = {"NO", "YES"};
     HashMap<String, String> hashMap;
     AlertDialog.Builder builder;
-    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.issue_image)
     ImageView ivReportImage;
-    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.location_addr)
     TextView location_tv;
-    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.tv_progress)
     TextView tv_progress;
     FusedLocationProviderClient mFusedLocationClient;
@@ -165,8 +162,8 @@ public class ReportFormActivity extends BaseActivity implements Callback<User>, 
         }
 
         /*    private Bitmap mphoto_bitmap, gallery_bitmap;
-    private String imageString;
-    private String my_value;*/
+        private String imageString;
+        private String my_value;*/
         Volley.newRequestQueue(this);
         ButterKnife.bind(this);
         etName = findViewById(R.id.etName);
@@ -443,7 +440,6 @@ public class ReportFormActivity extends BaseActivity implements Callback<User>, 
 
     }
 
-    @SuppressLint("NonConstantResourceId")
     @OnClick(R.id.issue_photo_layout)
     public void photo_upload_option_linear(View view) {
 
@@ -628,8 +624,7 @@ public class ReportFormActivity extends BaseActivity implements Callback<User>, 
     }
 
 
-    @SuppressLint("NonConstantResourceId")
-    @OnClick(R.id.btn_submit)
+@OnClick(R.id.btn_submit)
     public void submit_form(View view) {
 
         if (!USABLE_IMAGE_DOWNLOAD_LINK.matches("")) {
@@ -670,8 +665,7 @@ public class ReportFormActivity extends BaseActivity implements Callback<User>, 
     }
 
 
-    @SuppressLint("NonConstantResourceId")
-    @OnClick(R.id.location_layout)
+@OnClick(R.id.location_layout)
     public void location_linear_layout(View view) {
 
 

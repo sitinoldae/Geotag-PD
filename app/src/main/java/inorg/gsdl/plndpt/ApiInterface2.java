@@ -2,6 +2,7 @@ package inorg.gsdl.plndpt;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
@@ -39,4 +40,8 @@ public interface ApiInterface2 {
     @Headers("Content-Type: application/json")
     @POST("projectStatusUpdate")
     Call<User> updateStatus(@Body String body);
+
+    @Headers("Content-Type: application/json")
+    @GET("updatepwd")
+    Call<MyUserData> updatepwd(String toString);
 }
