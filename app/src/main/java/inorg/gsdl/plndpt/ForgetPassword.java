@@ -79,7 +79,8 @@ public class ForgetPassword extends AppCompatActivity {
                 @Override
                 public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
                     if(response.code()==200){
-                        runOnUiThread(() -> Toast.makeText(context,response.message()+"password reset successfull\nplease login throgh the updated password",Toast.LENGTH_SHORT).show());
+                        runOnUiThread(() -> Toast.makeText(context,response.message()+"password reset successfull\nplease login throgh the updated password",Toast.LENGTH_LONG).show());
+                        onBackPressed();
                     }
                 }
             });

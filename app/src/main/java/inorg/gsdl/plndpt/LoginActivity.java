@@ -197,6 +197,7 @@ public class LoginActivity extends AppCompatActivity {
                             String userId = object.getString("userid");
                             if (email.equalsIgnoreCase(userId)) {
                                 applicationUtility.showSnack(LoginActivity.this, "User Verified\nEnter Password");
+                                findViewById(R.id.forgotPasswordBtn).setVisibility(View.GONE);
                                 etemail.setVisibility(View.GONE);
                                 etpass.setVisibility(View.VISIBLE);
                                 btnlogin.setVisibility(View.VISIBLE);
